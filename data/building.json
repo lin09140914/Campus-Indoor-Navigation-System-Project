@@ -1,0 +1,12 @@
+{
+  "id": "eng5-sample",
+  "name": "示範建築（樣板資料，不是工程五館）",
+  "floors": [
+    1,
+    2,
+    3
+  ],
+  "floorHeight": 4,
+  "unit": "m",
+  "sample": true
+}

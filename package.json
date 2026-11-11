@@ -1,0 +1,16 @@
+{
+  "name": "indoor-nav-kickoff-kit",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "description": "校園室內導航系統開工包（範例資料、stub、驗證腳本）",
+  "scripts": {
+    "serve": "node tools/serve.js . 8080",
+    "gen-sample": "node tools/gen-sample-data.js",
+    "validate": "node tools/validate-data.js data",
+    "test": "node --test"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

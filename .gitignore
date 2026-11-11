@@ -1,0 +1,26 @@
+# 依賴與建置產物
+node_modules/
+dist/
+
+# 作業系統與編輯器產生的檔案
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# 打包檔
+*.zip
+
+# 原始平面圖與現場照片：可能有使用限制（需系上或建築所屬單位同意），不要直接放進倉庫。
+# 倉庫只放我們自己畫好的 SVG（data/svg/）和資料檔。原始檔另外放在限定組員存取的雲端資料夾。
+raw-floorplans/
+site-photos/
+*.dwg
+*.dxf
+
+# 暫存與本機設定
+*.log
+.env
+.env.*
+tmp/

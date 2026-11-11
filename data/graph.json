@@ -1,0 +1,1159 @@
+{
+  "version": 1,
+  "building": "eng5-sample",
+  "unit": "m",
+  "nodes": [
+    {
+      "id": "F1-C-01",
+      "x": 2.5,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "F1-C-02",
+      "x": 8,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "F1-C-03",
+      "x": 14,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "F1-C-04",
+      "x": 20,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "F1-C-05",
+      "x": 26,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "F1-C-06",
+      "x": 32,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "F1-C-07",
+      "x": 37.5,
+      "z": 10,
+      "floor": 1,
+      "type": "corridor"
+    },
+    {
+      "id": "ELEV-A@1",
+      "x": 2.5,
+      "z": 7,
+      "floor": 1,
+      "type": "elevator"
+    },
+    {
+      "id": "STAIR-A@1",
+      "x": 37.5,
+      "z": 7,
+      "floor": 1,
+      "type": "stair"
+    },
+    {
+      "id": "ENTRANCE",
+      "x": 0.5,
+      "z": 10,
+      "floor": 1,
+      "type": "entrance"
+    },
+    {
+      "id": "M101",
+      "x": 8,
+      "z": 4.75,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M101#door",
+      "x": 8,
+      "z": 8.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M102",
+      "x": 14,
+      "z": 4.75,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M102#door",
+      "x": 14,
+      "z": 8.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M103",
+      "x": 20,
+      "z": 4.75,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M103#door",
+      "x": 20,
+      "z": 8.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M104",
+      "x": 26,
+      "z": 4.75,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M104#door",
+      "x": 26,
+      "z": 8.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M105",
+      "x": 32,
+      "z": 4.75,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M105#door",
+      "x": 32,
+      "z": 8.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M106",
+      "x": 8,
+      "z": 15.25,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M106#door",
+      "x": 8,
+      "z": 11.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M107",
+      "x": 14,
+      "z": 15.25,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M107#door",
+      "x": 14,
+      "z": 11.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M108",
+      "x": 20,
+      "z": 15.25,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M108#door",
+      "x": 20,
+      "z": 11.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M109",
+      "x": 26,
+      "z": 15.25,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M109#door",
+      "x": 26,
+      "z": 11.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "M110",
+      "x": 32,
+      "z": 15.25,
+      "floor": 1,
+      "type": "room"
+    },
+    {
+      "id": "M110#door",
+      "x": 32,
+      "z": 11.5,
+      "floor": 1,
+      "type": "door"
+    },
+    {
+      "id": "F2-C-01",
+      "x": 2.5,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "F2-C-02",
+      "x": 8,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "F2-C-03",
+      "x": 14,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "F2-C-04",
+      "x": 20,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "F2-C-05",
+      "x": 26,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "F2-C-06",
+      "x": 32,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "F2-C-07",
+      "x": 37.5,
+      "z": 10,
+      "floor": 2,
+      "type": "corridor"
+    },
+    {
+      "id": "ELEV-A@2",
+      "x": 2.5,
+      "z": 7,
+      "floor": 2,
+      "type": "elevator"
+    },
+    {
+      "id": "STAIR-A@2",
+      "x": 37.5,
+      "z": 7,
+      "floor": 2,
+      "type": "stair"
+    },
+    {
+      "id": "M201",
+      "x": 8,
+      "z": 4.75,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M201#door",
+      "x": 8,
+      "z": 8.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M202",
+      "x": 14,
+      "z": 4.75,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M202#door",
+      "x": 14,
+      "z": 8.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M203",
+      "x": 20,
+      "z": 4.75,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M203#door",
+      "x": 20,
+      "z": 8.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M204",
+      "x": 26,
+      "z": 4.75,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M204#door",
+      "x": 26,
+      "z": 8.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M205",
+      "x": 32,
+      "z": 4.75,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M205#door",
+      "x": 32,
+      "z": 8.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M206",
+      "x": 8,
+      "z": 15.25,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M206#door",
+      "x": 8,
+      "z": 11.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M207",
+      "x": 14,
+      "z": 15.25,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M207#door",
+      "x": 14,
+      "z": 11.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M208",
+      "x": 20,
+      "z": 15.25,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M208#door",
+      "x": 20,
+      "z": 11.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M209",
+      "x": 26,
+      "z": 15.25,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M209#door",
+      "x": 26,
+      "z": 11.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "M210",
+      "x": 32,
+      "z": 15.25,
+      "floor": 2,
+      "type": "room"
+    },
+    {
+      "id": "M210#door",
+      "x": 32,
+      "z": 11.5,
+      "floor": 2,
+      "type": "door"
+    },
+    {
+      "id": "F3-C-01",
+      "x": 2.5,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "F3-C-02",
+      "x": 8,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "F3-C-03",
+      "x": 14,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "F3-C-04",
+      "x": 20,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "F3-C-05",
+      "x": 26,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "F3-C-06",
+      "x": 32,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "F3-C-07",
+      "x": 37.5,
+      "z": 10,
+      "floor": 3,
+      "type": "corridor"
+    },
+    {
+      "id": "ELEV-A@3",
+      "x": 2.5,
+      "z": 7,
+      "floor": 3,
+      "type": "elevator"
+    },
+    {
+      "id": "STAIR-A@3",
+      "x": 37.5,
+      "z": 7,
+      "floor": 3,
+      "type": "stair"
+    },
+    {
+      "id": "M301",
+      "x": 8,
+      "z": 4.75,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M301#door",
+      "x": 8,
+      "z": 8.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M302",
+      "x": 14,
+      "z": 4.75,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M302#door",
+      "x": 14,
+      "z": 8.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M303",
+      "x": 20,
+      "z": 4.75,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M303#door",
+      "x": 20,
+      "z": 8.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M304",
+      "x": 26,
+      "z": 4.75,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M304#door",
+      "x": 26,
+      "z": 8.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M305",
+      "x": 32,
+      "z": 4.75,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M305#door",
+      "x": 32,
+      "z": 8.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M306",
+      "x": 8,
+      "z": 15.25,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M306#door",
+      "x": 8,
+      "z": 11.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M307",
+      "x": 14,
+      "z": 15.25,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M307#door",
+      "x": 14,
+      "z": 11.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M308",
+      "x": 20,
+      "z": 15.25,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M308#door",
+      "x": 20,
+      "z": 11.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M309",
+      "x": 26,
+      "z": 15.25,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M309#door",
+      "x": 26,
+      "z": 11.5,
+      "floor": 3,
+      "type": "door"
+    },
+    {
+      "id": "M310",
+      "x": 32,
+      "z": 15.25,
+      "floor": 3,
+      "type": "room"
+    },
+    {
+      "id": "M310#door",
+      "x": 32,
+      "z": 11.5,
+      "floor": 3,
+      "type": "door"
+    }
+  ],
+  "edges": [
+    {
+      "a": "M101",
+      "b": "M101#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M101#door",
+      "b": "F1-C-02",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M102",
+      "b": "M102#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M102#door",
+      "b": "F1-C-03",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M103",
+      "b": "M103#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M103#door",
+      "b": "F1-C-04",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M104",
+      "b": "M104#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M104#door",
+      "b": "F1-C-05",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M105",
+      "b": "M105#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M105#door",
+      "b": "F1-C-06",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M106",
+      "b": "M106#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M106#door",
+      "b": "F1-C-02",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M107",
+      "b": "M107#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M107#door",
+      "b": "F1-C-03",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M108",
+      "b": "M108#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M108#door",
+      "b": "F1-C-04",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M109",
+      "b": "M109#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M109#door",
+      "b": "F1-C-05",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M110",
+      "b": "M110#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M110#door",
+      "b": "F1-C-06",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-01",
+      "b": "F1-C-02",
+      "w": 5.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-02",
+      "b": "F1-C-03",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-03",
+      "b": "F1-C-04",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-04",
+      "b": "F1-C-05",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-05",
+      "b": "F1-C-06",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-06",
+      "b": "F1-C-07",
+      "w": 5.5,
+      "kind": "walk"
+    },
+    {
+      "a": "ELEV-A@1",
+      "b": "F1-C-01",
+      "w": 3,
+      "kind": "walk"
+    },
+    {
+      "a": "STAIR-A@1",
+      "b": "F1-C-07",
+      "w": 3,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE",
+      "b": "F1-C-01",
+      "w": 2,
+      "kind": "walk"
+    },
+    {
+      "a": "M201",
+      "b": "M201#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M201#door",
+      "b": "F2-C-02",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M202",
+      "b": "M202#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M202#door",
+      "b": "F2-C-03",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M203",
+      "b": "M203#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M203#door",
+      "b": "F2-C-04",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M204",
+      "b": "M204#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M204#door",
+      "b": "F2-C-05",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M205",
+      "b": "M205#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M205#door",
+      "b": "F2-C-06",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M206",
+      "b": "M206#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M206#door",
+      "b": "F2-C-02",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M207",
+      "b": "M207#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M207#door",
+      "b": "F2-C-03",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M208",
+      "b": "M208#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M208#door",
+      "b": "F2-C-04",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M209",
+      "b": "M209#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M209#door",
+      "b": "F2-C-05",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M210",
+      "b": "M210#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M210#door",
+      "b": "F2-C-06",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F2-C-01",
+      "b": "F2-C-02",
+      "w": 5.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F2-C-02",
+      "b": "F2-C-03",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F2-C-03",
+      "b": "F2-C-04",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F2-C-04",
+      "b": "F2-C-05",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F2-C-05",
+      "b": "F2-C-06",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F2-C-06",
+      "b": "F2-C-07",
+      "w": 5.5,
+      "kind": "walk"
+    },
+    {
+      "a": "ELEV-A@2",
+      "b": "F2-C-01",
+      "w": 3,
+      "kind": "walk"
+    },
+    {
+      "a": "STAIR-A@2",
+      "b": "F2-C-07",
+      "w": 3,
+      "kind": "walk"
+    },
+    {
+      "a": "M301",
+      "b": "M301#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M301#door",
+      "b": "F3-C-02",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M302",
+      "b": "M302#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M302#door",
+      "b": "F3-C-03",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M303",
+      "b": "M303#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M303#door",
+      "b": "F3-C-04",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M304",
+      "b": "M304#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M304#door",
+      "b": "F3-C-05",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M305",
+      "b": "M305#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M305#door",
+      "b": "F3-C-06",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M306",
+      "b": "M306#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M306#door",
+      "b": "F3-C-02",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M307",
+      "b": "M307#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M307#door",
+      "b": "F3-C-03",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M308",
+      "b": "M308#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M308#door",
+      "b": "F3-C-04",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M309",
+      "b": "M309#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M309#door",
+      "b": "F3-C-05",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "M310",
+      "b": "M310#door",
+      "w": 3.75,
+      "kind": "walk"
+    },
+    {
+      "a": "M310#door",
+      "b": "F3-C-06",
+      "w": 1.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F3-C-01",
+      "b": "F3-C-02",
+      "w": 5.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F3-C-02",
+      "b": "F3-C-03",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F3-C-03",
+      "b": "F3-C-04",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F3-C-04",
+      "b": "F3-C-05",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F3-C-05",
+      "b": "F3-C-06",
+      "w": 6,
+      "kind": "walk"
+    },
+    {
+      "a": "F3-C-06",
+      "b": "F3-C-07",
+      "w": 5.5,
+      "kind": "walk"
+    },
+    {
+      "a": "ELEV-A@3",
+      "b": "F3-C-01",
+      "w": 3,
+      "kind": "walk"
+    },
+    {
+      "a": "STAIR-A@3",
+      "b": "F3-C-07",
+      "w": 3,
+      "kind": "walk"
+    },
+    {
+      "a": "STAIR-A@1",
+      "b": "STAIR-A@2",
+      "w": 8,
+      "kind": "stair"
+    },
+    {
+      "a": "ELEV-A@1",
+      "b": "ELEV-A@2",
+      "w": 5,
+      "kind": "elev"
+    },
+    {
+      "a": "STAIR-A@2",
+      "b": "STAIR-A@3",
+      "w": 8,
+      "kind": "stair"
+    },
+    {
+      "a": "ELEV-A@2",
+      "b": "ELEV-A@3",
+      "w": 5,
+      "kind": "elev"
+    }
+  ]
+}

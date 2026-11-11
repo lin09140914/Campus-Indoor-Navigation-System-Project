@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>系館 3D 範例</title>
+<style>
+  :root { --bg:#101826; --panel:#ffffffee; --ink:#1b2430; --muted:#5b6777; --line:#d7dde6; --accent:#2f6fed; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); font-family: system-ui, "Noto Sans TC", "Microsoft JhengHei", sans-serif; color:var(--ink); }
+  #view { position:fixed; inset:0; }
+  #panel { position:fixed; top:12px; left:12px; width:300px; max-width:calc(100vw - 24px); max-height:calc(100vh - 24px); overflow:auto;
+           background:var(--panel); border-radius:12px; padding:14px; box-shadow:0 6px 24px #0005; font-size:14px; }
+  h1 { font-size:16px; margin:0 0 2px; }
+  .sub { color:var(--muted); font-size:12px; margin-bottom:10px; }
+  label { display:block; font-size:12px; color:var(--muted); margin:8px 0 3px; }
+  select, button { font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); }
+  select { width:100%; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; }
+  button { cursor:pointer; }
+  button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); width:100%; margin-top:10px; }
+  input[type=range] { width:100%; }
+  #result { margin-top:10px; padding:8px 10px; background:#f2f5fa; border-radius:8px; font-size:13px; line-height:1.5; min-height:40px; }
+  #plan2d { margin-top:10px; border:1px solid var(--line); border-radius:8px; background:#fff; padding:4px; }
+  #plan2d svg { width:100%; height:auto; display:block; }
+  #plan2d .outline { fill:#f4f6f9; stroke:#8a96a6; stroke-width:.3; }
+  #plan2d .room { fill:#dfe6ee; stroke:#516074; stroke-width:.2; }
+  #plan2d .core { fill:#b7c4d8; stroke:#516074; stroke-width:.2; }
+  .hint { font-size:11px; color:var(--muted); margin-top:8px; line-height:1.4; }
+  @media (max-width:640px) { #panel { width:auto; right:12px; max-height:46vh; } }
+</style>
+</head>
+<body>
+<div id="view"></div>
+<div id="panel">
+  <h1>系館 3D 範例（示意樓層）</h1>
+  <div class="sub">這是樣板平面圖，不是工程五館的真實尺寸。拿到真平面圖後只要換掉 SVG。</div>
+
+  <label>樓層顯示</label>
+  <div class="row" id="floorBtns"></div>
+
+  <label>爆炸圖間距：<span id="exVal">0</span> m</label>
+  <input type="range" id="explode" min="0" max="8" step="0.5" value="0">
+
+  <label>起點</label><select id="from"></select>
+  <label>終點</label><select id="to"></select>
+  <label>跨樓層方式</label>
+  <select id="mode">
+    <option value="any">最短（樓梯或電梯皆可）</option>
+    <option value="stair">只走樓梯</option>
+    <option value="elev">只走電梯（無障礙）</option>
+  </select>
+  <button class="primary" id="go">計算路徑（A*）</button>
+  <div id="result">請選起點與終點，或直接在 3D 畫面中點兩個房間。</div>
+
+  <div id="plan2d"></div>
+  <div class="hint">滑鼠左鍵旋轉、右鍵平移、滾輪縮放。2D 小圖和 3D 模型讀的是同一份 SVG。</div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+/* ============================================================
+   1. 資料：每層樓一份 SVG（單位 = 公尺）
+   ------------------------------------------------------------
+   換成真實平面圖時，只要改這一段：
+   - class="outline"  建築外框
+   - class="room"     房間（id = 房號，data-door = 門開在哪一邊 top / bottom）
+   - class="core"     樓梯 / 電梯（id 以 STAIR / ELEV 開頭）
+   ============================================================ */
+const FLOORS = [1, 2, 3];
+const FLOOR_H = 4;        // 樓高（公尺），請換成實測值
+const WALL_H  = 3.4;      // 牆高
+const SLAB_T  = 0.3;      // 樓板厚度
+
+function planSVG(f) {
+  const top = [5, 11, 17, 23, 29].map((x, i) =>
+    `<rect class="room" id="M${f}0${i + 1}" x="${x}" y="1" width="6" height="7.5" data-door="bottom"/>`).join('');
+  const bot = [5, 11, 17, 23, 29].map((x, i) =>
+    `<rect class="room" id="M${f}${String(i + 6).padStart(2, '0')}" x="${x}" y="11.5" width="6" height="7.5" data-door="top"/>`).join('');
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20">
+    <rect class="outline" x="0" y="0" width="40" height="20"/>
+    ${top}${bot}
+    <rect class="core" id="ELEV${f}" x="1" y="8.5" width="3" height="3"/>
+    <rect class="core" id="STAIR${f}" x="36" y="8.5" width="3" height="3"/>
+  </svg>`;
+}
+
+/* ============================================================
+   2. 解析 SVG → 房間 / 核心 / 外框
+   ============================================================ */
+function parsePlan(f) {
+  const doc = new DOMParser().parseFromString(planSVG(f), 'image/svg+xml');
+  const num = (el, k) => parseFloat(el.getAttribute(k));
+  const rect = el => ({ id: el.id, x: num(el, 'x'), y: num(el, 'y'), w: num(el, 'width'), h: num(el, 'height'), door: el.dataset?.door || el.getAttribute('data-door') });
+  return {
+    floor: f,
+    outline: rect(doc.querySelector('.outline')),
+    rooms: [...doc.querySelectorAll('.room')].map(rect),
+    cores: [...doc.querySelectorAll('.core')].map(rect),
+  };
+}
+const PLANS = FLOORS.map(parsePlan);
+
+/* ============================================================
+   3. 圖論：節點 + 邊（和簡報的 route layer 一樣）
+   ============================================================ */
+const nodes = new Map();   // id -> {id,x,z,f,type,edges:[]}
+function addNode(id, x, z, f, type) { nodes.set(id, { id, x, z, f, type, edges: [] }); return id; }
+function link(a, b, w, kind = 'walk') {
+  nodes.get(a).edges.push({ to: b, w, kind });
+  nodes.get(b).edges.push({ to: a, w, kind });
+}
+const dist2 = (a, b) => Math.hypot(nodes.get(a).x - nodes.get(b).x, nodes.get(a).z - nodes.get(b).z);
+
+const CORRIDOR_Z = 10;
+for (const p of PLANS) {
+  const f = p.floor;
+  const chain = [];      // 走廊上的節點，之後依 x 排序串起來
+  for (const r of p.rooms) {
+    const cx = r.x + r.w / 2;
+    const doorZ = r.door === 'bottom' ? r.y + r.h : r.y;
+    const room = addNode(`${r.id}`, cx, r.y + r.h / 2, f, 'room');
+    const door = addNode(`${r.id}#door`, cx, doorZ, f, 'door');
+    const corr = addNode(`${r.id}#corr`, cx, CORRIDOR_Z, f, 'corridor');
+    link(room, door, dist2(room, door)); link(door, corr, dist2(door, corr));
+    chain.push(corr);
+  }
+  for (const c of p.cores) {
+    const cx = c.x + c.w / 2, cz = c.y + c.h / 2;
+    const type = c.id.startsWith('STAIR') ? 'stair' : 'elev';
+    const core = addNode(c.id, cx, cz, f, type);
+    // 入口在靠走廊那一側
+    const entryX = cx < 20 ? c.x + c.w : c.x;
+    const entry = addNode(`${c.id}#entry`, entryX, CORRIDOR_Z, f, 'corridor');
+    link(core, entry, dist2(core, entry));
+    chain.push(entry);
+  }
+  chain.sort((a, b) => nodes.get(a).x - nodes.get(b).x);
+  for (let i = 0; i < chain.length - 1; i++) link(chain[i], chain[i + 1], dist2(chain[i], chain[i + 1]));
+}
+// 樓層之間：樓梯和電梯只是「跨樓層的邊」
+for (let f = 1; f < FLOORS.length; f++) {
+  link(`STAIR${f}`, `STAIR${f + 1}`, 8, 'stair');
+  link(`ELEV${f}`, `ELEV${f + 1}`, 5, 'elev');
+}
+
+function astar(startId, goalId, mode) {
+  const goal = nodes.get(goalId);
+  const h = id => Math.hypot(nodes.get(id).x - goal.x, nodes.get(id).z - goal.z);   // 平面直線距離，不會高估
+  const open = new Set([startId]), came = new Map(), g = new Map([[startId, 0]]), fs = new Map([[startId, h(startId)]]);
+  while (open.size) {
+    let cur = null;
+    for (const id of open) if (cur === null || fs.get(id) < fs.get(cur)) cur = id;
+    if (cur === goalId) {
+      const path = [cur];
+      while (came.has(cur)) { cur = came.get(cur); path.unshift(cur); }
+      return { path, length: g.get(goalId) };
+    }
+    open.delete(cur);
+    for (const e of nodes.get(cur).edges) {
+      if (mode === 'stair' && e.kind === 'elev') continue;
+      if (mode === 'elev' && e.kind === 'stair') continue;
+      const t = g.get(cur) + e.w;
+      if (t < (g.get(e.to) ?? Infinity)) {
+        came.set(e.to, cur); g.set(e.to, t); fs.set(e.to, t + h(e.to)); open.add(e.to);
+      }
+    }
+  }
+  return null;
+}
+
+/* ============================================================
+   4. Three.js 場景
+   ============================================================ */
+const view = document.getElementById('view');
+const renderer = new THREE.WebGLRenderer({ antialias: true });
+renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+view.appendChild(renderer.domElement);
+
+const scene = new THREE.Scene();
+scene.background = new THREE.Color(0x101826);
+const camera = new THREE.PerspectiveCamera(45, 1, 0.1, 500);
+camera.position.set(52, 38, 52);
+const controls = new OrbitControls(camera, renderer.domElement);
+controls.target.set(20, 4, 10);
+controls.enableDamping = true;
+
+scene.add(new THREE.HemisphereLight(0xdfe9ff, 0x2a3140, 1.1));
+const sun = new THREE.DirectionalLight(0xffffff, 1.4);
+sun.position.set(30, 60, 20);
+scene.add(sun);
+
+const M = {
+  slab:  new THREE.MeshStandardMaterial({ color: 0x9aa7b8, roughness: .9 }),
+  wall:  new THREE.MeshStandardMaterial({ color: 0xf1f4f8, roughness: .8 }),
+  outer: new THREE.MeshStandardMaterial({ color: 0xaecbff, transparent: true, opacity: .22, depthWrite: false }),
+  stair: new THREE.MeshStandardMaterial({ color: 0xd8b36a, roughness: .8 }),
+  elev:  new THREE.MeshStandardMaterial({ color: 0x6aa0d8, roughness: .5, transparent: true, opacity: .7 }),
+};
+const TILE = { base: 0xdfe6ee, start: 0x2fbf71, goal: 0xe5484d };
+
+const floorGroups = new Map();
+const tiles = [];       // 可點擊的房間地板
+const tileById = new Map();
+
+function box(parent, w, h, d, cx, cy, cz, mat) {
+  const m = new THREE.Mesh(new THREE.BoxGeometry(w, h, d), mat);
+  m.position.set(cx, cy, cz);
+  parent.add(m);
+  return m;
+}
+// 軸對齊的牆段（x1,z1)→(x2,z2)
+function wall(parent, x1, z1, x2, z2, mat = M.wall, h = WALL_H) {
+  const t = 0.2;
+  const horizontal = z1 === z2;
+  const w = horizontal ? Math.abs(x2 - x1) + t : t;
+  const d = horizontal ? t : Math.abs(z2 - z1) + t;
+  box(parent, w, h, d, (x1 + x2) / 2, h / 2, (z1 + z2) / 2, mat);
+}
+function labelSprite(text, color = '#1b2430') {
+  const c = document.createElement('canvas'); c.width = 256; c.height = 96;
+  const g = c.getContext('2d');
+  g.fillStyle = '#ffffffdd'; g.beginPath(); g.roundRect(8, 8, 240, 80, 18); g.fill();
+  g.fillStyle = color; g.font = 'bold 44px system-ui, sans-serif'; g.textAlign = 'center'; g.textBaseline = 'middle';
+  g.fillText(text, 128, 50);
+  const s = new THREE.Sprite(new THREE.SpriteMaterial({ map: new THREE.CanvasTexture(c), depthTest: false, transparent: true }));
+  s.scale.set(3.6, 1.35, 1); s.renderOrder = 10;
+  return s;
+}
+
+for (const p of PLANS) {
+  const g = new THREE.Group();
+  const o = p.outline;
+  // 樓板
+  box(g, o.w, SLAB_T, o.h, o.x + o.w / 2, -SLAB_T / 2, o.y + o.h / 2, M.slab);
+  // 外牆（半透明）
+  wall(g, o.x, o.y, o.x + o.w, o.y, M.outer); wall(g, o.x, o.y + o.h, o.x + o.w, o.y + o.h, M.outer);
+  wall(g, o.x, o.y, o.x, o.y + o.h, M.outer); wall(g, o.x + o.w, o.y, o.x + o.w, o.y + o.h, M.outer);
+
+  // 房間：四面牆，門那一側留 1.4 m 缺口
+  for (const r of p.rooms) {
+    const x0 = r.x, x1 = r.x + r.w, z0 = r.y, z1 = r.y + r.h, cx = r.x + r.w / 2, gap = 0.7;
+    wall(g, x0, z0, x0, z1); wall(g, x1, z0, x1, z1);
+    if (r.door === 'bottom') { wall(g, x0, z0, x1, z0); wall(g, x0, z1, cx - gap, z1); wall(g, cx + gap, z1, x1, z1); }
+    else                     { wall(g, x0, z1, x1, z1); wall(g, x0, z0, cx - gap, z0); wall(g, cx + gap, z0, x1, z0); }
+    // 地板色塊（可點擊）
+    const tile = new THREE.Mesh(new THREE.PlaneGeometry(r.w - .3, r.h - .3), new THREE.MeshStandardMaterial({ color: TILE.base }));
+    tile.rotation.x = -Math.PI / 2; tile.position.set(cx, 0.02, r.y + r.h / 2);
+    tile.userData.roomId = r.id; g.add(tile); tiles.push(tile); tileById.set(r.id, tile);
+    const lab = labelSprite(r.id); lab.position.set(cx, 1.6, r.y + r.h / 2); g.add(lab);
+  }
+  // 電梯 / 樓梯
+  for (const c of p.cores) {
+    if (c.id.startsWith('ELEV')) {
+      box(g, c.w, WALL_H, c.h, c.x + c.w / 2, WALL_H / 2, c.y + c.h / 2, M.elev);
+    } else {
+      const n = 8;
+      for (let i = 0; i < n; i++) {
+        const sh = (WALL_H / n) * (i + 1), sw = c.w / n;
+        box(g, sw, sh, c.h, c.x + sw * (i + .5), sh / 2, c.y + c.h / 2, M.stair);
+      }
+    }
+    const lab = labelSprite(c.id.startsWith('ELEV') ? '電梯' : '樓梯', '#8a5a00');
+    lab.position.set(c.x + c.w / 2, WALL_H + 1.2, c.y + c.h / 2); g.add(lab);
+  }
+  const fl = labelSprite(`${p.floor}F`, '#2f6fed'); fl.position.set(-2.5, 1.5, 10); g.add(fl);
+  scene.add(g); floorGroups.set(p.floor, g);
+}
+
+/* ============================================================
+   5. 樓層切換 / 爆炸圖
+   ============================================================ */
+let explode = 0, showFloor = 'all';
+function layoutFloors() {
+  for (const [f, g] of floorGroups) {
+    g.position.y = (f - 1) * (FLOOR_H + explode);
+    g.visible = showFloor === 'all' || showFloor === f;
+  }
+  drawRoute();
+}
+const btnBox = document.getElementById('floorBtns');
+const btns = [['all', '全部'], ...FLOORS.map(f => [f, `${f}F`])].map(([v, t]) => {
+  const b = document.createElement('button'); b.textContent = t;
+  b.onclick = () => { showFloor = v; sync2D(); layoutFloors(); markBtns(); };
+  btnBox.appendChild(b); return [v, b];
+});
+function markBtns() { btns.forEach(([v, b]) => b.classList.toggle('on', v === showFloor)); }
+document.getElementById('explode').oninput = e => {
+  explode = +e.target.value; document.getElementById('exVal').textContent = explode; layoutFloors();
+};
+
+/* 2D 小圖：直接顯示同一份 SVG */
+function sync2D() { document.getElementById('plan2d').innerHTML = planSVG(showFloor === 'all' ? 1 : showFloor); }
+
+/* ============================================================
+   6. 路徑繪製與動畫
+   ============================================================ */
+const routeGroup = new THREE.Group(); scene.add(routeGroup);
+const marker = new THREE.Mesh(new THREE.SphereGeometry(.55, 24, 16), new THREE.MeshBasicMaterial({ color: 0xffb020, depthTest: false }));
+marker.renderOrder = 20; marker.visible = false; scene.add(marker);
+let routePts = [], routeLens = [], routeTotal = 0, currentPath = null;
+
+function nodePos(id) {
+  const n = nodes.get(id);
+  return new THREE.Vector3(n.x, (n.f - 1) * (FLOOR_H + explode) + 0.5, n.z);
+}
+function drawRoute() {
+  routeGroup.clear();
+  routePts = []; routeLens = []; routeTotal = 0;
+  if (!currentPath) { marker.visible = false; return; }
+  routePts = currentPath.path.map(nodePos);
+  const mat = new THREE.MeshBasicMaterial({ color: 0xff7a1a, depthTest: false });
+  for (let i = 0; i < routePts.length - 1; i++) {
+    const a = routePts[i], b = routePts[i + 1], len = a.distanceTo(b);
+    routeLens.push(len); routeTotal += len;
+    const cyl = new THREE.Mesh(new THREE.CylinderGeometry(.16, .16, len, 10), mat);
+    cyl.position.copy(a).add(b).multiplyScalar(.5);
+    cyl.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), b.clone().sub(a).normalize());
+    cyl.renderOrder = 15; routeGroup.add(cyl);
+    const j = new THREE.Mesh(new THREE.SphereGeometry(.16, 10, 8), mat); j.position.copy(a); j.renderOrder = 15; routeGroup.add(j);
+  }
+  marker.visible = true;
+}
+function pointAt(t) {
+  let d = t * routeTotal;
+  for (let i = 0; i < routeLens.length; i++) {
+    if (d <= routeLens[i] || i === routeLens.length - 1) return routePts[i].clone().lerp(routePts[i + 1], Math.min(d / routeLens[i], 1));
+    d -= routeLens[i];
+  }
+  return routePts[0];
+}
+
+/* ============================================================
+   7. UI：起迄點、計算、點選房間
+   ============================================================ */
+const fromSel = document.getElementById('from'), toSel = document.getElementById('to');
+const roomIds = PLANS.flatMap(p => p.rooms.map(r => r.id));
+for (const id of roomIds) {
+  for (const sel of [fromSel, toSel]) { const o = document.createElement('option'); o.value = id; o.textContent = `${id}（${id[1]}F）`; sel.appendChild(o); }
+}
+fromSel.value = 'M101'; toSel.value = 'M310';
+
+function paintTiles() {
+  tileById.forEach(t => t.material.color.setHex(TILE.base));
+  tileById.get(fromSel.value)?.material.color.setHex(TILE.start);
+  tileById.get(toSel.value)?.material.color.setHex(TILE.goal);
+}
+function compute() {
+  paintTiles();
+  const s = fromSel.value, t = toSel.value, mode = document.getElementById('mode').value;
+  const out = document.getElementById('result');
+  if (s === t) { currentPath = null; drawRoute(); out.textContent = '起點和終點相同。'; return; }
+  const r = astar(s, t, mode);
+  currentPath = r;
+  drawRoute();
+  if (!r) { out.textContent = '找不到路徑（請檢查跨樓層方式）。'; return; }
+  const used = r.path.filter(id => /^(STAIR|ELEV)\d$/.test(id));
+  const how = used.some(id => id.startsWith('ELEV')) ? '電梯' : used.length ? '樓梯' : null;
+  const f1 = nodes.get(s).f, f2 = nodes.get(t).f;
+  out.innerHTML = `<b>${s}（${f1}F）→ ${t}（${f2}F）</b><br>路徑長度約 ${r.length.toFixed(1)} m` +
+    (how ? `<br>跨樓層：搭${how}，${f1}F → ${f2}F` : '<br>同一層，不需要跨樓層') +
+    `<br>經過 ${r.path.length} 個節點`;
+}
+document.getElementById('go').onclick = compute;
+fromSel.onchange = toSel.onchange = compute;
+document.getElementById('mode').onchange = compute;
+
+// 點 3D 畫面中的房間：第一下設起點，第二下設終點，之後輪流
+let pickNext = 'from', downAt = null;
+renderer.domElement.addEventListener('pointerdown', e => { downAt = [e.clientX, e.clientY]; });
+renderer.domElement.addEventListener('pointerup', e => {
+  if (!downAt || Math.hypot(e.clientX - downAt[0], e.clientY - downAt[1]) > 4) return;   // 拖曳旋轉不算點擊
+  const rc = new THREE.Raycaster(), v = new THREE.Vector2(
+    (e.clientX / innerWidth) * 2 - 1, -(e.clientY / innerHeight) * 2 + 1);
+  rc.setFromCamera(v, camera);
+  const hit = rc.intersectObjects(tiles.filter(t => t.parent.visible), false)[0];
+  if (!hit) return;
+  (pickNext === 'from' ? fromSel : toSel).value = hit.object.userData.roomId;
+  pickNext = pickNext === 'from' ? 'to' : 'from';
+  compute();
+});
+
+/* ============================================================
+   8. 啟動
+   ============================================================ */
+function resize() {
+  renderer.setSize(innerWidth, innerHeight); camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix();
+}
+addEventListener('resize', resize); resize();
+sync2D(); markBtns(); layoutFloors(); compute();
+
+const clock = new THREE.Clock();
+renderer.setAnimationLoop(() => {
+  controls.update();
+  if (currentPath && routeTotal > 0) {
+    const t = (clock.getElapsedTime() * 4 / routeTotal) % 1;     // 約 4 m/s 的示意速度
+    marker.position.copy(pointAt(t));
+  }
+  renderer.render(scene, camera);
+});
+window.__demo = { astar, nodes, THREE };   // 方便在 console 檢查
+</script>
+</body>
+</html>

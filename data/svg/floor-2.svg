@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20">
+  <!-- 樣板資料（假的）：2F。單位＝公尺，原點＝建築外框左上角 -->
+  <polygon class="outline" points="0,0 40,0 40,20 0,20"/>
+  <polygon class="corridor" points="0,8.5 40,8.5 40,11.5 0,11.5"/>
+  <polygon class="room" id="M201" points="5,1 11,1 11,8.5 5,8.5"/>
+  <line class="door" data-room="M201" x1="7.3" y1="8.5" x2="8.7" y2="8.5"/>
+  <polygon class="room" id="M202" points="11,1 17,1 17,8.5 11,8.5"/>
+  <line class="door" data-room="M202" x1="13.3" y1="8.5" x2="14.7" y2="8.5"/>
+  <polygon class="room" id="M203" points="17,1 23,1 23,8.5 17,8.5"/>
+  <line class="door" data-room="M203" x1="19.3" y1="8.5" x2="20.7" y2="8.5"/>
+  <polygon class="room" id="M204" points="23,1 29,1 29,8.5 23,8.5"/>
+  <line class="door" data-room="M204" x1="25.3" y1="8.5" x2="26.7" y2="8.5"/>
+  <polygon class="room" id="M205" points="29,1 35,1 35,8.5 29,8.5"/>
+  <line class="door" data-room="M205" x1="31.3" y1="8.5" x2="32.7" y2="8.5"/>
+  <polygon class="room" id="M206" points="5,11.5 11,11.5 11,19 5,19"/>
+  <line class="door" data-room="M206" x1="7.3" y1="11.5" x2="8.7" y2="11.5"/>
+  <polygon class="room" id="M207" points="11,11.5 17,11.5 17,19 11,19"/>
+  <line class="door" data-room="M207" x1="13.3" y1="11.5" x2="14.7" y2="11.5"/>
+  <polygon class="room" id="M208" points="17,11.5 23,11.5 23,19 17,19"/>
+  <line class="door" data-room="M208" x1="19.3" y1="11.5" x2="20.7" y2="11.5"/>
+  <polygon class="room" id="M209" points="23,11.5 29,11.5 29,19 23,19"/>
+  <line class="door" data-room="M209" x1="25.3" y1="11.5" x2="26.7" y2="11.5"/>
+  <polygon class="room" id="M210" points="29,11.5 35,11.5 35,19 29,19"/>
+  <line class="door" data-room="M210" x1="31.3" y1="11.5" x2="32.7" y2="11.5"/>
+  <polygon class="elevator" id="ELEV-A" points="1,5.5 4,5.5 4,8.5 1,8.5"/>
+  <polygon class="stair" id="STAIR-A" points="36,5.5 39,5.5 39,8.5 36,8.5"/>
+</svg>

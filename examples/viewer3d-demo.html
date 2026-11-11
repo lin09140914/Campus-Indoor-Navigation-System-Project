@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>3D 檢視元件示範</title>
+<style>
+  :root { --bg:#101826; --panel:#ffffffee; --ink:#1b2430; --muted:#5b6777; --line:#d7dde6; --accent:#2f6fed; }
+  * { box-sizing: border-box; }
+  html, body { margin:0; height:100%; background:var(--bg); font-family: system-ui, "Noto Sans TC", "Microsoft JhengHei", sans-serif; color:var(--ink); }
+  #view { position:fixed; inset:0; }
+  #plan2d { position:absolute; inset:0; display:flex; align-items:center; justify-content:center; padding:24px 24px 24px 340px; background:#eef2f7; }
+  #plan2d svg { width:100%; max-height:100%; }
+  #plan2d .outline { fill:#f9fafc; stroke:#8a96a6; stroke-width:.25; }
+  #plan2d .corridor { fill:#e3e9f1; }
+  #plan2d .room { fill:#dfe6ee; stroke:#516074; stroke-width:.15; }
+  #plan2d .door { stroke:#e5484d; stroke-width:.35; }
+  #plan2d .stair, #plan2d .elevator { fill:#c7b27a; stroke:#516074; stroke-width:.15; }
+  #panel { position:fixed; top:12px; left:12px; width:310px; max-width:calc(100vw - 24px); max-height:calc(100vh - 24px); overflow:auto;
+           background:var(--panel); border-radius:12px; padding:14px; box-shadow:0 6px 24px #0005; font-size:14px; z-index:5; }
+  h1 { font-size:16px; margin:0 0 2px; }
+  .sub { color:var(--muted); font-size:12px; margin-bottom:8px; }
+  label { display:block; font-size:12px; color:var(--muted); margin:8px 0 3px; }
+  select, button { font:inherit; padding:6px 8px; border:1px solid var(--line); border-radius:8px; background:#fff; color:var(--ink); }
+  select { width:100%; }
+  .row { display:flex; gap:6px; flex-wrap:wrap; }
+  button { cursor:pointer; }
+  button.on { background:var(--accent); color:#fff; border-color:var(--accent); }
+  button.primary { background:var(--accent); color:#fff; border-color:var(--accent); width:100%; margin-top:10px; }
+  input[type=range] { width:100%; }
+  #result { margin-top:10px; padding:8px 10px; background:#f2f5fa; border-radius:8px; font-size:13px; line-height:1.5; min-height:40px; }
+  #log { margin-top:8px; font-size:12px; color:var(--muted); line-height:1.4; }
+  #err { position:fixed; inset:0; display:none; align-items:center; justify-content:center; color:#fff; background:#101826; z-index:9; padding:24px; text-align:center; }
+  @media (max-width:640px) { #panel { width:auto; right:12px; max-height:46vh; } #plan2d { padding:24px; } }
+</style>
+</head>
+<body>
+<div id="view"></div>
+<div id="err"></div>
+<div id="panel">
+  <h1>3D 檢視元件示範</h1>
+  <div class="sub">讀 <code>data/</code> 的標準 SVG；路徑由真的 <code>findRoute</code> 算出。</div>
+
+  <div class="row" id="modeBtns"></div>
+  <label>樓層</label><div class="row" id="floorBtns"></div>
+  <label>爆炸圖間距：<span id="exVal">0</span> m</label>
+  <input type="range" id="explode" min="0" max="8" step="0.5" value="0">
+
+  <label>起點</label><select id="from"></select>
+  <label>終點</label><select id="to"></select>
+  <label>跨樓層方式</label>
+  <select id="mode">
+    <option value="any">最短（樓梯或電梯皆可）</option>
+    <option value="stair">只走樓梯</option>
+    <option value="elev">只走電梯（無障礙）</option>
+  </select>
+  <button class="primary" id="go">計算並顯示路徑</button>
+  <div class="row" style="margin-top:6px">
+    <button id="walk">模擬走一遍（setUserPosition）</button>
+    <button id="cycle">重建 10 次（測 dispose）</button>
+  </div>
+  <div id="result">請選起點與終點，或在 3D 畫面中點兩個房間。</div>
+  <div id="log"></div>
+</div>
+
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+} }
+</script>
+<script type="module">
+import { createViewer3D } from '../src/viewer3d/createViewer3D.js';
+import { findRoute } from '../src/route/findRoute.js';
+
+const $ = id => document.getElementById(id);
+const showError = msg => { $('err').style.display = 'flex'; $('err').textContent = msg; };
+
+// ---------- 讀資料 ----------
+let building, graph, rooms, svgs = {};
+try {
+  const base = '../data/';
+  [building, graph] = await Promise.all([
+    fetch(base + 'building.json').then(r => { if (!r.ok) throw new Error('building.json'); return r.json(); }),
+    fetch(base + 'graph.json').then(r => { if (!r.ok) throw new Error('graph.json'); return r.json(); }),
+  ]);
+  const csv = (await fetch(base + 'rooms.csv').then(r => r.text())).replace(/^﻿/, '').trim().split(/\r?\n/);
+  const head = csv.shift().split(',');
+  rooms = csv.map(l => Object.fromEntries(l.split(',').map((v, i) => [head[i], v])));   // 示範用：名稱內不含逗號
+  for (const f of building.floors) svgs[f] = await fetch(`${base}svg/floor-${f}.svg`).then(r => r.text());
+} catch (e) {
+  showError(`讀取資料失敗：${e.message}。請用 node tools/serve.js 開啟，不要直接雙擊 html 檔。`);
+  throw e;
+}
+
+// ---------- 狀態 ----------
+let viewer = null, is3D = true;
+let floor = 'all', explode = 0, route = null;
+let pick = 'from';
+const roles = { start: null, goal: null };
+const log = t => { $('log').textContent = t; };
+
+function build3D() {
+  try {
+    viewer = createViewer3D($('view'), { svgs, building });
+  } catch (e) {
+    // UI 的標準做法：3D 失敗就退回 2D，不影響導航功能
+    console.warn('3D 失敗，退回 2D：', e.code, e.message);
+    log(`3D 無法使用（${e.code}），已退回 2D。`);
+    is3D = false; render2D(); markMode(); return;
+  }
+  viewer.setFloor(floor); viewer.setExplode(explode);
+  if (roles.start) viewer.highlightRoom(roles.start, 'start');
+  if (roles.goal) viewer.highlightRoom(roles.goal, 'goal');
+  if (route) viewer.showRoute(route);
+  viewer.onRoomClick(id => { (pick === 'from' ? $('from') : $('to')).value = id; pick = pick === 'from' ? 'to' : 'from'; compute(); });
+  window.__viewer = viewer;
+}
+function render2D() {
+  const f = floor === 'all' ? building.floors[0] : floor;
+  $('view').innerHTML = `<div id="plan2d">${svgs[f]}</div>`;
+}
+function setMode(want3D) {
+  if (want3D === is3D) return;
+  if (is3D) { viewer?.dispose(); viewer = null; window.__viewer = null; is3D = false; render2D(); }
+  else { $('view').innerHTML = ''; is3D = true; build3D(); }
+  markMode();
+}
+
+// ---------- UI ----------
+const modeBtns = [['3D', true], ['2D', false]].map(([t, v]) => {
+  const b = document.createElement('button'); b.textContent = t; b.onclick = () => setMode(v); $('modeBtns').appendChild(b); return [v, b];
+});
+function markMode() { modeBtns.forEach(([v, b]) => b.classList.toggle('on', v === is3D)); }
+const floorBtns = [['all', '全部'], ...building.floors.map(f => [f, `${f}F`])].map(([v, t]) => {
+  const b = document.createElement('button'); b.textContent = t;
+  b.onclick = () => { floor = v; viewer?.setFloor(v); if (!is3D) render2D(); markFloor(); };
+  $('floorBtns').appendChild(b); return [v, b];
+});
+function markFloor() { floorBtns.forEach(([v, b]) => b.classList.toggle('on', v === floor)); }
+$('explode').oninput = e => { explode = +e.target.value; $('exVal').textContent = explode; viewer?.setExplode(explode); };
+
+for (const r of rooms) for (const sel of [$('from'), $('to')]) {
+  const o = document.createElement('option'); o.value = r.room_id; o.textContent = `${r.room_id}（${r.floor}F）${r.name}`; sel.appendChild(o);
+}
+$('from').value = 'M101'; $('to').value = 'M310';
+
+function compute() {
+  const s = $('from').value, t = $('to').value;
+  for (const role of ['start', 'goal']) if (roles[role]) viewer?.highlightRoom(roles[role], null);
+  roles.start = s; roles.goal = t;
+  viewer?.highlightRoom(s, 'start'); viewer?.highlightRoom(t, 'goal');
+  route = findRoute(graph, s, t, $('mode').value);
+  viewer?.showRoute(route);
+  if (!route) { $('result').textContent = '找不到路徑（請檢查跨樓層方式）。'; return; }
+  const how = route.via === 'elev' ? '電梯' : route.via === 'stair' ? '樓梯' : null;
+  $('result').innerHTML = `<b>${s} → ${t}</b><br>約 ${route.length.toFixed(1)} m` +
+    (how ? `<br>搭${how}：${route.floors[0]}F → ${route.floors[1]}F` : '<br>同一層');
+}
+$('go').onclick = compute;
+$('mode').onchange = compute;
+$('from').onchange = $('to').onchange = compute;
+
+// 模擬使用者位置：沿路徑移動，過半後信心度由 confirmed 變 estimated，最後再 confirmed
+$('walk').onclick = () => {
+  if (!route || !viewer) { log('請先在 3D 模式計算一條路徑。'); return; }
+  const P = route.path, seg = [];
+  let total = 0;
+  for (let i = 0; i < P.length - 1; i++) {
+    const l = P[i].floor === P[i + 1].floor ? Math.hypot(P[i + 1].x - P[i].x, P[i + 1].z - P[i].z) : 3;   // 跨層以 3 m 計
+    seg.push(l); total += l;
+  }
+  const t0 = performance.now();
+  const step = () => {
+    if (!viewer) return;
+    let d = ((performance.now() - t0) / 1000) * 6;
+    if (d >= total) { const L = P.at(-1); viewer.setUserPosition({ x: L.x, z: L.z, floor: L.floor, confidence: 'confirmed' }); return; }
+    let i = 0; while (d > seg[i]) { d -= seg[i]; i++; }
+    const a = P[i], b = P[i + 1], u = d / seg[i];
+    viewer.setUserPosition({
+      x: a.x + (b.x - a.x) * u, z: a.z + (b.z - a.z) * u,
+      floor: u < 0.5 ? a.floor : b.floor,
+      confidence: (total ? (performance.now() - t0) / 1000 * 6 / total : 0) < 0.5 ? 'confirmed' : 'estimated',
+    });
+    requestAnimationFrame(step);
+  };
+  step();
+};
+
+// 重複建立與釋放 10 次，看 canvas 有沒有殘留
+$('cycle').onclick = () => {
+  if (!is3D) { log('請先切到 3D。'); return; }
+  const t0 = performance.now();
+  for (let i = 0; i < 10; i++) { viewer.dispose(); $('view').innerHTML = ''; build3D(); if (!viewer) return; }
+  log(`重建 10 次完成：${Math.round(performance.now() - t0)} ms；目前 canvas 數量 = ${document.querySelectorAll('canvas').length}（應為 1）`);
+};
+
+markMode(); markFloor(); build3D(); compute();
+</script>
+</body>
+</html>
