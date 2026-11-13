@@ -1,0 +1,38 @@
+name: Master PR checks
+
+on:
+  pull_request:
+    branches:
+      - master
+
+permissions:
+  contents: read
+
+jobs:
+  check-ignored-files:
+    name: check-ignored-files
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the PR merge result
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Reject tracked files excluded by master's .gitignore
+        shell: bash
+        env:
+          BASE_SHA: ${{ github.event.pull_request.base.sha }}
+        run: |
+          set -euo pipefail
+
+          base_ignore="${RUNNER_TEMP}/master.gitignore"
+          git show "${BASE_SHA}:.gitignore" > "${base_ignore}"
+
+          ignored_files="$(git ls-files --cached --ignored --exclude-from="${base_ignore}")"
+          if [[ -n "${ignored_files}" ]]; then
+            printf 'Tracked files excluded by master .gitignore:\n%s\n' "${ignored_files}"
+            exit 1
+          fi
+
+          echo "No tracked files are excluded by master .gitignore."
