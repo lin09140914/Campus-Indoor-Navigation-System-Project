@@ -101,7 +101,7 @@
 ```
 
 ### 3.4 Git 流程
-- `main` 永遠是能運作的版本，**只能經過 Pull Request 合併**。
+- `master` 永遠是能運作的版本，**只能經過 Pull Request 合併**。
 - 分支命名：`組別/簡述`，例如 `map/floor1-svg`、`route/astar-core`。
 - 每個 PR 至少要有一位整合者審核才能合併。
 - 提交訊息要看得懂在做什麼（例如「新增 floor-1 的走廊節點」）。
@@ -112,7 +112,7 @@
 1. 產出符合本文件對應的規格。
 2. 驗收標準全部通過（各組章節有列）。
 3. 有一份簡短說明（怎麼用、已知限制），放在該組資料夾的 `README.md`。
-4. 已經合併進 `main`。
+4. 已經合併進 `master`。
 
 ### 3.6 會議與決策
 - **每週四進度會報**（建議 45 到 60 分鐘），每組約 5 分鐘，只講三件事：做完什麼、卡在哪、下週誰做什麼，並附可展示的東西（連結或截圖）。週五上課時帶著會報摘要和老師討論。詳見第 7 章。
@@ -342,13 +342,13 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 
 **每週例行：**
 1. 週三晚收各組進度與 PR（建議的提交截止時間）。
-2. 週四會報前，合併通過驗收的 PR，產生一版可展示的 `main`。
+2. 週四會報前，合併通過驗收的 PR，產生一版可展示的 `master`。
 3. 週四會報後整理一頁摘要，週五上課帶去和老師討論。
 4. 週五上課後，更新 `docs/decisions.md` 和〈變更紀錄〉，確認下週各組任務。
 
 **驗收標準：**
 - 每個組在開工當天就拿到全部輸入。
-- `main` 隨時可以打開、展示。
+- `master` 隨時可以打開、展示。
 
 ### 5.2 地圖資料組（3 人）
 
@@ -477,6 +477,49 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 - 3D 和定位提示在第二階段。
 
 **卡住時：** 任何上游沒到的東西，都先用假資料和假函式，不等。
+
+### 5.4 UI Team (2 people) — English version
+
+> This is an English translation of section 5.4 above, for international team members. If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
+
+**Goal:** Build the web pages that users actually use. 2D first, with mobile (iPhone Safari) as the priority.
+
+**What the integrators provide before you start:**
+- The specifications in 4.1 to 4.7
+- Sample SVG, `rooms.csv`, and `graph.json`
+- `findRoute.stub.js`, `viewer3d.stub.js`, and `position.stub.js` (stub functions)
+
+**How to do it:**
+1. **Screens (minimum version):**
+   - Start and destination selection (dropdown plus search; the data comes from `rooms.csv`).
+   - 2D map: show the SVG of the current floor, with 1F / 2F / 3F switching.
+   - Route display: draw the `path` returned by `findRoute` as a line. **When the route crosses floors, automatically switch to the matching floor and show a prompt**, such as "Take the elevator/stairs to 3F here."
+   - Distance and a text description (for example, "About 55 meters, take the elevator from 1F to 3F").
+   - Tapping the map resets the current position.
+2. **Cross-floor options:** Shortest / Stairs only / Elevator only (accessible).
+3. **2D/3D toggle:** 2D by default. Create `createViewer3D` only when switching to 3D, and call `dispose()` when switching back. If 3D fails, fall back to 2D automatically.
+4. **Position prompts (phase 2):** Use the `confidence` field from `position`. When the state is `lost`, or the user has moved too far since the last confirmation, ask the user to confirm their position.
+5. Use the **stub functions** to get the whole flow working first, then replace them when the real modules are ready. The interfaces do not change.
+
+**Deliverables:**
+- The web code under `src/ui/`
+- `src/ui/README.md` (how to start it and how to swap the data)
+- A short usage guide or screenshots
+
+**Acceptance criteria:**
+- Everything works on iPhone Safari: choosing the start and destination, viewing the route, and switching floors.
+- The floor-switching prompt is correct when a route crosses floors.
+- The only data source is the standard files under `data/`; swapping the data needs no code changes.
+- When no route is found, a clear message is shown, not a blank screen.
+- No horizontal scrolling at phone width (about 375 px).
+
+**Schedule:**
+- By November 19: get the 2D layout working with the sample data and stub functions.
+- By November 26: connect the real `findRoute`, and swap in the real SVG once the map data arrives.
+- By December 3: MVP integration (one floor of real data, usable on iPhone Safari).
+- 3D and position prompts come in the second phase.
+
+**When you are stuck:** For anything that upstream teams have not delivered yet, use sample data and stub functions. Don't wait.
 
 ### 5.5 3D 組（1 人）
 
@@ -702,6 +745,7 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 | v0.2 | （填入日期） | 時程改為 12/18 成果發表、共 5 週；每週四進度會報、週五上課討論；新增砍範圍順序 | 第 3.6、5、7、8 章 |
 | v0.2.1 | （填入日期） | 開工包完成；3D 元件雛形改為讀標準 SVG；更新第 4.1、5.5、6 章的狀態 | 3D 組、UI 組、整合組 |
 | v0.2.2 | （填入日期） | 建築由數學館改為工程五館（組員皆為資工系）；樣板資料的建築代號改為 `eng5` | 全部 |
+| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增第 5.4 節的英文版 | 全部、UI 組 |
 
 ---
 
