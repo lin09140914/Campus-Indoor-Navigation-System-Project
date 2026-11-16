@@ -1,5 +1,9 @@
 # 校園室內導航系統：分工與規格 v0.2
 
+**繁體中文** | [English](spec.en.md)
+
+> 英文版是 [spec.en.md](spec.en.md)。兩者不一致時，**以中文為準**；修改本文件時，請一併更新英文版。
+
 > 本文件是全組共用的規格。各組只要照「接口規格」交付，就不必等其他組。
 > 規格有疑問或要修改，一律找整合者，並寫進最後的〈變更紀錄〉。
 > 標示「建議」的數字是起始值，不是標準答案，試做後可以調整，但要記錄調整的原因。
@@ -97,6 +101,7 @@
   marks.csv
 /docs/
   spec.md                # 本文件
+  spec.en.md             # 英文翻譯
   decisions.md           # 決策紀錄
 ```
 
@@ -270,145 +275,6 @@ pos.stop();
 ```
 
 `feed(sample)` 的格式：`{ t, ax, ay, az, gx, gy, gz, heading }`，單位在 4.8 定義。這樣同一個模組可以拿錄好的數據離線重播，也能接真實的即時感測器。
-
-### 4.1–4.3 — English version
-
-> This is an English translation of sections 4.1 to 4.3 above, for international team members. Chapter 4 is the "contract" between the teams, so tell the integrators before changing anything in it. If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
-
-#### 4.1 Floor plan SVG (`data/svg/floor-N.svg`)
-
-One file per floor. The unit of the `viewBox` is meters.
-
-| Element | How to write it | Description |
-|---|---|---|
-| Building outline | `<polygon class="outline" points="...">`, exactly one | The outer outline of the whole floor |
-| Room | `<polygon class="room" id="M116" points="...">` | The area of the room; `id` is the room code |
-| Door | `<line class="door" data-room="M116" x1 y1 x2 y2>` | A line segment on the room's wall; the midpoint of the segment is the position of the doorway |
-| Corridor | `<polygon class="corridor" points="...">` | For display only; there can be several |
-| Stairs | `<polygon class="stair" id="STAIR-A" points="...">` | The same staircase uses the same id on every floor |
-| Elevator | `<polygon class="elevator" id="ELEV-A" points="...">` | Same as above |
-
-Example:
-
-```xml
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20">
-  <polygon class="outline" points="0,0 40,0 40,20 0,20"/>
-  <polygon class="room" id="M116" points="5,1 11,1 11,8.5 5,8.5"/>
-  <line class="door" data-room="M116" x1="7.3" y1="8.5" x2="8.7" y2="8.5"/>
-  <polygon class="stair" id="STAIR-A" points="36,8.5 39,8.5 39,11.5 36,11.5"/>
-</svg>
-```
-
-> Note: The earliest example, `legacy-demo-simple-svg.html`, uses a simplified format (rectangles plus a `data-door` direction to represent doors). **It is not the format of this spec; it is kept for reference only, so please do not use it.** `src/viewer3d/createViewer3D.js` and `examples/viewer3d-demo.html` in the kickoff kit have been changed to read the standard format in this section.
-
-#### 4.2 `data/graph.json`
-
-```json
-{
-  "version": 1,
-  "building": "eng5",
-  "unit": "m",
-  "nodes": [
-    { "id": "M116",       "x": 8.0, "z": 4.75, "floor": 1, "type": "room" },
-    { "id": "M116#door",  "x": 8.0, "z": 8.5,  "floor": 1, "type": "door" },
-    { "id": "F1-C-008",   "x": 8.0, "z": 10.0, "floor": 1, "type": "corridor" },
-    { "id": "STAIR-A@1",  "x": 37.5,"z": 10.0, "floor": 1, "type": "stair" },
-    { "id": "STAIR-A@2",  "x": 37.5,"z": 10.0, "floor": 2, "type": "stair" }
-  ],
-  "edges": [
-    { "a": "M116", "b": "M116#door", "w": 3.75, "kind": "walk" },
-    { "a": "STAIR-A@1", "b": "STAIR-A@2", "w": 8.0, "kind": "stair" }
-  ]
-}
-```
-
-**Field rules:**
-- `type`: `room`, `door`, `corridor`, `stair`, `elevator`, `entrance`.
-- Node ids: a room uses its room code; a door uses `<room code>#door`; a corridor node uses `F<floor>-C-<sequence number>`; stairs and elevators use `<shaft id>@<floor>` (the id of the stairwell or elevator shaft, followed by the floor).
-- `kind`: `walk` (walking), `stair` (stairs), `elev` (elevator).
-- **The `w` of a walk edge must not be smaller than the straight-line distance between its two endpoints**; otherwise the A* heuristic becomes inaccurate (it could overestimate the remaining distance). Normally just set it to the straight-line distance.
-- The `w` of a cross-floor edge (`stair`, `elev`) is the equivalent distance for going up one floor. Start with the default values (stairs 8, elevator 5), and adjust them later based on measurements.
-- The graph is **undirected**; write each edge only once.
-
-**Who produces it:** The Map Data Team. The Integration Team will later provide a small tool that turns an SVG into a draft of the nodes (not produced yet; see chapter 6), and the corridor nodes still have to be added by hand. For now, see `tools/gen-sample-data.js` for how the nodes and edges are put together.
-
-#### 4.3 `data/rooms.csv`
-
-```csv
-room_id,floor,name,type,node_id
-M116,1,示範教室 M116,classroom,M116
-M201,2,系辦公室,office,M201
-```
-
-- `type`: `classroom`, `office`, `lab`, `restroom`, `storage`, `other`.
-- `node_id` corresponds to the room node in `graph.json`.
-- The UI's dropdown menus and search rely entirely on this file.
-
-### 4.4–4.7 — English version
-
-> This is an English translation of sections 4.4 to 4.7 above, for international team members (mainly the UI Team). If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
-
-#### 4.4 `building.json`
-
-```json
-{ "id": "eng5", "name": "工程五館", "floors": [1, 2, 3], "floorHeight": 4.0, "unit": "m" }
-```
-
-`floorHeight` must be replaced with the **measured value**.
-
-#### 4.5 Route function `findRoute`
-
-```js
-findRoute(graph, fromRoomId, toRoomId, mode)
-// mode: 'any' | 'stair' | 'elev'
-// Returns:
-{
-  path: [ { id, x, z, floor, type }, ... ],   // nodes passed through, in order
-  length: 55.5,                                // total distance (meters)
-  floors: [1, 3],                              // start floor, destination floor
-  via: 'elev'                                  // 'stair' | 'elev' | null (same floor)
-}
-// If no route is found, or the room code does not exist: returns null
-```
-
-- This is a **pure function**; it does not touch the web page.
-- When the start equals the destination, it returns a `path` with a single node and a `length` of 0.
-
-#### 4.6 3D viewer component `createViewer3D`
-
-```js
-const viewer = createViewer3D(containerElement, { svgs, building });
-
-viewer.setFloor('all' | 1 | 2 | 3);                 // which floors to show
-viewer.setExplode(meters);                           // gap for the exploded view
-viewer.highlightRoom(roomId, 'start' | 'goal' | null);
-viewer.showRoute(routeResult);                       // takes the return value of findRoute directly
-viewer.setUserPosition({ x, z, floor, confidence });
-viewer.onRoomClick(roomId => {});
-viewer.dispose();
-```
-
-#### 4.7 Positioning module output
-
-```js
-const pos = createPositioning(graph);
-pos.startAt({ nodeId } | { x, z, floor });   // start: chosen by the user, or the entrance
-pos.confirm(nodeId);                         // the user confirms "I am here"
-pos.reset({ x, z, floor });                  // manual reset
-pos.onUpdate(state => {});                   // keeps reporting the state
-pos.feed(sample);                            // feed one sensor sample (shared by replay and live use)
-pos.stop();
-
-// state:
-{
-  x, z, floor,
-  confidence: 'confirmed' | 'estimated' | 'lost',
-  distSinceConfirm: 12.4,    // meters walked since the last confirmation
-  ts: 1731300000000
-}
-```
-
-Format of `feed(sample)`: `{ t, ax, ay, az, gx, gy, gz, heading }`. The units are defined in 4.8: acceleration in m/s², angular velocity in rad/s, `heading` in degrees (0 = north, increasing clockwise), and `t` in milliseconds relative to the start of the recording. This way the same module can replay recorded data offline and also work with real live sensors.
 
 ### 4.8 感測器數據格式
 
@@ -616,49 +482,6 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 - 3D 和定位提示在第二階段。
 
 **卡住時：** 任何上游沒到的東西，都先用假資料和假函式，不等。
-
-### 5.4 UI Team (2 people) — English version
-
-> This is an English translation of section 5.4 above, for international team members. If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
-
-**Goal:** Build the web pages that users actually use. 2D first, with mobile (iPhone Safari) as the priority.
-
-**What the integrators provide before you start:**
-- The specifications in 4.1 to 4.7
-- Sample SVG, `rooms.csv`, and `graph.json`
-- `findRoute.stub.js`, `viewer3d.stub.js`, and `position.stub.js` (stub functions)
-
-**How to do it:**
-1. **Screens (minimum version):**
-   - Start and destination selection (dropdown plus search; the data comes from `rooms.csv`).
-   - 2D map: show the SVG of the current floor, with 1F / 2F / 3F switching.
-   - Route display: draw the `path` returned by `findRoute` as a line. **When the route crosses floors, automatically switch to the matching floor and show a prompt**, such as "Take the elevator/stairs to 3F here."
-   - Distance and a text description (for example, "About 55 meters, take the elevator from 1F to 3F").
-   - Tapping the map resets the current position.
-2. **Cross-floor options:** Shortest / Stairs only / Elevator only (accessible).
-3. **2D/3D toggle:** 2D by default. Create `createViewer3D` only when switching to 3D, and call `dispose()` when switching back. If 3D fails, fall back to 2D automatically.
-4. **Position prompts (phase 2):** Use the `confidence` field from `position`. When the state is `lost`, or the user has moved too far since the last confirmation, ask the user to confirm their position.
-5. Use the **stub functions** to get the whole flow working first, then replace them when the real modules are ready. The interfaces do not change.
-
-**Deliverables:**
-- The web code under `src/ui/`
-- `src/ui/README.md` (how to start it and how to swap the data)
-- A short usage guide or screenshots
-
-**Acceptance criteria:**
-- Everything works on iPhone Safari: choosing the start and destination, viewing the route, and switching floors.
-- The floor-switching prompt is correct when a route crosses floors.
-- The only data source is the standard files under `data/`; swapping the data needs no code changes.
-- When no route is found, a clear message is shown, not a blank screen.
-- No horizontal scrolling at phone width (about 375 px).
-
-**Schedule:**
-- By November 19: get the 2D layout working with the sample data and stub functions.
-- By November 26: connect the real `findRoute`, and swap in the real SVG once the map data arrives.
-- By December 3: MVP integration (one floor of real data, usable on iPhone Safari).
-- 3D and position prompts come in the second phase.
-
-**When you are stuck:** For anything that upstream teams have not delivered yet, use sample data and stub functions. Don't wait.
 
 ### 5.5 3D 組（1 人）
 
@@ -884,7 +707,7 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 | v0.2 | （填入日期） | 時程改為 12/18 成果發表、共 5 週；每週四進度會報、週五上課討論；新增砍範圍順序 | 第 3.6、5、7、8 章 |
 | v0.2.1 | （填入日期） | 開工包完成；3D 元件雛形改為讀標準 SVG；更新第 4.1、5.5、6 章的狀態 | 3D 組、UI 組、整合組 |
 | v0.2.2 | （填入日期） | 建築由數學館改為工程五館（組員皆為資工系）；樣板資料的建築代號改為 `eng5` | 全部 |
-| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增第 4.1–4.7 節與第 5.4 節的英文版 | 全部、UI 組 |
+| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增完整英文版 `docs/spec.en.md` | 全部 |
 
 ---
 
