@@ -271,6 +271,79 @@ pos.stop();
 
 `feed(sample)` 的格式：`{ t, ax, ay, az, gx, gy, gz, heading }`，單位在 4.8 定義。這樣同一個模組可以拿錄好的數據離線重播，也能接真實的即時感測器。
 
+### 4.1–4.3 — English version
+
+> This is an English translation of sections 4.1 to 4.3 above, for international team members. Chapter 4 is the "contract" between the teams, so tell the integrators before changing anything in it. If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
+
+#### 4.1 Floor plan SVG (`data/svg/floor-N.svg`)
+
+One file per floor. The unit of the `viewBox` is meters.
+
+| Element | How to write it | Description |
+|---|---|---|
+| Building outline | `<polygon class="outline" points="...">`, exactly one | The outer outline of the whole floor |
+| Room | `<polygon class="room" id="M116" points="...">` | The area of the room; `id` is the room code |
+| Door | `<line class="door" data-room="M116" x1 y1 x2 y2>` | A line segment on the room's wall; the midpoint of the segment is the position of the doorway |
+| Corridor | `<polygon class="corridor" points="...">` | For display only; there can be several |
+| Stairs | `<polygon class="stair" id="STAIR-A" points="...">` | The same staircase uses the same id on every floor |
+| Elevator | `<polygon class="elevator" id="ELEV-A" points="...">` | Same as above |
+
+Example:
+
+```xml
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 40 20">
+  <polygon class="outline" points="0,0 40,0 40,20 0,20"/>
+  <polygon class="room" id="M116" points="5,1 11,1 11,8.5 5,8.5"/>
+  <line class="door" data-room="M116" x1="7.3" y1="8.5" x2="8.7" y2="8.5"/>
+  <polygon class="stair" id="STAIR-A" points="36,8.5 39,8.5 39,11.5 36,11.5"/>
+</svg>
+```
+
+> Note: The earliest example, `legacy-demo-simple-svg.html`, uses a simplified format (rectangles plus a `data-door` direction to represent doors). **It is not the format of this spec; it is kept for reference only, so please do not use it.** `src/viewer3d/createViewer3D.js` and `examples/viewer3d-demo.html` in the kickoff kit have been changed to read the standard format in this section.
+
+#### 4.2 `data/graph.json`
+
+```json
+{
+  "version": 1,
+  "building": "eng5",
+  "unit": "m",
+  "nodes": [
+    { "id": "M116",       "x": 8.0, "z": 4.75, "floor": 1, "type": "room" },
+    { "id": "M116#door",  "x": 8.0, "z": 8.5,  "floor": 1, "type": "door" },
+    { "id": "F1-C-008",   "x": 8.0, "z": 10.0, "floor": 1, "type": "corridor" },
+    { "id": "STAIR-A@1",  "x": 37.5,"z": 10.0, "floor": 1, "type": "stair" },
+    { "id": "STAIR-A@2",  "x": 37.5,"z": 10.0, "floor": 2, "type": "stair" }
+  ],
+  "edges": [
+    { "a": "M116", "b": "M116#door", "w": 3.75, "kind": "walk" },
+    { "a": "STAIR-A@1", "b": "STAIR-A@2", "w": 8.0, "kind": "stair" }
+  ]
+}
+```
+
+**Field rules:**
+- `type`: `room`, `door`, `corridor`, `stair`, `elevator`, `entrance`.
+- Node ids: a room uses its room code; a door uses `<room code>#door`; a corridor node uses `F<floor>-C-<sequence number>`; stairs and elevators use `<shaft id>@<floor>` (the id of the stairwell or elevator shaft, followed by the floor).
+- `kind`: `walk` (walking), `stair` (stairs), `elev` (elevator).
+- **The `w` of a walk edge must not be smaller than the straight-line distance between its two endpoints**; otherwise the A* heuristic becomes inaccurate (it could overestimate the remaining distance). Normally just set it to the straight-line distance.
+- The `w` of a cross-floor edge (`stair`, `elev`) is the equivalent distance for going up one floor. Start with the default values (stairs 8, elevator 5), and adjust them later based on measurements.
+- The graph is **undirected**; write each edge only once.
+
+**Who produces it:** The Map Data Team. The Integration Team will later provide a small tool that turns an SVG into a draft of the nodes (not produced yet; see chapter 6), and the corridor nodes still have to be added by hand. For now, see `tools/gen-sample-data.js` for how the nodes and edges are put together.
+
+#### 4.3 `data/rooms.csv`
+
+```csv
+room_id,floor,name,type,node_id
+M116,1,示範教室 M116,classroom,M116
+M201,2,系辦公室,office,M201
+```
+
+- `type`: `classroom`, `office`, `lab`, `restroom`, `storage`, `other`.
+- `node_id` corresponds to the room node in `graph.json`.
+- The UI's dropdown menus and search rely entirely on this file.
+
 ### 4.4–4.7 — English version
 
 > This is an English translation of sections 4.4 to 4.7 above, for international team members (mainly the UI Team). If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
@@ -811,7 +884,7 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 | v0.2 | （填入日期） | 時程改為 12/18 成果發表、共 5 週；每週四進度會報、週五上課討論；新增砍範圍順序 | 第 3.6、5、7、8 章 |
 | v0.2.1 | （填入日期） | 開工包完成；3D 元件雛形改為讀標準 SVG；更新第 4.1、5.5、6 章的狀態 | 3D 組、UI 組、整合組 |
 | v0.2.2 | （填入日期） | 建築由數學館改為工程五館（組員皆為資工系）；樣板資料的建築代號改為 `eng5` | 全部 |
-| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增第 4.4–4.7 節與第 5.4 節的英文版 | 全部、UI 組 |
+| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增第 4.1–4.7 節與第 5.4 節的英文版 | 全部、UI 組 |
 
 ---
 
