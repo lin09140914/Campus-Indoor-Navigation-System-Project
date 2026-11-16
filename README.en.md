@@ -4,7 +4,7 @@
 
 This is the kickoff kit for the campus indoor navigation system (starting with Engineering Building #5). **All data inside is sample (fake) data.** Its purpose is to let every team start working before the real data arrives; when the real data comes in, just replace it, with no code changes. The sample room codes (`M101`…) are only for demonstration and do not represent the actual room codes of Engineering Building #5.
 
-> Full specification: [docs/spec.md](docs/spec.md) (currently written in Traditional Chinese). If you have questions or want to change the spec, ask the integrators.
+> Full specification: [docs/spec.en.md](docs/spec.en.md) (English translation) and [docs/spec.md](docs/spec.md) (Traditional Chinese, the authoritative version). If you have questions or want to change the spec, ask the integrators.
 
 ## Prerequisites
 
@@ -43,7 +43,8 @@ Without npm, run the commands directly: `node tools/validate-data.js data`, `nod
 | `tools/gen-sample-data.js` | Sample data generator | Integration team |
 | `tools/serve.js` | Local static server (binds to 127.0.0.1 only) | 3D, UI |
 | `sensor-data/runs.csv`, `marks.csv` | Empty templates for sensor data (spec 4.8) | Sensors team |
-| `docs/spec.md` | Full specification | All |
+| `docs/spec.md` | Full specification (Traditional Chinese, the authoritative version) | All |
+| `docs/spec.en.md` | English translation of the full specification | All |
 | `docs/decisions.md` | Decision log (only the integrators edit it) | All |
 | `docs/templates/` | Phone inventory, on-site measurement sheet, and weekly status templates | Each team |
 | `examples/viewer3d-demo.html` | 3D component demo page (uses the real `findRoute`, can switch between 2D and 3D, can test `dispose`) | 3D, UI |
@@ -86,6 +87,6 @@ Without npm, run the commands directly: `node tools/validate-data.js data`, `nod
 - `viewer3d.stub.js` and `createViewer3D.js` need a browser environment; all other files run in plain Node.
 - **`createViewer3D.js` has only been tested in a desktop browser (the built-in browser)**: loading, floor switching, exploded view, routes, user position, clicking rooms, 2D/3D switching, rebuilding 10 times with `dispose`, and error codes. **It has not been tested on iPhone Safari yet**; performance and gestures must be confirmed on a real device.
 - The 3D view assumes rooms are simple shapes on both sides of a corridor. Staircase steps always run along the x direction, and the stairs and elevator are only illustrative.
-- `docs/spec.md` is a snapshot of the document. If the spec is updated, the integrators must sync this copy.
+- `docs/spec.md` and `docs/spec.en.md` are snapshots of the document. If the spec is updated, the integrators must sync both copies.
 - The cross-floor edge lengths for stairs and elevators (stairs 8, elevator 5) are default values, not measurements.
 - Sensor data recording, analysis scripts, and the positioning algorithm **do not exist yet**; this kit only provides formats and templates.
