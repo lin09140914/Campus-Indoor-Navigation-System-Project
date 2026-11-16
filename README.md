@@ -1,8 +1,10 @@
 # 開工包（Kickoff Kit）v0.2
 
+**繁體中文** | [English](README.en.md)
+
 校園室內導航系統（先做工程五館 Engineering Building #5）的開工包。**裡面的資料全是樣板（假的）**，目的是讓每個組在拿到真實資料之前就能開工，真資料到了直接取代，程式不用改。樣板房號（`M101`…）只是示範，不代表工程五館的實際編碼。
 
-> 規格全文：[docs/spec.md](docs/spec.md)。有疑問或要改規格，找整合者。
+> 規格全文：[docs/spec.md](docs/spec.md)（[English version](docs/spec.en.md)）。有疑問或要改規格，找整合者。
 
 ## 先決條件
 
@@ -41,7 +43,8 @@ npm run serve        # 啟動本機伺服器（127.0.0.1:8080），看 3D 示範
 | `tools/gen-sample-data.js` | 樣板資料產生器 | 整合組 |
 | `tools/serve.js` | 本機靜態伺服器（只綁 127.0.0.1） | 3D、UI |
 | `sensor-data/runs.csv`、`marks.csv` | 感測器數據的空模板（spec 4.8） | 感測器組 |
-| `docs/spec.md` | 完整規格 | 全部 |
+| `docs/spec.md` | 完整規格（繁體中文，以此為準） | 全部 |
+| `docs/spec.en.md` | 完整規格的英文翻譯 | 全部 |
 | `docs/decisions.md` | 決策紀錄（只有整合者改） | 全部 |
 | `docs/templates/` | 手機清單、現場測量表、週報模板 | 各組 |
 | `examples/viewer3d-demo.html` | 3D 元件示範頁面（用真的 `findRoute`，可切 2D／3D，可測 `dispose`） | 3D、UI |
@@ -84,7 +87,7 @@ npm run serve        # 啟動本機伺服器（127.0.0.1:8080），看 3D 示範
 - `viewer3d.stub.js` 和 `createViewer3D.js` 需要瀏覽器環境；其他檔案都是純 Node 可跑。
 - **`createViewer3D.js` 只在桌面瀏覽器（內建瀏覽器）測過**：載入、樓層切換、爆炸圖、路徑、使用者位置、點房間、2D／3D 切換、`dispose` 重建 10 次、錯誤碼。**iPhone Safari 還沒有實測**，效能和手勢要在真機上確認。
 - 3D 檢視假設房間是走廊兩側的簡單形狀；樓梯階梯固定沿 x 方向；電梯與樓梯的外觀只是示意。
-- `docs/spec.md` 是文件快照。規格若有更新，整合者要同步這份。
+- `docs/spec.md` 和 `docs/spec.en.md` 是文件快照。規格若有更新，整合者要同步這兩份。
 - 樓梯與電梯的跨層邊長度（樓梯 8、電梯 5）是預設值，不是實測。
 - 感測器數據的記錄、分析腳本、定位演算法**還沒有**，這份開工包只提供格式和模板。
 
