@@ -271,6 +271,72 @@ pos.stop();
 
 `feed(sample)` 的格式：`{ t, ax, ay, az, gx, gy, gz, heading }`，單位在 4.8 定義。這樣同一個模組可以拿錄好的數據離線重播，也能接真實的即時感測器。
 
+### 4.4–4.7 — English version
+
+> This is an English translation of sections 4.4 to 4.7 above, for international team members (mainly the UI Team). If the two versions differ, the Chinese version is the authoritative one; please tell the integrators so we can fix it.
+
+#### 4.4 `building.json`
+
+```json
+{ "id": "eng5", "name": "工程五館", "floors": [1, 2, 3], "floorHeight": 4.0, "unit": "m" }
+```
+
+`floorHeight` must be replaced with the **measured value**.
+
+#### 4.5 Route function `findRoute`
+
+```js
+findRoute(graph, fromRoomId, toRoomId, mode)
+// mode: 'any' | 'stair' | 'elev'
+// Returns:
+{
+  path: [ { id, x, z, floor, type }, ... ],   // nodes passed through, in order
+  length: 55.5,                                // total distance (meters)
+  floors: [1, 3],                              // start floor, destination floor
+  via: 'elev'                                  // 'stair' | 'elev' | null (same floor)
+}
+// If no route is found, or the room code does not exist: returns null
+```
+
+- This is a **pure function**; it does not touch the web page.
+- When the start equals the destination, it returns a `path` with a single node and a `length` of 0.
+
+#### 4.6 3D viewer component `createViewer3D`
+
+```js
+const viewer = createViewer3D(containerElement, { svgs, building });
+
+viewer.setFloor('all' | 1 | 2 | 3);                 // which floors to show
+viewer.setExplode(meters);                           // gap for the exploded view
+viewer.highlightRoom(roomId, 'start' | 'goal' | null);
+viewer.showRoute(routeResult);                       // takes the return value of findRoute directly
+viewer.setUserPosition({ x, z, floor, confidence });
+viewer.onRoomClick(roomId => {});
+viewer.dispose();
+```
+
+#### 4.7 Positioning module output
+
+```js
+const pos = createPositioning(graph);
+pos.startAt({ nodeId } | { x, z, floor });   // start: chosen by the user, or the entrance
+pos.confirm(nodeId);                         // the user confirms "I am here"
+pos.reset({ x, z, floor });                  // manual reset
+pos.onUpdate(state => {});                   // keeps reporting the state
+pos.feed(sample);                            // feed one sensor sample (shared by replay and live use)
+pos.stop();
+
+// state:
+{
+  x, z, floor,
+  confidence: 'confirmed' | 'estimated' | 'lost',
+  distSinceConfirm: 12.4,    // meters walked since the last confirmation
+  ts: 1731300000000
+}
+```
+
+Format of `feed(sample)`: `{ t, ax, ay, az, gx, gy, gz, heading }`. The units are defined in 4.8: acceleration in m/s², angular velocity in rad/s, `heading` in degrees (0 = north, increasing clockwise), and `t` in milliseconds relative to the start of the recording. This way the same module can replay recorded data offline and also work with real live sensors.
+
 ### 4.8 感測器數據格式
 
 **單位（定案）：**
@@ -745,7 +811,7 @@ r001,2026-11-18,A,iPhone13,hand,E2,corr20m,27,20.0,
 | v0.2 | （填入日期） | 時程改為 12/18 成果發表、共 5 週；每週四進度會報、週五上課討論；新增砍範圍順序 | 第 3.6、5、7、8 章 |
 | v0.2.1 | （填入日期） | 開工包完成；3D 元件雛形改為讀標準 SVG；更新第 4.1、5.5、6 章的狀態 | 3D 組、UI 組、整合組 |
 | v0.2.2 | （填入日期） | 建築由數學館改為工程五館（組員皆為資工系）；樣板資料的建築代號改為 `eng5` | 全部 |
-| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增第 5.4 節的英文版 | 全部、UI 組 |
+| v0.2.3 | （填入日期） | 分支名稱由 `main` 改為 `master`（3.4、3.5、5.1）；新增第 4.4–4.7 節與第 5.4 節的英文版 | 全部、UI 組 |
 
 ---
 
