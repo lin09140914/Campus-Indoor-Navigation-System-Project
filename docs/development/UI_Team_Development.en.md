@@ -1,37 +1,244 @@
-# UI Team Development Specification — V0.1
+# Campus Indoor Navigation System V1 — UI Team Development Specification
 
-> Status: draft implementation specification. Cross-team data and functions follow the interfaces specifications.  
-> This is an English translation of the Chinese original (`docs/development/UI_Team_Development.md`). If the two differ, the Chinese original prevails.
+**Document Version:** V0.1 (Draft)  
+**Responsible Team:** UI Team (User Interface Team)  
+**Applicable Scope:** V1  
+**Status:** Pending confirmation of cross-team data specifications
 
-## 1. Purpose and Version
-Defines the user operation flow and how each team's features are integrated, ensuring users can choose a destination, see their position, and obtain and follow a route.
+---
 
-## 2. Team Mission and Scope
-Responsible for screens, interaction, state presentation, permission prompts, error messages, and cross-team call coordination. Not responsible for modifying map topology, localization algorithms, or the routing search core.
+## 1. Development Objectives
 
-## 3. Use Cases and System Flow
-Choose a floor or accept localization (V1 covers a single building, so building selection is not offered) → search / select a Destination → call localization and routing → present the map and route → update when moving, when the floor changes, or when data becomes invalid → provide retry and alternative actions.
+The UI Team is responsible for developing the user interface and integrating localization, route planning, and 3D visualization functions so that users can perform indoor navigation operations.
 
-## 4. Input Data and Preconditions
-Receives Floor, Location, Localization Result, Route, SVG / Graph, and the status of each function. Platform permissions must be obtained before starting sensor localization; display names may be localized, but building / location / node IDs must not be translated or reused.
+The core V1 tasks of this team are:
 
-## 5. Output Data and Quality Requirements
-Outputs user actions (destination, floor, movement preference, retry) and readable map / localization / route status. The screen must distinguish localizing, success, low confidence, stale, no route, and error, and offer a next action.
+1. **User interface:** Allow users to select destinations and travel modes that comply with standardized data formats.
+2. **Visualization integration:** Call functions provided by the 3D Team to display maps and navigation routes.
+3. **Exception handling interface:** Receive exceptional states reported by the teams and provide users with appropriate error messages and ways to handle them.
 
-## 6. Cross-team Interfaces and Data Dependencies
-Calls `getCurrentPosition()` to obtain the position, calls `findRoute()` with the Location `id`, calls `renderMap()` to load the map, and calls `renderRoute()` to overlay the route. The call order must ensure `building_id`, `map_version`, and `coordinate_system_id` are compatible; the UI must not rewrite a Route or treat display strings as IDs.
+The UI Team serves as the main entry point for user operations and cross-team function coordination.
 
-## 7. Design and Implementation Rules
-- The state flow must be explicit, and repeated requests must not overwrite newer results; use timestamps / request identifiers to decide whether a response still applies.
-- Destinations are displayed and selected using the V1 Location fields, and passed to the Route Team by the stable `id`; do not assume alias fields exist.
-- Map readability, touch targets, keyboard / assistive technology, and color contrast must be part of the design; routes must not be distinguished by color alone.
-- Permission purposes and sensor status are explained in clear text; on failure, allow manually choosing a floor or retrying (if the product flow supports it).
+The UI Team is not responsible for map production, localization algorithms, A\* route search, or the internal implementation of the 3D rendering engine.
 
-## 8. Error Handling and Special Cases
-No permission, no localization, low confidence, invalid destination, no route, map data load failure, and floor inconsistency each get a clear status and an actionable message. Avoid duplicate submissions; cancelled / expired requests must not overwrite the latest screen.
+## 2. Scope of Work and Deliverables
 
-## 9. Testing and Acceptance
-Walk through the full navigation flow plus permission denial, search with no results, no route, cross-floor, stale localization, load failure, narrow screens, and assistive operation. Verify that the position / floor / route on screen match the data returned by the interfaces, and that users can understand the cause of a failure and how to recover.
+| Work Item | Deliverable | V1 Requirement |
+| --- | --- | --- |
+| User interface | Operable Android App UI | Required |
+| Destination selection | Selection function using standardized destination data | Required |
+| Travel mode selection | Travel mode selection interface | Required |
+| Localization integration | Obtain and use localization results | Required |
+| Route planning integration | Pass navigation requirements to the Route Planning Team | Required |
+| 3D map and route display | Display visualization results provided by the 3D Team | Required |
+| Exceptional state handling | Error messages and necessary exception handling pages | Required |
+| Complete interaction flow verification | Test results and operation records | Required |
 
-## 10. Deliverables, Dependencies, and Open Items
-Deliver flow drafts, screen states, integration code, accessibility checks, and end-to-end acceptance records. Depends on stable interfaces from each team. Open: destination search source, language list, and visual design system. V1 is an offline Android app; see `System_Architecture.md`.
+V1 does not require continuous navigation tracking while walking or automatic route replanning.
+
+## 3. Main Functions and Function Integration Specifications
+
+The UI Team is not currently required to add an independent main externally exposed function; instead, it is responsible for coordinating the confirmed main functions.
+
+### 3.1 User Input
+
+| Input | Description |
+| --- | --- |
+| Destination | Standardized destination data selected by the user |
+| Travel mode | Mode of reaching the destination selected by the user |
+| User operations | Operations such as localization, route search, and map viewing |
+
+### 3.2 getCurrentPosition() Integration
+
+**Function:** Obtain the user's current location output by the Localization Team.
+
+Input and Output follow the Localization Team's formal function specification.
+
+The UI Team is responsible for obtaining the localization result and providing it to the subsequent navigation flow, not for the localization algorithm.
+
+### 3.3 findRoute() Integration
+
+**Function:** Pass navigation requirements to the Route Planning Team and obtain Route.
+
+Expected inputs:
+
+- Graph.
+- Current position.
+- Destination.
+- Travel mode.
+
+The output is a Route that complies with the standardized specification.
+
+### 3.4 renderMap() Integration
+
+**Function:** Call the map rendering function provided by the 3D Team and present the map visualization result in the user interface.
+
+Expected to use standardized SVG, floor data, and display settings.
+
+### 3.5 renderRoute() Integration
+
+**Function:** Provide the standardized Route generated by the Route Planning Team to the 3D Team to display the navigation route on the map scene.
+
+### 3.6 Basic Interaction Flow
+
+1. The user opens the application.
+2. The UI loads or obtains the necessary map data.
+3. The UI uses the Localization Team function to obtain the current location.
+4. The user selects a destination and travel mode.
+5. The UI passes the data to the Route Planning Team for route planning.
+6. Obtain the standardized Route.
+7. Call the rendering functions provided by the 3D Team.
+8. Display the map and navigation route.
+9. If an exception occurs, display an appropriate error message or handling interface.
+
+The actual module calls and data transfer methods will be confirmed later according to the system integration architecture.
+
+## 4. Standardized Data Specifications
+
+### 4.1 Destination Data
+
+**Data Provider:** Map Team  
+**Data User:** UI Team
+
+The UI must use standardized destination data and must not independently generate destination IDs that are inconsistent with those of the Map Team.
+
+### 4.2 Travel Modes
+
+The UI must provide travel mode options that comply with the requirements of the Route Planning Team.
+
+The official names, codes, and allowed values for travel modes are standardized project-wide; different meanings must not be independently defined.
+
+### 4.3 Localization Results
+
+**Data Provider:** Localization Team  
+**Data User:** UI Team
+
+The UI must be able to receive standardized localization results and use location information for route planning and necessary screen presentation.
+
+### 4.4 Route Data
+
+**Data Provider:** Route Planning Team  
+**Data Users:** UI Team, 3D Team
+
+The UI must be able to receive Route and pass it to the 3D Team's rendering function for visualization.
+
+### 4.5 Floor and Shared Identification Data
+
+The UI must use standardized floor and location identification rules to ensure consistency among destination selection, localization results, and map display.
+
+### 4.6 Exceptional State Data
+
+The UI must be able to distinguish normal results from exceptional states reported by the teams.
+
+Detailed error codes and data structures are pending confirmation of the standardized exception handling specification.
+
+All formal fields and types in this section are governed by the project-wide standardized data specifications.
+
+## 5. Cross-Team Handoffs
+
+| Related Team | Handoff Data or Function | Purpose |
+| --- | --- | --- |
+| Map Team | Destination, floor, and related map data | Destination selection and map data usage |
+| Localization Team | Localization function and localization result | Determine the user's current location |
+| Route Planning Team | findRoute() and Route | Calculate and obtain routes |
+| 3D Team | renderMap() | Display floor maps |
+| 3D Team | renderRoute() | Display navigation routes |
+| All teams | Exceptional states and error information | Display the corresponding exception handling interface |
+
+Each team is responsible for providing identifiable error states, and the UI Team is responsible for converting them into messages and actions users can understand.
+
+## 6. Development Environment and Dependencies
+
+The UI Team targets a native Android application.
+
+Current technical direction:
+
+- **Primary language:** Kotlin (recommended).
+- **UI framework:** Jetpack Compose (recommended).
+- **IDE:** Unrestricted choice.
+- **3D integration:** Use the Three.js visualization functions provided by the 3D Team.
+- **Build environment:** Follow the project's standardized Android and Gradle version specifications.
+
+The formal bridging method between Kotlin and Three.js will be confirmed later according to the system integration specifications.
+
+Other UI libraries and internal architecture may be independently determined by the UI Team, but must comply with the development guidelines.
+
+## 7. Testing and Acceptance Requirements
+
+### 7.1 User Interaction Tests
+
+| Test Item | Acceptance Criteria |
+| --- | --- |
+| Destination selection | Users can correctly select destinations |
+| Travel mode selection | Options comply with the standardized travel mode specification |
+| Localization integration | Can obtain and use localization results |
+| Route integration | Can pass navigation requirements and obtain Route |
+| Map display | Can present maps provided by the 3D Team |
+| Route display | Can display navigation routes on the map |
+
+### 7.2 Exception Handling Tests
+
+| Exceptional Condition | UI Acceptance Criteria |
+| --- | --- |
+| No destination selected | Display necessary guidance |
+| Localization failure | Display localization failure information and appropriate actions |
+| Destination does not exist | Display invalid destination information |
+| No reachable route | Display a message indicating the destination is unreachable |
+| Missing map data | Display a message indicating that data is unavailable |
+| Map or route rendering failure | Display rendering error information |
+
+A separate page is not mandatory for every error. Messages, dialogs, or error pages may be used according to UX requirements, but users must be able to understand the problem and the next actions they can take.
+
+### 7.3 Complete Flow Tests
+
+At a minimum, verify:
+
+1. Open the App.
+2. Complete stationary localization.
+3. Select a destination and travel mode.
+4. Obtain a navigation route.
+5. Correctly display the map and Route.
+
+In addition, verify that exceptional conditions do not prevent the application from continuing to operate.
+
+Specific testing tools, numbers of test cases, and QA release criteria will be established in subsequent engineering specifications.
+
+## 8. Future Extensions
+
+After completing V1, the following may be considered:
+
+- Updates to the user's location during movement.
+- Dynamic route replanning.
+- More complete map interaction methods.
+- User interface experience optimization.
+
+The above items are not part of the mandatory V1 acceptance requirements.
+
+## 9. Items Pending Confirmation
+
+| Item | Status |
+| --- | --- |
+| Formal destination data format | Pending standardization |
+| Official allowed values for travel modes | Pending standardization |
+| Localization result format | Pending standardization |
+| Route format | Pending standardization |
+| Floor data format | Pending standardization |
+| Calling and integration methods for the three main modules | Pending confirmation |
+| Integration method between Three.js and Android | Pending confirmation |
+| Standardized exceptional states and error reporting format | To be established |
+| Kotlin, Compose, and other versions | Pending formal confirmation |
+
+## 10. V1 Completion Criteria
+
+To complete V1, the UI Team must:
+
+1. Provide a complete user interface.
+2. Be able to receive standardized destinations and travel modes.
+3. Integrate the Localization Team's localization function.
+4. Integrate the Route Planning Team's route planning function.
+5. Display maps and navigation routes through functions provided by the 3D Team.
+6. Identify and handle necessary exceptional states from the teams.
+7. Complete basic navigation operations and exception handling tests.
+8. Comply with the project-wide shared data and development specifications.
+
+The UI Team may independently design internal pages, components, and helper functions, but must not independently modify formal cross-team data and interface specifications.
