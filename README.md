@@ -13,6 +13,7 @@
 
 - [System Architecture](./docs/architecture/System_Architecture.md) — 系統架構、五組模組關係與 Android／Three.js 整合方式。
 - [Technology Stack](./docs/architecture/Technology_Stack.md) — 開發語言、框架、依賴套件與版本規範。
+- [開發環境安裝與建置指南](./docs/Environment_Setup.md) — Linux、macOS、Windows 的 JDK／Android SDK 安裝與路徑設定，以及 Gradle 建置和依賴更新流程。
 
 請依照統一技術棧進行開發，不得自行變更影響其他組別的共用依賴。
 
