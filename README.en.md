@@ -14,6 +14,7 @@ All developers must follow this document.
 
 - [System Architecture](./docs/architecture/System_Architecture.en.md) — System architecture, how the five teams' modules relate, and the Android / Three.js integration.
 - [Technology Stack](./docs/architecture/Technology_Stack.en.md) — Programming languages, frameworks, dependencies, and version rules.
+- [Development Environment Setup and Build Guide](./docs/Environment_Setup.en.md) — JDK and Android SDK setup on Linux, macOS, and Windows, plus Gradle builds and dependency updates.
 
 Develop according to the unified technology stack, and do not change shared dependencies in ways that affect other teams.
 
