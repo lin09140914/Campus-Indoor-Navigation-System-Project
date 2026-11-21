@@ -21,13 +21,13 @@
 
 請閱讀所屬組別的開發規格：
 
-| 組別 | 開發規格 |
-|---|---|
-| 地圖組 | [Map Team](./docs/development/Map_Team_Development.md) |
-| 定位組 | [Localization Team](./docs/development/Localization_Team_Development.md) |
-| 路徑組 | [Route Team](./docs/development/Route_Team_Development.md) |
-| 3D 組 | [3D Team](./docs/development/3D_Team_Development.md) |
-| UI 組 | [UI Team](./docs/development/UI_Team_Development.md) |
+| 組別 | 開發規格 | V0.1 進度表 |
+|---|---|---|
+| 地圖組 | [Map Team](./docs/development/Map_Team_Development.md) | [地圖組進度表](./docs/planning/v0.1/milestones/map-team.md) |
+| 定位組 | [Localization Team](./docs/development/Localization_Team_Development.md) | [定位組進度表](./docs/planning/v0.1/milestones/localization-team.md) |
+| 路徑組 | [Route Team](./docs/development/Route_Team_Development.md) | [路徑組進度表](./docs/planning/v0.1/milestones/route-team.md) |
+| 3D 組 | [3D Team](./docs/development/3D_Team_Development.md) | [3D 組進度表](./docs/planning/v0.1/milestones/3d-team.md) |
+| UI 組 | [UI Team](./docs/development/UI_Team_Development.md) | [UI 組進度表](./docs/planning/v0.1/milestones/ui-team.md) |
 
 各組可自行決定內部實作方式，但必須符合所屬開發規格及跨組介面契約。
 
