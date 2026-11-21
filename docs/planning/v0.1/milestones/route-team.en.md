@@ -13,7 +13,10 @@
 | Stage | Acceptance criteria |
 | --- | --- |
 | Nov 29 | Same-floor start and destination points yield a continuous, legal path; other teams can read the Route's ordered nodes, coordinates, and floor. |
-| Dec 4 | The start position and destination resolve to valid nodes; stair/elevator transitions obey the selected travel mode; an unreachable destination returns `null` without inventing a route. |
+| Dec 4 | The start position and destination resolve to valid nodes; an unreachable destination returns `null` without inventing a route. |
+| Dec 4: same-floor matching | A localized position matches only a traversable node on the same floor; the subsequent route may change floors through a valid connection. |
+| Dec 4: no wall crossing | Neither the access path from the localized position to the Graph nor the resulting route may cross a wall. |
+| Dec 4: travel mode | `stair` excludes elevator edges, `elev` excludes stair edges, and `any` permits both. |
 | Dec 11 | Validate route weights and shortest paths against known answers or independent calculations. At least 10 cases are recommended, covering same-floor and cross-floor routes, different modes, and invalid input; retain expected and actual results. |
 
 ## 3. Features to Implement
