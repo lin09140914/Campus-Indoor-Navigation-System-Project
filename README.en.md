@@ -22,13 +22,13 @@ Develop according to the unified technology stack, and do not change shared depe
 
 Read the development specification of your own team:
 
-| Team | Development specification |
-|---|---|
-| Map Team | [Map Team](./docs/development/Map_Team_Development.en.md) |
-| Localization Team | [Localization Team](./docs/development/Localization_Team_Development.en.md) |
-| Route Team | [Route Team](./docs/development/Route_Team_Development.en.md) |
-| 3D Team | [3D Team](./docs/development/3D_Team_Development.en.md) |
-| UI Team | [UI Team](./docs/development/UI_Team_Development.en.md) |
+| Team | Development specification | V0.1 schedule |
+|---|---|---|
+| Map Team | [Map Team](./docs/development/Map_Team_Development.en.md) | [Map Team schedule](./docs/planning/v0.1/milestones/map-team.en.md) |
+| Localization Team | [Localization Team](./docs/development/Localization_Team_Development.en.md) | [Localization Team schedule](./docs/planning/v0.1/milestones/localization-team.en.md) |
+| Route Team | [Route Team](./docs/development/Route_Team_Development.en.md) | [Route Team schedule](./docs/planning/v0.1/milestones/route-team.en.md) |
+| 3D Team | [3D Team](./docs/development/3D_Team_Development.en.md) | [3D Team schedule](./docs/planning/v0.1/milestones/3d-team.en.md) |
+| UI Team | [UI Team](./docs/development/UI_Team_Development.en.md) | [UI Team schedule](./docs/planning/v0.1/milestones/ui-team.en.md) |
 
 Each team may decide its own internal implementation, but it must comply with its development specification and the cross-team interface contracts.
 
