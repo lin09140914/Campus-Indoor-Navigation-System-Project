@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  A118 教室：基本物件與圖層堆疊範本
+
+  用途
+    示範牆壁、房間、走廊、門與標示各自保留獨立結構。
+    本圖為教學示意，並非從原圖精確描繪，也不是 A118 實測尺寸。
+    building-id、map-version 與導航錨點 ID 均為範例，正式交付前須替換。
+
+  編輯規則
+    1. 每個基本物件有唯一 ID，可個別選取、修改及移除。
+    2. 使用 g 分組與圖層順序組合；不要將整張地圖合併為單一 path 或圖片。
+    3. 同類物件放入固定圖層；房號文字與門扇符號分開處理。
+    4. 保持縮排、換行及命名一致；刪除無用物件後再交付。
+
+  堆疊順序
+    走廊 → 房間 → 牆壁 → 樓梯 → 電梯 → 門 → 錨點 → 文字
+    SVG 中越後面的可見元素，通常畫在越前面的元素上方。
+    g 是保留子物件的容器，分組不代表合併子物件的幾何。
+
+  3D 與導航交接
+    walls 中的 rect 為有面積的牆體輪廓；牆高由 3D 組另外設定。
+    doors 只表示門扇與開門方向，不應當作牆體拉高。
+    房間地板為封閉區域；上側牆體分為兩段，保留真正的門口缺口。
+    nav-anchors 暫放範例點，尚未與正式 Graph / Node Mapping 綁定。
+    世界比例、原點與旋轉仍須由 floors.json 的 svg_transform 提供。
+    doors、labels 依 V1.1 補充規格，在有門或標示時分別保留。
+    data-room-ref 是可選輔助關聯，不取代 Node Mapping 或 Destination。
+    本檔僅示範 SVG 結構，未附正式 Graph 與座標轉換，不能當作已通過整合驗證的圖資。
+-->
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+  id="A118-template"
+  viewBox="0 0 1000 850"
+  data-building-id="EB5_DEMO"
+  data-floor="1"
+  data-map-version="example-A118-v1"
+  role="img"
+  aria-labelledby="template-title template-description"
+>
+  <title id="template-title">A118 教室分層與物件化範本</title>
+  <desc id="template-description">
+    上方為走廊，下方為 A118 教室。牆壁保留上側門口缺口，
+    門、房間、走廊與文字皆可獨立處理。尺寸為示意。
+  </desc>
+
+  <!-- 01：走廊區域。新增其他走廊時，在此圖層新增獨立物件。 -->
+  <g id="corridors" inkscape:groupmode="layer" inkscape:label="01 Corridors">
+    <rect
+      id="corridor-A118-front"
+      x="140" y="100" width="720" height="160"
+      fill="#fff0ce"
+    />
+  </g>
+
+  <!-- 02：房間區域。房間是獨立群組，地板也是獨立物件。 -->
+  <g id="rooms" inkscape:groupmode="layer" inkscape:label="02 Rooms">
+    <g id="room-A118">
+      <rect
+        id="room-A118-floor"
+        x="160" y="280" width="680" height="440"
+        fill="#dff2d8"
+      />
+      <rect
+        id="room-A118-threshold"
+        x="220" y="260" width="120" height="20"
+        fill="#dff2d8"
+      />
+    </g>
+  </g>
+
+  <!-- 03：牆體輪廓。五段牆各有 ID，不與房間、門或文字合併。 -->
+  <g id="walls" inkscape:groupmode="layer" inkscape:label="03 Walls">
+    <g id="wall-set-A118" data-room-ref="room-A118" fill="#4f78ba">
+      <rect id="wall-A118-west" x="140" y="280" width="20" height="440" />
+      <rect id="wall-A118-east" x="840" y="280" width="20" height="440" />
+      <rect id="wall-A118-south" x="140" y="720" width="720" height="20" />
+
+      <!-- 上側牆分成兩段；x=220 到 x=340 是門口，不以色塊遮掩整面牆。 -->
+      <rect id="wall-A118-north-left" x="140" y="260" width="80" height="20" />
+      <rect id="wall-A118-north-right" x="340" y="260" width="520" height="20" />
+    </g>
+  </g>
+
+  <!-- 04：A118 範例範圍沒有樓梯，保留標準空圖層。 -->
+  <g id="stairs" inkscape:groupmode="layer" inkscape:label="04 Stairs" />
+
+  <!-- 05：A118 範例範圍沒有電梯，保留標準空圖層。 -->
+  <g id="elevators" inkscape:groupmode="layer" inkscape:label="05 Elevators" />
+
+  <!-- 06：門是獨立群組；門扇與開門弧線也保留個別 ID。 -->
+  <g id="doors" inkscape:groupmode="layer" inkscape:label="06 Doors">
+    <g id="door-A118-main" data-room-ref="room-A118" fill="none" stroke="#b96816">
+      <line id="door-A118-leaf" x1="220" y1="280" x2="220" y2="400" stroke-width="8" />
+      <path id="door-A118-swing" d="M 220 400 A 120 120 0 0 0 340 280" stroke-width="3" stroke-dasharray="10 8" />
+    </g>
+  </g>
+
+  <!-- 07：導航錨點預設隱藏；完成 Graph 後替換 ID、座標與 Node Mapping。 -->
+  <g id="nav-anchors" inkscape:groupmode="layer" inkscape:label="07 Nav anchors" display="none" fill="#a34dc7">
+    <circle id="anchor-N_A118_CORRIDOR" cx="280" cy="180" r="10" />
+    <circle id="anchor-N_A118_ENTRY" cx="280" cy="270" r="10" />
+  </g>
+
+  <!-- 08：文字最後疊上；保留 text，方便修改，不轉成牆體輪廓。 -->
+  <g id="labels" inkscape:groupmode="layer" inkscape:label="08 Labels" fill="#203246" font-family="sans-serif" text-anchor="middle">
+    <text id="label-corridor-A118" x="500" y="195" font-size="42">走廊</text>
+    <g id="label-room-A118">
+      <text id="label-A118-number" x="500" y="510" font-size="76">A118</text>
+      <text id="label-A118-kind" x="500" y="565" font-size="38">教室</text>
+    </g>
+    <text id="label-template-note" x="500" y="800" font-size="28">結構範例 · 尺寸為示意</text>
+  </g>
+</svg>
