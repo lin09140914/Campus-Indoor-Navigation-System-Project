@@ -1,4 +1,4 @@
-import { findRoute } from '../src/route/findRoute.js';
+import { findDraftRoute } from './floor1-draft-route.mjs';
 
 const $ = id => document.getElementById(id);
 const svgNS = 'http://www.w3.org/2000/svg';
@@ -63,7 +63,7 @@ try {
   $('from').value = destinations.some(n => n.id === params.get('from')) ? params.get('from') : 'A125';
   $('to').value = destinations.some(n => n.id === params.get('to')) ? params.get('to') : 'B103';
   function route() {
-    const result = findRoute(graph, $('from').value, $('to').value);
+    const result = findDraftRoute(graph, $('from').value, $('to').value);
     $('route').replaceChildren(); $('route-list').replaceChildren();
     $('route-notes').hidden = true;
     document.body.dataset.routeFound = String(Boolean(result));
@@ -89,5 +89,5 @@ try {
   route(); document.body.dataset.ready = 'true';
 } catch (e) {
   document.body.dataset.ready = 'error';
-  $('status').textContent = `載入失敗：${e.message}。請透過 npm run serve 開啟此頁。`;
+  $('status').textContent = `載入失敗：${e.message}。請先在專案根目錄執行 python -m http.server 8080 --bind 127.0.0.1。`;
 }

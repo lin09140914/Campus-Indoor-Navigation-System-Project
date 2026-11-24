@@ -9,7 +9,7 @@
 距離繼續以 SVG 圖面單位顯示，不用假比例補成公尺；正式資料契約與 `--strict` 的要求維持不變。
 
 依據：[V1.1 統一資料規格](https://github.com/lin09140914/Campus-Indoor-Navigation-System-Project/blob/master/docs/interfaces/schemas/Data_Specification.md)。
-本機 `docs/spec.md`、既有 `validate-data.js` 與 3D 示範仍屬較早的開工包介面，不能用來判定新版 SVG 是否合格。
+正式契約位於 `docs/interfaces/schemas/Data_Specification.md`；本次附帶的工具僅供地圖組離線整理與審查，不取代 Android／3D 組的正式模組。
 
 ## 檔案與預覽
 
@@ -25,7 +25,7 @@
 | `validation-report.json` | 草稿一致性與正式交付狀態分開列出的檢查報告 |
 | `../../../examples/floor1-graph-draft.html` | 原圖疊圖與 A* 路線預覽 |
 
-在專案根目錄執行 `node tools/serve.js . 8080`，開啟：
+在專案根目錄執行 `python -m http.server 8080 --bind 127.0.0.1`，開啟：
 
 <http://127.0.0.1:8080/examples/floor1-graph-draft.html>
 
@@ -89,11 +89,11 @@ SVG 根元素包含 `data-building-id="eng5"`、`data-floor="1"`、
 ## 修改與驗證
 
 ```sh
-node tools/build-floor1-graph.js
-node tools/build-floor1-graph.js --check
+node tools/build-floor1-graph.mjs
+node tools/build-floor1-graph.mjs --check
 python tools/validate-floor1-svg.py
 python -m unittest discover -s tools -p "test_floor1*.py"
-node --test
+node --test tools/build-floor1-graph.test.mjs examples/floor1-draft-route.test.mjs
 ```
 
 SVG 驗證工具只使用 Python 3 標準函式庫；檢查 XML、唯一 ID、圖層順序、安全引用、
@@ -101,6 +101,8 @@ SVG 驗證工具只使用 Python 3 標準函式庫；檢查 XML、唯一 ID、�
 全部錨點 / Mapping，以及 Graph 線段是否進入牆體或跨越牆體邊界。
 契約檢查另驗證欄位／型別、snake_case、版本、Node／Edge／Mapping／Location 引用及權重規則。
 Node 測試另檢查內門連通、A/B 通道、房號暫名、版本、目的地與完整座標轉換。
+預覽使用獨立的 `examples/floor1-draft-route.mjs`，逐一以 Dijkstra 比對全部目的地的 A* 路線。
+工具僅使用 Node／Python 內建功能，不依賴 `package.json`、npm 套件或已移除的舊版原型。
 這些是圖面與資料一致性檢查，不證明現場可通行，也不取代實際尺寸與門口的人工核對。
 
 產生本次檢查報告：

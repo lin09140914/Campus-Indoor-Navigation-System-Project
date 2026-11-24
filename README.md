@@ -1,109 +1,70 @@
-# 開工包（Kickoff Kit）v0.2
+# 開發者指南（Developer Guide）
 
 **繁體中文** | [English](README.en.md)
 
-校園室內導航系統（先做工程五館 Engineering Building #5）的開工包。路網、房間表與 2F／3F 平面圖仍使用樣板資料；1F 已加入初版 SVG 與另存的導航草稿（見下方說明）。樣板房號（`M101`…）只是示範，不代表工程五館的實際編碼。
+所有參與本專案的開發者，在開始實作前，請先閱讀團隊規範、系統架構及所屬組別的開發規格。
 
-> 規格全文：[docs/spec.md](docs/spec.md)（[English version](docs/spec.en.md)）。有疑問或要改規格，找整合者。
+## 1. 團隊協作規範
 
-## 先決條件
+- [CONTRIBUTING.md](./CONTRIBUTING.md) — Git Branch、Pull Request、Code Review、測試及跨組協作規範。
 
-- 安裝 Node.js 18 以上（最新版也可以）。測試版本：Node 22。
-- 不需要 `npm install`，這個包沒有任何外部套件。
+所有開發者都必須遵守此文件。
 
-## 一分鐘上手
+## 2. 系統架構與技術棧
 
-```bash
-npm run validate     # 驗證 data/ 底下的資料（V1–V10）
-npm test             # 跑圖論組的測試
-npm run gen-sample   # 重新產生樣板資料（會覆蓋 data/）
-npm run serve        # 啟動本機伺服器（127.0.0.1:8080），看 3D 示範頁面
-```
+- [System Architecture](./docs/architecture/System_Architecture.md) — 系統架構、五組模組關係與 Android／Three.js 整合方式。
+- [Technology Stack](./docs/architecture/Technology_Stack.md) — 開發語言、框架、依賴套件與版本規範。
+- [開發環境安裝與建置指南](./docs/Environment_Setup.md) — Linux、macOS、Windows 的 JDK／Android SDK 安裝與路徑設定，以及 Gradle 建置和依賴更新流程。
 
-看 3D 示範：執行 `npm run serve`，瀏覽器開 <http://127.0.0.1:8080/examples/viewer3d-demo.html>。
-**不能直接雙擊 html 檔**，因為頁面要用 `fetch` 讀資料、載入 ES module。3D 的 Three.js 從網路載入，需要連網。
+請依照統一技術棧進行開發，不得自行變更影響其他組別的共用依賴。
 
-沒有 npm 的話，直接用 `node tools/validate-data.js data`、`node --test`、`node tools/serve.js . 8080`。
+## 3. 各組開發規格
 
-## 資料夾
+請閱讀所屬組別的開發規格：
 
-| 路徑 | 內容 | 誰用 |
+| 組別 | 開發規格 | V0.1 進度表 |
 |---|---|---|
-| `data/svg/floor-1..3.svg` | 1F 已依新版資料契約分層（待實測）；2F／3F 為舊版樣板 | 地圖、UI、3D |
-| `data/graph.json` | 樣板圖（88 個節點、89 條邊，格式照 spec 4.2） | 圖論、UI |
-| `data/rooms.csv` | 房間資料表（spec 4.3） | UI |
-| `data/building.json` | 樓層與樓高（spec 4.4） | 全部 |
-| `src/route/findRoute.js` | **圖論組已有的雛形**：A* 已實作並通過 12 組手算測試 | 圖論、UI |
-| `src/route/findRoute.test.js` | 測試（手算期望值） | 圖論 |
-| `src/route/findRoute.stub.js` | 假函式（UI 組先用） | UI |
-| `src/viewer3d/createViewer3D.js` | **3D 組已有的雛形**：讀標準 SVG，實作 spec 4.6 全部函式 | 3D、UI |
-| `src/viewer3d/viewer3d.stub.js` | 3D 假元件（UI 組先用） | UI |
-| `src/position/position.stub.js` | 定位假模組（UI、3D 組先用） | UI、3D |
-| `tools/validate-data.js` | 資料驗證腳本 V1–V10 | 地圖組交件前必跑、整合組 |
-| `tools/gen-sample-data.js` | 樣板資料產生器 | 整合組 |
-| `tools/serve.js` | 本機靜態伺服器（只綁 127.0.0.1） | 3D、UI |
-| `sensor-data/runs.csv`、`marks.csv` | 感測器數據的空模板（spec 4.8） | 感測器組 |
-| `docs/spec.md` | 完整規格（繁體中文，以此為準） | 全部 |
-| `docs/spec.en.md` | 完整規格的英文翻譯 | 全部 |
-| `docs/decisions.md` | 決策紀錄（只有整合者改） | 全部 |
-| `docs/templates/` | 手機清單、現場測量表、週報模板 | 各組 |
-| `examples/viewer3d-demo.html` | 3D 元件示範頁面（用真的 `findRoute`，可切 2D／3D，可測 `dispose`） | 3D、UI |
-| `examples/legacy-demo-simple-svg.html` | 最早的原型，用簡化版 SVG 格式，**只供參考，請勿使用** | — |
+| 地圖組 | [Map Team](./docs/development/Map_Team_Development.md) | [地圖組進度表](./docs/planning/v0.1/milestones/map-team.md) |
+| 定位組 | [Localization Team](./docs/development/Localization_Team_Development.md) | [定位組進度表](./docs/planning/v0.1/milestones/localization-team.md) |
+| 路徑組 | [Route Team](./docs/development/Route_Team_Development.md) | [路徑組進度表](./docs/planning/v0.1/milestones/route-team.md) |
+| 3D 組 | [3D Team](./docs/development/3D_Team_Development.md) | [3D 組進度表](./docs/planning/v0.1/milestones/3d-team.md) |
+| UI 組 | [UI Team](./docs/development/UI_Team_Development.md) | [UI 組進度表](./docs/planning/v0.1/milestones/ui-team.md) |
 
-## 各組怎麼開工
+各組可自行決定內部實作方式，但必須符合所屬開發規格及跨組介面契約。
 
-**地圖資料組**
-1. 讀 spec 第 3、4 章與 5.2。
-2. 看 `data/svg/floor-1.svg`、`data/graph.json`、`data/rooms.csv` 的寫法。
-3. 用 `docs/templates/measurement-sheet.md` 去現場量。
-4. 做完把檔案放進 `data/`，跑 `npm run validate`，**全部通過才開 PR**。
+## 4. 跨組共用規格
 
-**圖論路徑組**
-1. 讀 spec 4.2、4.5 與 5.3。
-2. `src/route/findRoute.js` 已經是可用的 A*。你的工作是：換成真資料後重新手算測試期望值、補更多測試、檢查效能、處理邊界情況。
-3. 注意：`findRoute.test.js` 的期望值是用**樣板資料**手算的，真資料到了要重算，不能直接沿用。
+涉及其他組別的資料或函式時，必須參考：
 
-**UI 組**
-1. 讀 spec 4.4–4.7 與 5.4。
-2. 先用 `findRoute.stub.js`、`viewer3d.stub.js`、`position.stub.js`，介面和真的一樣。
-3. 資料只從 `data/` 讀（SVG、`rooms.csv`、`graph.json`），不要把房號寫死在程式裡。
+- [Data Specification](./docs/interfaces/schemas/Data_Specification.md) — 八項統一資料格式。
+- [Function Interface](./docs/interfaces/functions/function.md) — 跨組 Function 的 Input、Output 及使用條件。
 
-**3D 組**
-1. 讀 spec 4.1、4.6 與 5.5。
-2. `src/viewer3d/createViewer3D.js` 已經能讀標準 SVG 並實作 4.6 的全部函式；用 `npm run serve` 開示範頁面看效果。
-3. 你的工作是：換成真實 SVG 後檢查外觀、處理不規則形狀和樓梯方向、在真實 iPhone 上測效能、補 `src/viewer3d/README.md`。
-4. 示範頁面上的「重建 10 次」按鈕可以檢查 `dispose()` 有沒有漏資源（canvas 數量應維持 1）。
+跨組介面不得由單一組別擅自修改。
 
-**感測器與定位組**
-1. 讀 spec 4.7、4.8 與 5.6。
-2. 用 `docs/templates/phone-inventory.md` 開始 E1。
-3. 數據檔放 `sensor-data/raw/`（自己建立），並登記 `runs.csv`、`marks.csv`。
-4. 定位模組用 `src/position/position.stub.js` 的介面當起點。
+## 5. 開發流程
 
-## 1F 導航圖草稿
+1. 閱讀本專案的團隊規範及技術棧。
+2. 閱讀所屬組別的開發規格。
+3. 確認需要使用的跨組資料與 Function。
+4. 從開發分支進行實作。
+5. 完成功能後執行基本測試。
+6. 建立 Pull Request 至 `master`。
+7. 通過必要檢查及至少一位非作者 Reviewer 批准後，才能合併。
 
-1F SVG 已依 [新版統一資料規格](https://github.com/lin09140914/Campus-Indoor-Navigation-System-Project/blob/master/docs/interfaces/schemas/Data_Specification.md)
-及 PR #13 的補充要求分類為標準圖層，門與文字獨立、牆體為封閉輪廓並保留門口缺口。
-由圖稿建立的 A、B 區連通草稿另存於
-[`data/drafts/floor-1/`](data/drafts/floor-1/README.md)，包含 41 個房間與 7 個圖面出入口。
-目前採 SVG 座標，**尚未校正為公尺，也尚未現勘**；未取代原本的樣板 graph 與房間表。
+涉及統一資料規格、跨組 Function 或技術棧的修改，必須先與受影響組別協調。
 
-執行 `npm run serve` 後，開啟 <http://127.0.0.1:8080/examples/floor1-graph-draft.html>
-可對照原圖測試路線。修改標記後用 `node tools/build-floor1-graph.js` 重建，
-執行 `python tools/validate-floor1-svg.py` 檢查圖層、門口與 Node Mapping。
-草稿一致性與正式交付條件分開檢查；`--strict` 目前會因量測／世界座標資料未完成而失敗，
-結果見 [`validation-report.json`](data/drafts/floor-1/validation-report.json)。
-使用者已確認本輪暫緩實際尺寸量測，先完成圖面結構與 SVG／Graph 對應；距離維持 SVG 圖面單位。
-物件結構見 [`data/svg/README.md`](data/svg/README.md)；舊版 3D 元件與驗證器尚未適配新版契約。
+## 6. 1F 分層圖資與離線檢查草稿
 
-## 已知限制（請先看過）
+1F SVG 已依 V1.1 契約分類，牆體為封閉輪廓，門與文字獨立，並附上對應的導航草稿。
+目前有 41 個房間、7 個入口、141 個節點與 140 條邊；實際尺寸依使用者安排延後量測，距離維持 SVG 圖面單位。
 
-- 正式路網 `data/graph.json`、房間表、building 與 2F／3F SVG 仍是**樣板資料**。1F SVG 已依新版契約分層，未實測的導航草稿另存於 `data/drafts/floor-1/`。`building.json` 仍標有 `"sample": true`。
-- 驗證腳本的 SVG 解析是簡單的文字解析：只認 `<polygon>` 和 `<line>`，不支援 `transform`、`<path>`、`<rect>`。從 Inkscape 匯出時，請把形狀轉成 polygon 並套用 transform。
-- `viewer3d.stub.js` 和 `createViewer3D.js` 需要瀏覽器環境；其他檔案都是純 Node 可跑。
-- **`createViewer3D.js` 只在桌面瀏覽器（內建瀏覽器）測過**：載入、樓層切換、爆炸圖、路徑、使用者位置、點房間、2D／3D 切換、`dispose` 重建 10 次、錯誤碼。**iPhone Safari 還沒有實測**，效能和手勢要在真機上確認。
-- 3D 檢視假設房間是走廊兩側的簡單形狀；樓梯階梯固定沿 x 方向；電梯與樓梯的外觀只是示意。
-- `docs/spec.md` 和 `docs/spec.en.md` 是文件快照。規格若有更新，整合者要同步這兩份。
-- 樓梯與電梯的跨層邊長度（樓梯 8、電梯 5）是預設值，不是實測。
-- 感測器數據的記錄、分析腳本、定位演算法**還沒有**，這份開工包只提供格式和模板。
+- [SVG 物件與圖層說明](data/svg/README.md)
+- [導航草稿、重建方式與待確認事項](data/drafts/floor-1/README.md)
+- [草稿／正式交付分開列出的檢查報告](data/drafts/floor-1/validation-report.json)
+
+離線預覽：在專案根目錄執行 `python -m http.server 8080 --bind 127.0.0.1`，
+開啟 <http://127.0.0.1:8080/examples/floor1-graph-draft.html>。
+此工具使用 Python／Node 標準函式庫與獨立的預覽用 A*，不新增 npm 套件，也不屬於 Android 路徑組的正式 API。
+
+草稿檢查通過不代表已完成正式世界座標整合、實測或 APK 驗收。
 

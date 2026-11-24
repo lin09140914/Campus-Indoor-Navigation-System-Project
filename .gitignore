@@ -1,6 +1,10 @@
 # 依賴與建置產物
 node_modules/
 dist/
+.gradle/
+build/
+local.properties
+.kotlin/
 
 # 作業系統與編輯器產生的檔案
 .DS_Store

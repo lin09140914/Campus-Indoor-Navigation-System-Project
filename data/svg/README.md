@@ -48,7 +48,6 @@ Building ID 暫用使用者指定的 `eng5`，待整合組定案。
 
 在根目錄執行 `python tools/validate-floor1-svg.py`，檢查封閉非零面積、輪廓自交、門口、錨點與路網穿牆。
 使用 `--strict` 驗證正式交付條件；目前會因世界座標、量測及整合資料尚未完成而失敗。
-不要用舊版 `tools/validate-data.js` 的 polygon / class / metre 前提驗收這份新版分層 SVG。
-舊版 `createViewer3D.js` 也尚未適配新版分層契約；這次交付的是分層圖稿，不包含 3D 元件改版。
+這次交付的是分層圖稿與離線檢查工具，正式 Android／3D 模組仍依目前專案架構整合；不包含 APK 或 3D 元件改版。
 
 導航、量測待辦及重建方式見 [`../drafts/floor-1/README.md`](../drafts/floor-1/README.md)。
