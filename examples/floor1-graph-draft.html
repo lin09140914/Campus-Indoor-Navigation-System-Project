@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>1F 導航圖草稿</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #eef2f5; color: #20313b; font: 15px/1.6 system-ui, sans-serif; }
+    header { padding: 18px 26px; background: #102e3c; color: white; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+    h1 { font-size: 21px; margin: 0; } header p { margin: 1px 0 0; color: #c4d6df; font-size: 13px; }
+    .badge { border: 1px solid #eccd8b; border-radius: 30px; padding: 5px 12px; color: #ffe0a4; white-space: nowrap; font-size: 13px; }
+    main { display: grid; grid-template-columns: 310px minmax(0, 1fr); gap: 18px; padding: 18px; }
+    aside, .map-panel { min-width: 0; background: white; border: 1px solid #dce4e9; border-radius: 10px; }
+    aside { padding: 20px; } h2 { margin: 0 0 12px; font-size: 17px; }
+    label { display: block; font-weight: 600; font-size: 13px; margin-bottom: 5px; }
+    select, button { font: inherit; width: 100%; padding: 9px; border: 1px solid #bccbd4; border-radius: 6px; background: white; color: inherit; }
+    select { margin-bottom: 13px; } button { background: #126275; color: white; border: none; cursor: pointer; }
+    button:disabled { background: #889ca5; cursor: wait; }
+    #summary { margin-top: 16px; font-weight: 650; }
+    #route-notes, .notice { background: #fff6e4; padding: 10px 12px; border-radius: 6px; color: #775012; font-size: 13px; }
+    .notice { margin-top: 18px; } .notice p { margin: 0 0 7px; } .notice p:last-child { margin-bottom: 0; }
+    #status { font-size: 13px; color: #617781; margin: 8px 0; }
+    .toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; padding: 11px 16px; border-bottom: 1px solid #e1e8ec; }
+    .toolbar label { margin: 0; font-weight: 400; display: flex; align-items: center; gap: 5px; }
+    #zoom { width: 110px; } .legend { font-size: 12px; color: #546b76; margin-left: auto; }
+    .map-scroll { max-height: 80vh; overflow: auto; padding: 12px; background: white; border-radius: 0 0 10px 10px; }
+    svg { display: block; width: 100%; min-width: 700px; height: auto; background: white; }
+    .map-label { paint-order: stroke; stroke: white; stroke-width: 2px; stroke-linejoin: round; fill: #173e54; font: 6px system-ui,sans-serif; pointer-events: none; }
+    .destination { cursor: pointer; } .destination:focus { outline: none; } .destination:focus circle { stroke: #e23e73; stroke-width: 2px; }
+    #route-list { padding-left: 22px; font-size: 12px; overflow-wrap: anywhere; max-height: 240px; overflow: auto; }
+    details { margin-top: 13px; font-size: 13px; } footer { font-size: 12px; margin: 0 20px 20px; color: #60727e; }
+    a { color: #126275; } [hidden] { display: none !important; }
+    @media (max-width: 850px) { main { grid-template-columns: 1fr; padding: 10px; } header { padding: 15px; flex-wrap: wrap; } .map-scroll { max-height: 75vh; } }
+  </style>
+</head>
+<body>
+  <header><div><h1>1F 導航圖草稿</h1><p>工程五館 · 依分層 SVG 建立的待現勘草稿 · 點選房間可設為終點</p></div><span class="badge" id="calibration">草稿・比例未校正</span></header>
+  <main>
+    <aside>
+      <h2>測試一條路線</h2>
+      <label for="from">起點</label><select id="from" disabled></select>
+      <label for="to">終點</label><select id="to" disabled></select>
+      <button id="swap" disabled>交換起點與終點</button>
+      <div id="status" role="status">正在載入地圖與導航草稿…</div>
+      <div id="summary" aria-live="polite"></div>
+      <p id="route-notes" hidden></p>
+      <details><summary>路線節點</summary><ol id="route-list"></ol></details>
+      <div class="notice"><p><strong>這是待現勘的連通草稿。</strong></p><p>尚無公尺比例；畫面數值為 SVG 圖面單位。重複房號使用 TEMP-* 暫名。</p><p>樓梯、電梯、廁所及未確認隔間尚未納入路網。內門與出入口是否開放仍需確認。</p></div>
+      <details><summary>待確認項目</summary><ul id="issues"></ul></details>
+    </aside>
+    <section class="map-panel" aria-label="1F 地圖與路線">
+      <div class="toolbar">
+        <label><input id="show-graph" type="checkbox" checked>完整圖網</label>
+        <label><input id="show-labels" type="checkbox">節點名稱</label>
+        <label for="zoom">縮放 <input id="zoom" type="range" min="100" max="300" step="25" value="100"></label>
+        <span class="legend">藍：圖網　粉：路線　橘：暫定房號</span>
+      </div>
+      <div class="map-scroll"><svg id="map" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1122.6667 793.62665" aria-label="導航草稿疊圖"><image id="floor-image" href="../data/svg/floor-1.svg" width="1122.6667" height="793.62665" opacity="0.6"/><g id="graph-edges"></g><g id="graph-nodes"></g><g id="graph-labels" hidden></g><g id="route"></g></svg></div>
+    </section>
+  </main>
+  <footer>預覽使用專案既有 A* 路徑函式。<a href="../data/drafts/floor-1/graph.json">Graph JSON</a> · <a href="../data/drafts/floor-1/rooms.csv">房間表</a> · <a href="../data/drafts/floor-1/README.md">資料說明</a></footer>
+  <script type="module" src="./floor1-graph-draft.js"></script>
+</body>
+</html>

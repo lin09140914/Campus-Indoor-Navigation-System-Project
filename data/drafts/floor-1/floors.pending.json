@@ -1,0 +1,20 @@
+{
+  "building_id": "eng5",
+  "map_version": "2026-11-24-floor1-structured-draft2",
+  "coordinate_system_id": "eng5_LOCAL_PENDING",
+  "status": "pending-measurement-and-integration",
+  "floors": [
+    {
+      "floor": 1,
+      "label": "1F",
+      "elevation_m": null,
+      "svg": "../../svg/floor-1.svg",
+      "svg_transform": {
+        "origin_x_m": null,
+        "origin_z_m": null,
+        "scale_m_per_svg_unit": null,
+        "rotation_deg": null
+      }
+    }
+  ]
+}

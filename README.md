@@ -2,7 +2,7 @@
 
 **繁體中文** | [English](README.en.md)
 
-校園室內導航系統（先做工程五館 Engineering Building #5）的開工包。**裡面的資料全是樣板（假的）**，目的是讓每個組在拿到真實資料之前就能開工，真資料到了直接取代，程式不用改。樣板房號（`M101`…）只是示範，不代表工程五館的實際編碼。
+校園室內導航系統（先做工程五館 Engineering Building #5）的開工包。路網、房間表與 2F／3F 平面圖仍使用樣板資料；1F 已加入初版 SVG 與另存的導航草稿（見下方說明）。樣板房號（`M101`…）只是示範，不代表工程五館的實際編碼。
 
 > 規格全文：[docs/spec.md](docs/spec.md)（[English version](docs/spec.en.md)）。有疑問或要改規格，找整合者。
 
@@ -29,7 +29,7 @@ npm run serve        # 啟動本機伺服器（127.0.0.1:8080），看 3D 示範
 
 | 路徑 | 內容 | 誰用 |
 |---|---|---|
-| `data/svg/floor-1..3.svg` | 樣板平面圖（3 層，格式照 spec 4.1） | 地圖、UI、3D |
+| `data/svg/floor-1..3.svg` | 1F 已依新版資料契約分層（待實測）；2F／3F 為舊版樣板 | 地圖、UI、3D |
 | `data/graph.json` | 樣板圖（88 個節點、89 條邊，格式照 spec 4.2） | 圖論、UI |
 | `data/rooms.csv` | 房間資料表（spec 4.3） | UI |
 | `data/building.json` | 樓層與樓高（spec 4.4） | 全部 |
@@ -80,9 +80,25 @@ npm run serve        # 啟動本機伺服器（127.0.0.1:8080），看 3D 示範
 3. 數據檔放 `sensor-data/raw/`（自己建立），並登記 `runs.csv`、`marks.csv`。
 4. 定位模組用 `src/position/position.stub.js` 的介面當起點。
 
+## 1F 導航圖草稿
+
+1F SVG 已依 [新版統一資料規格](https://github.com/lin09140914/Campus-Indoor-Navigation-System-Project/blob/master/docs/interfaces/schemas/Data_Specification.md)
+及 PR #13 的補充要求分類為標準圖層，門與文字獨立、牆體為封閉輪廓並保留門口缺口。
+由圖稿建立的 A、B 區連通草稿另存於
+[`data/drafts/floor-1/`](data/drafts/floor-1/README.md)，包含 41 個房間與 7 個圖面出入口。
+目前採 SVG 座標，**尚未校正為公尺，也尚未現勘**；未取代原本的樣板 graph 與房間表。
+
+執行 `npm run serve` 後，開啟 <http://127.0.0.1:8080/examples/floor1-graph-draft.html>
+可對照原圖測試路線。修改標記後用 `node tools/build-floor1-graph.js` 重建，
+執行 `python tools/validate-floor1-svg.py` 檢查圖層、門口與 Node Mapping。
+草稿一致性與正式交付條件分開檢查；`--strict` 目前會因量測／世界座標資料未完成而失敗，
+結果見 [`validation-report.json`](data/drafts/floor-1/validation-report.json)。
+使用者已確認本輪暫緩實際尺寸量測，先完成圖面結構與 SVG／Graph 對應；距離維持 SVG 圖面單位。
+物件結構見 [`data/svg/README.md`](data/svg/README.md)；舊版 3D 元件與驗證器尚未適配新版契約。
+
 ## 已知限制（請先看過）
 
-- `data/` 底下全是**假資料**，`building.json` 標有 `"sample": true`，驗證時會顯示警告。換成真資料時要把這個欄位移除。
+- 正式路網 `data/graph.json`、房間表、building 與 2F／3F SVG 仍是**樣板資料**。1F SVG 已依新版契約分層，未實測的導航草稿另存於 `data/drafts/floor-1/`。`building.json` 仍標有 `"sample": true`。
 - 驗證腳本的 SVG 解析是簡單的文字解析：只認 `<polygon>` 和 `<line>`，不支援 `transform`、`<path>`、`<rect>`。從 Inkscape 匯出時，請把形狀轉成 polygon 並套用 transform。
 - `viewer3d.stub.js` 和 `createViewer3D.js` 需要瀏覽器環境；其他檔案都是純 Node 可跑。
 - **`createViewer3D.js` 只在桌面瀏覽器（內建瀏覽器）測過**：載入、樓層切換、爆炸圖、路徑、使用者位置、點房間、2D／3D 切換、`dispose` 重建 10 次、錯誤碼。**iPhone Safari 還沒有實測**，效能和手勢要在真機上確認。

@@ -24,3 +24,5 @@ site-photos/
 .env
 .env.*
 tmp/
+__pycache__/
+*.py[cod]
