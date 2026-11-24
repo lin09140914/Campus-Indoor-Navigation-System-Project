@@ -54,3 +54,17 @@ No single team may change a cross-team interface on its own.
 Changes to the unified data specification, cross-team Functions, or the technology stack must first be coordinated with the affected teams.
 
 > The Chinese documents are authoritative; the `.en.md` files are translations.
+
+## 6. Layered 1F Map and Offline Draft Checks
+
+The 1F SVG contains classified layers, closed wall outlines, separate doors and editable labels, plus a matching navigation draft.
+It covers 41 rooms and 7 entrances with 141 nodes and 140 edges. Physical measurements are deferred by the user; distances remain in SVG units.
+
+- [SVG structure notes](data/svg/README.md)
+- [Draft data, rebuilding and open questions](data/drafts/floor-1/README.md)
+- [Draft consistency and formal delivery report](data/drafts/floor-1/validation-report.json)
+
+For offline preview, run `python -m http.server 8080 --bind 127.0.0.1` from the repository root and open
+<http://127.0.0.1:8080/examples/floor1-graph-draft.html>.
+The tools use Python / Node built-ins and an isolated preview A*. They add no npm packages and do not implement the Android route team's API.
+Passing draft checks does not establish measured world coordinates or complete APK acceptance.

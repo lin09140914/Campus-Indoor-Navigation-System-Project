@@ -1,0 +1,2270 @@
+{
+  "building_id": "eng5",
+  "map_version": "2026-11-24-floor1-structured-draft2",
+  "coordinate_system_id": "eng5_LOCAL_PENDING",
+  "building_id_status": "provisional",
+  "unit": "svg-unit",
+  "status": "draft",
+  "floor": 1,
+  "measurement_policy": {
+    "status": "deferred_by_user",
+    "current_scope": "svg_graph_structure_and_correspondence",
+    "distance_unit": "svg-unit",
+    "deferred_items": [
+      "實際長度與公尺比例",
+      "實際牆厚與樓層高度",
+      "正式世界座標轉換所需的量測與整合確認"
+    ]
+  },
+  "source": {
+    "path": "data/svg/floor-1.svg",
+    "sha256": "73101d0a844380939934c32ea66d1946bff964689a3a87c22bd684849a4d1c13",
+    "layers": [
+      "walls",
+      "rooms",
+      "corridors",
+      "stairs",
+      "elevators",
+      "nav-anchors",
+      "doors",
+      "labels",
+      "fixtures"
+    ],
+    "view_box": [
+      0,
+      0,
+      1122.6667,
+      793.62665
+    ]
+  },
+  "svg_transform": {
+    "origin_x_m": null,
+    "origin_z_m": null,
+    "scale_m_per_svg_unit": null,
+    "rotation_deg": null
+  },
+  "review": {
+    "status": "needs-site-review",
+    "issues": [
+      "所有節點、門口及連通關係皆為圖面人工判讀，尚未現勘。",
+      "A119 與 A114 各有兩個不同空間重複標號，使用 TEMP-* 暫存識別碼，不能當正式房號。",
+      "B103 暫經 B105、南側 A119 暫經 A120 進入；需確認內門是否可供導航通行。",
+      "A 區中段隔門及 A/B 連接段採人工走廊轉折；房間門口已依原始門扇定位，門禁及淨寬仍待量測。",
+      "部分房間有多個門；此草稿只選一個已判讀的門口，距離不代表最短實際步行距離。",
+      "牆體已展開為封閉輪廓，但 0.5 SVG 單位寬度僅來自原圖可見線寬，非實測牆厚。"
+    ],
+    "omitted": [
+      "樓梯、電梯及跨樓層連線：只有 1F 圖面，尚未確認各井的對應 ID 與出入口。",
+      "廁所、未標房號的小隔間、A124-1 的分區及院辦旁狹窄區域，待補標記。",
+      "室外捷徑、無障礙條件、門禁時段、現場障礙物與出入口開放狀態。"
+    ]
+  },
+  "nodes": [
+    {
+      "id": "F1-C-001",
+      "x": 90,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-002",
+      "x": 507.5,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-003",
+      "x": 882.5,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-004",
+      "x": 935,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-005",
+      "x": 90,
+      "z": 176,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-006",
+      "x": 90,
+      "z": 312.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-007",
+      "x": 882.5,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-008",
+      "x": 882.5,
+      "z": 632.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-009",
+      "x": 637.5,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-010",
+      "x": 1074,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-011",
+      "x": 205.68,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-012",
+      "x": 254.6,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-013",
+      "x": 284.76,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-014",
+      "x": 378.96,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-015",
+      "x": 392,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-016",
+      "x": 433.28,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-017",
+      "x": 491.84,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-018",
+      "x": 524.24,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-019",
+      "x": 703,
+      "z": 164,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-020",
+      "x": 727.5,
+      "z": 164,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-021",
+      "x": 727.5,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-022",
+      "x": 752.5,
+      "z": 164,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-023",
+      "x": 717.5,
+      "z": 171,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-024",
+      "x": 717.5,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-025",
+      "x": 755,
+      "z": 171,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-026",
+      "x": 755,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-027",
+      "x": 128.84,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-028",
+      "x": 156.96,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-029",
+      "x": 203,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-030",
+      "x": 301.36,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-031",
+      "x": 314.48,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-032",
+      "x": 356.4,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-033",
+      "x": 396.12,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-034",
+      "x": 440.92,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-035",
+      "x": 482.44,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-036",
+      "x": 565.2,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-037",
+      "x": 669.96,
+      "z": 202.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-038",
+      "x": 641.68,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-039",
+      "x": 688.8,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-040",
+      "x": 735.92,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-041",
+      "x": 783.04,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-042",
+      "x": 916.56,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-043",
+      "x": 1070.8,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-044",
+      "x": 667.12,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-045",
+      "x": 714.24,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-046",
+      "x": 761.36,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-047",
+      "x": 808.48,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-048",
+      "x": 960.72,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-049",
+      "x": 1004.88,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-050",
+      "x": 1049.04,
+      "z": 554,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-051",
+      "x": 90,
+      "z": 203,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "F1-C-052",
+      "x": 882.5,
+      "z": 395.70684,
+      "floor": 1,
+      "type": "walk",
+      "role": "corridor",
+      "label": "走廊轉折／投影點"
+    },
+    {
+      "id": "A129",
+      "x": 52,
+      "z": 172.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A129 氣體室",
+      "source_label": "A129",
+      "temporary_id": false
+    },
+    {
+      "id": "A129#door",
+      "x": 71.36,
+      "z": 176.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A129 氣體室 門口"
+    },
+    {
+      "id": "A125",
+      "x": 189,
+      "z": 135,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A125 氣體吸附儀室",
+      "source_label": "A125",
+      "temporary_id": false
+    },
+    {
+      "id": "A125#door",
+      "x": 205.68,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A125 氣體吸附儀室 門口"
+    },
+    {
+      "id": "A123",
+      "x": 240,
+      "z": 135,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A123 光電子能譜儀室",
+      "source_label": "A123",
+      "temporary_id": false
+    },
+    {
+      "id": "A123#door",
+      "x": 254.6,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A123 光電子能譜儀室 門口"
+    },
+    {
+      "id": "A121",
+      "x": 295,
+      "z": 160,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A121 掃描式電子顯微鏡室（二）",
+      "source_label": "A121",
+      "temporary_id": false
+    },
+    {
+      "id": "A121#door",
+      "x": 284.76,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A121 掃描式電子顯微鏡室（二） 門口"
+    },
+    {
+      "id": "TEMP-A119-N",
+      "x": 364.5,
+      "z": 150,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A119 北側（房號待確認）",
+      "source_label": "A119",
+      "temporary_id": true,
+      "note": "北側離子濺鍍機室與南側材料所所長室均標 A119，暫以 TEMP-A119-N/S 區分。"
+    },
+    {
+      "id": "TEMP-A119-N#door",
+      "x": 378.96,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A119 北側（房號待確認） 門口"
+    },
+    {
+      "id": "A117",
+      "x": 405,
+      "z": 135,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A117 掃描式電子顯微鏡室（一）",
+      "source_label": "A117",
+      "temporary_id": false
+    },
+    {
+      "id": "A117#door",
+      "x": 392,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A117 掃描式電子顯微鏡室（一） 門口"
+    },
+    {
+      "id": "A115-1",
+      "x": 443,
+      "z": 135,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A115-1 精儀中心主任辦公室",
+      "source_label": "A115-1",
+      "temporary_id": false
+    },
+    {
+      "id": "A115-1#door",
+      "x": 433.28,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A115-1 精儀中心主任辦公室 門口"
+    },
+    {
+      "id": "A115",
+      "x": 479,
+      "z": 135,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A115 工學院副院長室",
+      "source_label": "A115",
+      "temporary_id": false
+    },
+    {
+      "id": "A115#door",
+      "x": 491.84,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A115 工學院副院長室 門口"
+    },
+    {
+      "id": "A111",
+      "x": 535,
+      "z": 135,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A111 工學院會議室",
+      "source_label": "A111",
+      "temporary_id": false
+    },
+    {
+      "id": "A111#door",
+      "x": 524.24,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A111 工學院會議室 門口"
+    },
+    {
+      "id": "A107",
+      "x": 680,
+      "z": 112.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A107 工學院院長室",
+      "source_label": "A107",
+      "temporary_id": false
+    },
+    {
+      "id": "A107#door",
+      "x": 703.84,
+      "z": 151.62683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A107 工學院院長室 門口"
+    },
+    {
+      "id": "A103",
+      "x": 760,
+      "z": 112.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A103 工學院辦公室",
+      "source_label": "A103",
+      "temporary_id": false
+    },
+    {
+      "id": "A103#door",
+      "x": 752.88,
+      "z": 151.62683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A103 工學院辦公室 門口"
+    },
+    {
+      "id": "A109",
+      "x": 675,
+      "z": 164,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A109 茶水間",
+      "source_label": "A109",
+      "temporary_id": false
+    },
+    {
+      "id": "A109#door",
+      "x": 697.92,
+      "z": 170.42683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A109 茶水間 門口"
+    },
+    {
+      "id": "A101",
+      "x": 790,
+      "z": 164,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A101 檔案室",
+      "source_label": "A101",
+      "temporary_id": false
+    },
+    {
+      "id": "A101#door",
+      "x": 771.92,
+      "z": 170.42683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A101 檔案室 門口"
+    },
+    {
+      "id": "A124",
+      "x": 131,
+      "z": 255,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A124（與 A124-1 的分區待確認）",
+      "source_label": "A124",
+      "temporary_id": false,
+      "note": "圖面同一未分隔區域還標有 A124-1；先保留 A124 北門，未另外推定 A124-1 的房間邊界。"
+    },
+    {
+      "id": "A124#door",
+      "x": 128.84,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A124（與 A124-1 的分區待確認） 門口"
+    },
+    {
+      "id": "A122",
+      "x": 170,
+      "z": 245,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A122 熱分析儀室",
+      "source_label": "A122",
+      "temporary_id": false
+    },
+    {
+      "id": "A122#door",
+      "x": 156.96,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A122 熱分析儀室 門口"
+    },
+    {
+      "id": "A120",
+      "x": 209,
+      "z": 245,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A120 材料所辦公室",
+      "source_label": "A120",
+      "temporary_id": false
+    },
+    {
+      "id": "A120#door",
+      "x": 203,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A120 材料所辦公室 門口"
+    },
+    {
+      "id": "TEMP-A119-S",
+      "x": 248.5,
+      "z": 245,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A119 南側（房號待確認）",
+      "source_label": "A119",
+      "temporary_id": true,
+      "note": "圖面門開在 A120 與此室的共用側牆，暫經 A120 進入；須確認可通行及實際房號。"
+    },
+    {
+      "id": "TEMP-A119-S#door",
+      "x": 229.92,
+      "z": 234.66683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A119 南側（房號待確認） 門口"
+    },
+    {
+      "id": "A118",
+      "x": 288,
+      "z": 245,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A118 鍍金室",
+      "source_label": "A118",
+      "temporary_id": false
+    },
+    {
+      "id": "A118#door",
+      "x": 301.36,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A118 鍍金室 門口"
+    },
+    {
+      "id": "A116",
+      "x": 327,
+      "z": 265,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A116 穿透式電子顯微鏡室（二）",
+      "source_label": "A116",
+      "temporary_id": false
+    },
+    {
+      "id": "A116#door",
+      "x": 314.48,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A116 穿透式電子顯微鏡室（二） 門口"
+    },
+    {
+      "id": "TEMP-A114-W",
+      "x": 365,
+      "z": 252.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A114 西側（房號待確認）",
+      "source_label": "A114",
+      "temporary_id": true,
+      "note": "穿透式電子顯微鏡室（一）與東側 X 光室均標 A114，暫以 TEMP-A114-W/E 區分。"
+    },
+    {
+      "id": "TEMP-A114-W#door",
+      "x": 356.4,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A114 西側（房號待確認） 門口"
+    },
+    {
+      "id": "A112",
+      "x": 404.5,
+      "z": 246.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A112",
+      "source_label": "A112",
+      "temporary_id": false
+    },
+    {
+      "id": "A112#door",
+      "x": 396.12,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A112 門口"
+    },
+    {
+      "id": "TEMP-A114-E",
+      "x": 447,
+      "z": 265,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A114 東側（房號待確認）",
+      "source_label": "A114",
+      "temporary_id": true,
+      "note": "此為 X 光粉末繞射／光譜儀室，與西側房間房號重複。"
+    },
+    {
+      "id": "TEMP-A114-E#door",
+      "x": 440.92,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A114 東側（房號待確認） 門口"
+    },
+    {
+      "id": "A108",
+      "x": 485,
+      "z": 265,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A108 資料室",
+      "source_label": "A108",
+      "temporary_id": false
+    },
+    {
+      "id": "A108#door",
+      "x": 482.44,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A108 資料室 門口"
+    },
+    {
+      "id": "A106",
+      "x": 514.5,
+      "z": 265,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A106 環境與能源研究中心主任辦公室",
+      "source_label": "A106",
+      "temporary_id": false
+    },
+    {
+      "id": "A106#door",
+      "x": 524.24,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A106 環境與能源研究中心主任辦公室 門口"
+    },
+    {
+      "id": "A104",
+      "x": 553.5,
+      "z": 265,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A104 環境與能源研究中心管理辦公室",
+      "source_label": "A104",
+      "temporary_id": false
+    },
+    {
+      "id": "A104#door",
+      "x": 565.2,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A104 環境與能源研究中心管理辦公室 門口"
+    },
+    {
+      "id": "A102",
+      "x": 725,
+      "z": 272.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "A102 綜合教室",
+      "source_label": "A102",
+      "temporary_id": false
+    },
+    {
+      "id": "A102#door",
+      "x": 669.96,
+      "z": 228.18684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "A102 綜合教室 門口"
+    },
+    {
+      "id": "B113",
+      "x": 654,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B113 研究室",
+      "source_label": "B113",
+      "temporary_id": false
+    },
+    {
+      "id": "B113#door",
+      "x": 641.68,
+      "z": 540.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B113 研究室 門口"
+    },
+    {
+      "id": "B111",
+      "x": 701,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B111 實驗室",
+      "source_label": "B111",
+      "temporary_id": false
+    },
+    {
+      "id": "B111#door",
+      "x": 688.8,
+      "z": 540.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B111 實驗室 門口"
+    },
+    {
+      "id": "B109",
+      "x": 748.5,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B109 實驗室",
+      "source_label": "B109",
+      "temporary_id": false
+    },
+    {
+      "id": "B109#door",
+      "x": 735.92,
+      "z": 540.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B109 實驗室 門口"
+    },
+    {
+      "id": "B107",
+      "x": 795,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B107 實驗室",
+      "source_label": "B107",
+      "temporary_id": false
+    },
+    {
+      "id": "B107#door",
+      "x": 783.04,
+      "z": 540.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B107 實驗室 門口"
+    },
+    {
+      "id": "B105",
+      "x": 950,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B105 資訊電機學院",
+      "source_label": "B105",
+      "temporary_id": false
+    },
+    {
+      "id": "B105#door",
+      "x": 916.56,
+      "z": 540.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B105 資訊電機學院 門口"
+    },
+    {
+      "id": "B103",
+      "x": 1015,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B103（經 B105 進入）",
+      "source_label": "B103",
+      "temporary_id": false,
+      "note": "圖面只有開向 B105 的側門；沒有建立直接穿越南牆到走廊的邊。開放狀態待現勘。"
+    },
+    {
+      "id": "B103#door",
+      "x": 994,
+      "z": 526.50683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B103（經 B105 進入） 門口"
+    },
+    {
+      "id": "B101",
+      "x": 1060,
+      "z": 512.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B101 實驗室",
+      "source_label": "B101",
+      "temporary_id": false
+    },
+    {
+      "id": "B101#door",
+      "x": 1070.8,
+      "z": 540.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B101 實驗室 門口"
+    },
+    {
+      "id": "B116",
+      "x": 654,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B116 研究室",
+      "source_label": "B116",
+      "temporary_id": false
+    },
+    {
+      "id": "B116#door",
+      "x": 667.12,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B116 研究室 門口"
+    },
+    {
+      "id": "B114",
+      "x": 701,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B114 實驗室",
+      "source_label": "B114",
+      "temporary_id": false
+    },
+    {
+      "id": "B114#door",
+      "x": 714.24,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B114 實驗室 門口"
+    },
+    {
+      "id": "B112",
+      "x": 748.5,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B112 實驗室",
+      "source_label": "B112",
+      "temporary_id": false
+    },
+    {
+      "id": "B112#door",
+      "x": 761.36,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B112 實驗室 門口"
+    },
+    {
+      "id": "B110",
+      "x": 795,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B110 實驗室",
+      "source_label": "B110",
+      "temporary_id": false
+    },
+    {
+      "id": "B110#door",
+      "x": 808.48,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B110 實驗室 門口"
+    },
+    {
+      "id": "B108",
+      "x": 927,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B108 實驗室",
+      "source_label": "B108",
+      "temporary_id": false
+    },
+    {
+      "id": "B108#door",
+      "x": 916.56,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B108 實驗室 門口"
+    },
+    {
+      "id": "B106",
+      "x": 971,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B106 實驗室",
+      "source_label": "B106",
+      "temporary_id": false
+    },
+    {
+      "id": "B106#door",
+      "x": 960.72,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B106 實驗室 門口"
+    },
+    {
+      "id": "B104",
+      "x": 1015.5,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B104 實驗室",
+      "source_label": "B104",
+      "temporary_id": false
+    },
+    {
+      "id": "B104#door",
+      "x": 1004.88,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B104 實驗室 門口"
+    },
+    {
+      "id": "B102",
+      "x": 1060,
+      "z": 593.5,
+      "floor": 1,
+      "type": "walk",
+      "role": "room",
+      "label": "B102 實驗室",
+      "source_label": "B102",
+      "temporary_id": false
+    },
+    {
+      "id": "B102#door",
+      "x": 1049.04,
+      "z": 568.74683,
+      "floor": 1,
+      "type": "door",
+      "role": "door",
+      "label": "B102 實驗室 門口"
+    },
+    {
+      "id": "ENTRANCE-A-W",
+      "x": 49.76,
+      "z": 203.62667,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "A 區西側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    },
+    {
+      "id": "ENTRANCE-A-NW",
+      "x": 91,
+      "z": 164.34683,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "A 區西北側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    },
+    {
+      "id": "ENTRANCE-A-SW",
+      "x": 91,
+      "z": 321.38684,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "A 區西南側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    },
+    {
+      "id": "ENTRANCE-A-N",
+      "x": 935.16,
+      "z": 177.14684,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "A 區大廳北側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    },
+    {
+      "id": "ENTRANCE-LINK-E",
+      "x": 905.68,
+      "z": 395.70684,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "連接走廊東側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    },
+    {
+      "id": "ENTRANCE-B-E",
+      "x": 1082.4,
+      "z": 554.50667,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "B 區東側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    },
+    {
+      "id": "ENTRANCE-B-S",
+      "x": 878.68,
+      "z": 646.26684,
+      "floor": 1,
+      "type": "door",
+      "role": "entrance",
+      "label": "B 區南側入口",
+      "note": "依圖面門扇判讀的出入口，開放狀態待現勘。"
+    }
+  ],
+  "edges": [
+    {
+      "a": "F1-C-001",
+      "b": "F1-C-027",
+      "w": 38.84,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-027",
+      "b": "F1-C-028",
+      "w": 28.120000000000005,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-028",
+      "b": "F1-C-029",
+      "w": 46.03999999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-029",
+      "b": "F1-C-011",
+      "w": 2.680000000000007,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-011",
+      "b": "F1-C-012",
+      "w": 48.91999999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-012",
+      "b": "F1-C-013",
+      "w": 30.159999999999997,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-013",
+      "b": "F1-C-030",
+      "w": 16.600000000000023,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-030",
+      "b": "F1-C-031",
+      "w": 13.120000000000005,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-031",
+      "b": "F1-C-032",
+      "w": 41.91999999999996,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-032",
+      "b": "F1-C-014",
+      "w": 22.560000000000002,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-014",
+      "b": "F1-C-015",
+      "w": 13.04000000000002,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-015",
+      "b": "F1-C-033",
+      "w": 4.1200000000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-033",
+      "b": "F1-C-016",
+      "w": 37.15999999999997,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-016",
+      "b": "F1-C-034",
+      "w": 7.640000000000043,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-034",
+      "b": "F1-C-035",
+      "w": 41.51999999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-035",
+      "b": "F1-C-017",
+      "w": 9.399999999999977,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-017",
+      "b": "F1-C-002",
+      "w": 15.660000000000025,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-002",
+      "b": "F1-C-018",
+      "w": 16.74000000000001,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-018",
+      "b": "F1-C-036",
+      "w": 40.960000000000036,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-036",
+      "b": "F1-C-037",
+      "w": 104.75999999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-037",
+      "b": "F1-C-024",
+      "w": 47.539999999999964,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-024",
+      "b": "F1-C-021",
+      "w": 10,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-021",
+      "b": "F1-C-026",
+      "w": 27.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-026",
+      "b": "F1-C-003",
+      "w": 127.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-003",
+      "b": "F1-C-004",
+      "w": 52.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-005",
+      "b": "F1-C-001",
+      "w": 26.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-001",
+      "b": "F1-C-051",
+      "w": 0.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-051",
+      "b": "F1-C-006",
+      "w": 109.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-003",
+      "b": "F1-C-052",
+      "w": 193.20684,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-052",
+      "b": "F1-C-007",
+      "w": 158.29316,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-007",
+      "b": "F1-C-008",
+      "w": 78.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-009",
+      "b": "F1-C-038",
+      "w": 4.17999999999995,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-038",
+      "b": "F1-C-044",
+      "w": 25.440000000000055,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-044",
+      "b": "F1-C-039",
+      "w": 21.67999999999995,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-039",
+      "b": "F1-C-045",
+      "w": 25.440000000000055,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-045",
+      "b": "F1-C-040",
+      "w": 21.67999999999995,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-040",
+      "b": "F1-C-046",
+      "w": 25.440000000000055,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-046",
+      "b": "F1-C-041",
+      "w": 21.67999999999995,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-041",
+      "b": "F1-C-047",
+      "w": 25.440000000000055,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-047",
+      "b": "F1-C-007",
+      "w": 74.01999999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-007",
+      "b": "F1-C-042",
+      "w": 34.059999999999945,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-042",
+      "b": "F1-C-048",
+      "w": 44.16000000000008,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-048",
+      "b": "F1-C-049",
+      "w": 44.15999999999997,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-049",
+      "b": "F1-C-050",
+      "w": 44.15999999999997,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-050",
+      "b": "F1-C-043",
+      "w": 21.75999999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-043",
+      "b": "F1-C-010",
+      "w": 3.2000000000000455,
+      "kind": "walk"
+    },
+    {
+      "a": "A129",
+      "b": "A129#door",
+      "w": 19.723049550858,
+      "kind": "walk"
+    },
+    {
+      "a": "A125",
+      "b": "A125#door",
+      "w": 45.327458807941134,
+      "kind": "walk"
+    },
+    {
+      "a": "A123",
+      "b": "A123#door",
+      "w": 44.603992220266555,
+      "kind": "walk"
+    },
+    {
+      "a": "A121",
+      "b": "A121#door",
+      "w": 19.971773130736295,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A119-N",
+      "b": "TEMP-A119-N#door",
+      "w": 30.75780424519278,
+      "kind": "walk"
+    },
+    {
+      "a": "A117",
+      "b": "A117#door",
+      "w": 44.10619142462427,
+      "kind": "walk"
+    },
+    {
+      "a": "A115-1",
+      "b": "A115-1#door",
+      "w": 43.253144648517754,
+      "kind": "walk"
+    },
+    {
+      "a": "A115",
+      "b": "A115#door",
+      "w": 44.0592977926975,
+      "kind": "walk"
+    },
+    {
+      "a": "A111",
+      "b": "A111#door",
+      "w": 43.49866345056592,
+      "kind": "walk"
+    },
+    {
+      "a": "A107",
+      "b": "A107#door",
+      "w": 45.817621346474354,
+      "kind": "walk"
+    },
+    {
+      "a": "A103",
+      "b": "A103#door",
+      "w": 39.76937547722998,
+      "kind": "walk"
+    },
+    {
+      "a": "A109",
+      "b": "A109#door",
+      "w": 23.80400268544973,
+      "kind": "walk"
+    },
+    {
+      "a": "A101",
+      "b": "A101#door",
+      "w": 19.1882918429156,
+      "kind": "walk"
+    },
+    {
+      "a": "A124",
+      "b": "A124#door",
+      "w": 26.900021360318668,
+      "kind": "walk"
+    },
+    {
+      "a": "A122",
+      "b": "A122#door",
+      "w": 21.277310666190882,
+      "kind": "walk"
+    },
+    {
+      "a": "A120",
+      "b": "A120#door",
+      "w": 17.851676369058463,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A119-S",
+      "b": "TEMP-A119-S#door",
+      "w": 21.260075311458806,
+      "kind": "walk"
+    },
+    {
+      "a": "A118",
+      "b": "A118#door",
+      "w": 21.474914416257885,
+      "kind": "walk"
+    },
+    {
+      "a": "A116",
+      "b": "A116#door",
+      "w": 38.88391890210657,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A114-W",
+      "b": "TEMP-A114-W#door",
+      "w": 25.78933401981526,
+      "kind": "walk"
+    },
+    {
+      "a": "A112",
+      "b": "A112#door",
+      "w": 20.139419782744497,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A114-E",
+      "b": "TEMP-A114-E#door",
+      "w": 37.3118633839909,
+      "kind": "walk"
+    },
+    {
+      "a": "A108",
+      "b": "A108#door",
+      "w": 36.902064294367065,
+      "kind": "walk"
+    },
+    {
+      "a": "A106",
+      "b": "A106#door",
+      "w": 38.07986803004444,
+      "kind": "walk"
+    },
+    {
+      "a": "A104",
+      "b": "A104#door",
+      "w": 38.627694070260034,
+      "kind": "walk"
+    },
+    {
+      "a": "A102",
+      "b": "A102#door",
+      "w": 70.6615719410883,
+      "kind": "walk"
+    },
+    {
+      "a": "B113",
+      "b": "B113#door",
+      "w": 30.37729091913236,
+      "kind": "walk"
+    },
+    {
+      "a": "B111",
+      "b": "B111#door",
+      "w": 30.328821335251412,
+      "kind": "walk"
+    },
+    {
+      "a": "B109",
+      "b": "B109#door",
+      "w": 30.483664536692455,
+      "kind": "walk"
+    },
+    {
+      "a": "B107",
+      "b": "B107#door",
+      "w": 30.233077970752515,
+      "kind": "walk"
+    },
+    {
+      "a": "B105",
+      "b": "B105#door",
+      "w": 43.46528503973721,
+      "kind": "walk"
+    },
+    {
+      "a": "B103",
+      "b": "B103#door",
+      "w": 25.242648170287147,
+      "kind": "walk"
+    },
+    {
+      "a": "B101",
+      "b": "B101#door",
+      "w": 29.793244260832004,
+      "kind": "walk"
+    },
+    {
+      "a": "B116",
+      "b": "B116#door",
+      "w": 28.01524272693167,
+      "kind": "walk"
+    },
+    {
+      "a": "B114",
+      "b": "B114#door",
+      "w": 28.071640939725953,
+      "kind": "walk"
+    },
+    {
+      "a": "B112",
+      "b": "B112#door",
+      "w": 27.894426415484837,
+      "kind": "walk"
+    },
+    {
+      "a": "B110",
+      "b": "B110#door",
+      "w": 28.18563153539225,
+      "kind": "walk"
+    },
+    {
+      "a": "B108",
+      "b": "B108#door",
+      "w": 26.864717103459302,
+      "kind": "walk"
+    },
+    {
+      "a": "B106",
+      "b": "B106#door",
+      "w": 26.802944335443765,
+      "kind": "walk"
+    },
+    {
+      "a": "B104",
+      "b": "B104#door",
+      "w": 26.93517820711231,
+      "kind": "walk"
+    },
+    {
+      "a": "B102",
+      "b": "B102#door",
+      "w": 27.071036645257948,
+      "kind": "walk"
+    },
+    {
+      "a": "A129#door",
+      "b": "F1-C-005",
+      "w": 18.641909869581497,
+      "kind": "walk"
+    },
+    {
+      "a": "A125#door",
+      "b": "F1-C-011",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A123#door",
+      "b": "F1-C-012",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A121#door",
+      "b": "F1-C-013",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A119-N#door",
+      "b": "F1-C-014",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A117#door",
+      "b": "F1-C-015",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A115-1#door",
+      "b": "F1-C-016",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A115#door",
+      "b": "F1-C-017",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A111#door",
+      "b": "F1-C-018",
+      "w": 25.353160000000003,
+      "kind": "walk"
+    },
+    {
+      "a": "A107#door",
+      "b": "F1-C-019",
+      "w": 12.401650529219879,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-019",
+      "b": "F1-C-020",
+      "w": 24.5,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-020",
+      "b": "F1-C-021",
+      "w": 38.5,
+      "kind": "walk"
+    },
+    {
+      "a": "A103#door",
+      "b": "F1-C-022",
+      "w": 12.379003831039867,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-022",
+      "b": "F1-C-020",
+      "w": 25,
+      "kind": "walk"
+    },
+    {
+      "a": "A109#door",
+      "b": "F1-C-023",
+      "w": 19.588387474442648,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-023",
+      "b": "F1-C-024",
+      "w": 31.5,
+      "kind": "walk"
+    },
+    {
+      "a": "A101#door",
+      "b": "F1-C-025",
+      "w": 16.929705368047568,
+      "kind": "walk"
+    },
+    {
+      "a": "F1-C-025",
+      "b": "F1-C-026",
+      "w": 31.5,
+      "kind": "walk"
+    },
+    {
+      "a": "A124#door",
+      "b": "F1-C-027",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A122#door",
+      "b": "F1-C-028",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A120#door",
+      "b": "F1-C-029",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A119-S#door",
+      "b": "A120",
+      "w": 23.332826709357345,
+      "kind": "walk"
+    },
+    {
+      "a": "A118#door",
+      "b": "F1-C-030",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A116#door",
+      "b": "F1-C-031",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A114-W#door",
+      "b": "F1-C-032",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A112#door",
+      "b": "F1-C-033",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "TEMP-A114-E#door",
+      "b": "F1-C-034",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A108#door",
+      "b": "F1-C-035",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A106#door",
+      "b": "F1-C-018",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A104#door",
+      "b": "F1-C-036",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "A102#door",
+      "b": "F1-C-037",
+      "w": 25.68683999999999,
+      "kind": "walk"
+    },
+    {
+      "a": "B113#door",
+      "b": "F1-C-038",
+      "w": 13.733159999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "B111#door",
+      "b": "F1-C-039",
+      "w": 13.733159999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "B109#door",
+      "b": "F1-C-040",
+      "w": 13.733159999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "B107#door",
+      "b": "F1-C-041",
+      "w": 13.733159999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "B105#door",
+      "b": "F1-C-042",
+      "w": 13.733159999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "B103#door",
+      "b": "B105",
+      "w": 46.17565686212705,
+      "kind": "walk"
+    },
+    {
+      "a": "B101#door",
+      "b": "F1-C-043",
+      "w": 13.733159999999998,
+      "kind": "walk"
+    },
+    {
+      "a": "B116#door",
+      "b": "F1-C-044",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B114#door",
+      "b": "F1-C-045",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B112#door",
+      "b": "F1-C-046",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B110#door",
+      "b": "F1-C-047",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B108#door",
+      "b": "F1-C-042",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B106#door",
+      "b": "F1-C-048",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B104#door",
+      "b": "F1-C-049",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "B102#door",
+      "b": "F1-C-050",
+      "w": 14.746830000000045,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-A-W",
+      "b": "F1-C-051",
+      "w": 40.24487936730461,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-A-NW",
+      "b": "F1-C-005",
+      "w": 11.695998078355679,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-A-SW",
+      "b": "F1-C-006",
+      "w": 8.94292598569395,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-A-N",
+      "b": "F1-C-004",
+      "w": 25.35366486300551,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-LINK-E",
+      "b": "F1-C-052",
+      "w": 23.17999999999995,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-B-E",
+      "b": "F1-C-010",
+      "w": 8.41526675090585,
+      "kind": "walk"
+    },
+    {
+      "a": "ENTRANCE-B-S",
+      "b": "F1-C-008",
+      "w": 14.286997010764734,
+      "kind": "walk"
+    }
+  ]
+}

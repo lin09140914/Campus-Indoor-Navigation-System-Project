@@ -1,0 +1,711 @@
+{
+  "building_id": "eng5",
+  "map_version": "2026-11-24-floor1-structured-draft2",
+  "entries": [
+    {
+      "node_id": "F1-C-001",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-001"
+    },
+    {
+      "node_id": "F1-C-002",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-002"
+    },
+    {
+      "node_id": "F1-C-003",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-003"
+    },
+    {
+      "node_id": "F1-C-004",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-004"
+    },
+    {
+      "node_id": "F1-C-005",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-005"
+    },
+    {
+      "node_id": "F1-C-006",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-006"
+    },
+    {
+      "node_id": "F1-C-007",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-007"
+    },
+    {
+      "node_id": "F1-C-008",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-008"
+    },
+    {
+      "node_id": "F1-C-009",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-009"
+    },
+    {
+      "node_id": "F1-C-010",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-010"
+    },
+    {
+      "node_id": "F1-C-011",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-011"
+    },
+    {
+      "node_id": "F1-C-012",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-012"
+    },
+    {
+      "node_id": "F1-C-013",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-013"
+    },
+    {
+      "node_id": "F1-C-014",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-014"
+    },
+    {
+      "node_id": "F1-C-015",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-015"
+    },
+    {
+      "node_id": "F1-C-016",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-016"
+    },
+    {
+      "node_id": "F1-C-017",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-017"
+    },
+    {
+      "node_id": "F1-C-018",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-018"
+    },
+    {
+      "node_id": "F1-C-019",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-019"
+    },
+    {
+      "node_id": "F1-C-020",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-020"
+    },
+    {
+      "node_id": "F1-C-021",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-021"
+    },
+    {
+      "node_id": "F1-C-022",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-022"
+    },
+    {
+      "node_id": "F1-C-023",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-023"
+    },
+    {
+      "node_id": "F1-C-024",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-024"
+    },
+    {
+      "node_id": "F1-C-025",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-025"
+    },
+    {
+      "node_id": "F1-C-026",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-026"
+    },
+    {
+      "node_id": "F1-C-027",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-027"
+    },
+    {
+      "node_id": "F1-C-028",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-028"
+    },
+    {
+      "node_id": "F1-C-029",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-029"
+    },
+    {
+      "node_id": "F1-C-030",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-030"
+    },
+    {
+      "node_id": "F1-C-031",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-031"
+    },
+    {
+      "node_id": "F1-C-032",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-032"
+    },
+    {
+      "node_id": "F1-C-033",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-033"
+    },
+    {
+      "node_id": "F1-C-034",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-034"
+    },
+    {
+      "node_id": "F1-C-035",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-035"
+    },
+    {
+      "node_id": "F1-C-036",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-036"
+    },
+    {
+      "node_id": "F1-C-037",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-037"
+    },
+    {
+      "node_id": "F1-C-038",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-038"
+    },
+    {
+      "node_id": "F1-C-039",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-039"
+    },
+    {
+      "node_id": "F1-C-040",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-040"
+    },
+    {
+      "node_id": "F1-C-041",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-041"
+    },
+    {
+      "node_id": "F1-C-042",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-042"
+    },
+    {
+      "node_id": "F1-C-043",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-043"
+    },
+    {
+      "node_id": "F1-C-044",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-044"
+    },
+    {
+      "node_id": "F1-C-045",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-045"
+    },
+    {
+      "node_id": "F1-C-046",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-046"
+    },
+    {
+      "node_id": "F1-C-047",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-047"
+    },
+    {
+      "node_id": "F1-C-048",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-048"
+    },
+    {
+      "node_id": "F1-C-049",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-049"
+    },
+    {
+      "node_id": "F1-C-050",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-050"
+    },
+    {
+      "node_id": "F1-C-051",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-051"
+    },
+    {
+      "node_id": "F1-C-052",
+      "floor": 1,
+      "svg_anchor_id": "anchor-F1-C-052"
+    },
+    {
+      "node_id": "A129",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A129"
+    },
+    {
+      "node_id": "A129#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A129-door"
+    },
+    {
+      "node_id": "A125",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A125"
+    },
+    {
+      "node_id": "A125#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A125-door"
+    },
+    {
+      "node_id": "A123",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A123"
+    },
+    {
+      "node_id": "A123#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A123-door"
+    },
+    {
+      "node_id": "A121",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A121"
+    },
+    {
+      "node_id": "A121#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A121-door"
+    },
+    {
+      "node_id": "TEMP-A119-N",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A119-N"
+    },
+    {
+      "node_id": "TEMP-A119-N#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A119-N-door"
+    },
+    {
+      "node_id": "A117",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A117"
+    },
+    {
+      "node_id": "A117#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A117-door"
+    },
+    {
+      "node_id": "A115-1",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A115-1"
+    },
+    {
+      "node_id": "A115-1#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A115-1-door"
+    },
+    {
+      "node_id": "A115",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A115"
+    },
+    {
+      "node_id": "A115#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A115-door"
+    },
+    {
+      "node_id": "A111",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A111"
+    },
+    {
+      "node_id": "A111#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A111-door"
+    },
+    {
+      "node_id": "A107",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A107"
+    },
+    {
+      "node_id": "A107#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A107-door"
+    },
+    {
+      "node_id": "A103",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A103"
+    },
+    {
+      "node_id": "A103#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A103-door"
+    },
+    {
+      "node_id": "A109",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A109"
+    },
+    {
+      "node_id": "A109#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A109-door"
+    },
+    {
+      "node_id": "A101",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A101"
+    },
+    {
+      "node_id": "A101#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A101-door"
+    },
+    {
+      "node_id": "A124",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A124"
+    },
+    {
+      "node_id": "A124#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A124-door"
+    },
+    {
+      "node_id": "A122",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A122"
+    },
+    {
+      "node_id": "A122#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A122-door"
+    },
+    {
+      "node_id": "A120",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A120"
+    },
+    {
+      "node_id": "A120#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A120-door"
+    },
+    {
+      "node_id": "TEMP-A119-S",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A119-S"
+    },
+    {
+      "node_id": "TEMP-A119-S#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A119-S-door"
+    },
+    {
+      "node_id": "A118",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A118"
+    },
+    {
+      "node_id": "A118#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A118-door"
+    },
+    {
+      "node_id": "A116",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A116"
+    },
+    {
+      "node_id": "A116#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A116-door"
+    },
+    {
+      "node_id": "TEMP-A114-W",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A114-W"
+    },
+    {
+      "node_id": "TEMP-A114-W#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A114-W-door"
+    },
+    {
+      "node_id": "A112",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A112"
+    },
+    {
+      "node_id": "A112#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A112-door"
+    },
+    {
+      "node_id": "TEMP-A114-E",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A114-E"
+    },
+    {
+      "node_id": "TEMP-A114-E#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-TEMP-A114-E-door"
+    },
+    {
+      "node_id": "A108",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A108"
+    },
+    {
+      "node_id": "A108#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A108-door"
+    },
+    {
+      "node_id": "A106",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A106"
+    },
+    {
+      "node_id": "A106#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A106-door"
+    },
+    {
+      "node_id": "A104",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A104"
+    },
+    {
+      "node_id": "A104#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A104-door"
+    },
+    {
+      "node_id": "A102",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A102"
+    },
+    {
+      "node_id": "A102#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-A102-door"
+    },
+    {
+      "node_id": "B113",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B113"
+    },
+    {
+      "node_id": "B113#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B113-door"
+    },
+    {
+      "node_id": "B111",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B111"
+    },
+    {
+      "node_id": "B111#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B111-door"
+    },
+    {
+      "node_id": "B109",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B109"
+    },
+    {
+      "node_id": "B109#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B109-door"
+    },
+    {
+      "node_id": "B107",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B107"
+    },
+    {
+      "node_id": "B107#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B107-door"
+    },
+    {
+      "node_id": "B105",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B105"
+    },
+    {
+      "node_id": "B105#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B105-door"
+    },
+    {
+      "node_id": "B103",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B103"
+    },
+    {
+      "node_id": "B103#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B103-door"
+    },
+    {
+      "node_id": "B101",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B101"
+    },
+    {
+      "node_id": "B101#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B101-door"
+    },
+    {
+      "node_id": "B116",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B116"
+    },
+    {
+      "node_id": "B116#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B116-door"
+    },
+    {
+      "node_id": "B114",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B114"
+    },
+    {
+      "node_id": "B114#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B114-door"
+    },
+    {
+      "node_id": "B112",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B112"
+    },
+    {
+      "node_id": "B112#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B112-door"
+    },
+    {
+      "node_id": "B110",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B110"
+    },
+    {
+      "node_id": "B110#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B110-door"
+    },
+    {
+      "node_id": "B108",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B108"
+    },
+    {
+      "node_id": "B108#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B108-door"
+    },
+    {
+      "node_id": "B106",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B106"
+    },
+    {
+      "node_id": "B106#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B106-door"
+    },
+    {
+      "node_id": "B104",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B104"
+    },
+    {
+      "node_id": "B104#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B104-door"
+    },
+    {
+      "node_id": "B102",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B102"
+    },
+    {
+      "node_id": "B102#door",
+      "floor": 1,
+      "svg_anchor_id": "anchor-B102-door"
+    },
+    {
+      "node_id": "ENTRANCE-A-W",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-A-W"
+    },
+    {
+      "node_id": "ENTRANCE-A-NW",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-A-NW"
+    },
+    {
+      "node_id": "ENTRANCE-A-SW",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-A-SW"
+    },
+    {
+      "node_id": "ENTRANCE-A-N",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-A-N"
+    },
+    {
+      "node_id": "ENTRANCE-LINK-E",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-LINK-E"
+    },
+    {
+      "node_id": "ENTRANCE-B-E",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-B-E"
+    },
+    {
+      "node_id": "ENTRANCE-B-S",
+      "floor": 1,
+      "svg_anchor_id": "anchor-ENTRANCE-B-S"
+    }
+  ]
+}

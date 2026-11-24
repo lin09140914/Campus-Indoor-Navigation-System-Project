@@ -53,3 +53,18 @@
 
 涉及統一資料規格、跨組 Function 或技術棧的修改，必須先與受影響組別協調。
 
+## 6. 1F 分層圖資與離線檢查草稿
+
+1F SVG 已依 V1.1 契約分類，牆體為封閉輪廓，門與文字獨立，並附上對應的導航草稿。
+目前有 41 個房間、7 個入口、141 個節點與 140 條邊；實際尺寸依使用者安排延後量測，距離維持 SVG 圖面單位。
+
+- [SVG 物件與圖層說明](data/svg/README.md)
+- [導航草稿、重建方式與待確認事項](data/drafts/floor-1/README.md)
+- [草稿／正式交付分開列出的檢查報告](data/drafts/floor-1/validation-report.json)
+
+離線預覽：在專案根目錄執行 `python -m http.server 8080 --bind 127.0.0.1`，
+開啟 <http://127.0.0.1:8080/examples/floor1-graph-draft.html>。
+此工具使用 Python／Node 標準函式庫與獨立的預覽用 A*，不新增 npm 套件，也不屬於 Android 路徑組的正式 API。
+
+草稿檢查通過不代表已完成正式世界座標整合、實測或 APK 驗收。
+

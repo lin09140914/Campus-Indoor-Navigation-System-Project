@@ -1,0 +1,48 @@
+{
+  "map_version": "2026-11-24-floor1-structured-draft2",
+  "building_id": "eng5",
+  "schema_version": "V1.1",
+  "schema_git_commit": "89a6ae3fdbabdfc38f989d07330c1d40a63ad304",
+  "draft_consistency": "pass",
+  "formal_delivery": "pending",
+  "current_review_scope": "svg_graph_structure_and_correspondence",
+  "measurement_policy": {
+    "status": "deferred_by_user",
+    "current_scope": "svg_graph_structure_and_correspondence",
+    "distance_unit": "svg-unit",
+    "deferred_items": [
+      "實際長度與公尺比例",
+      "實際牆厚與樓層高度",
+      "正式世界座標轉換所需的量測與整合確認"
+    ]
+  },
+  "counts": {
+    "layers": 9,
+    "closed_wall_objects": 204,
+    "door_openings": 82,
+    "nodes": 141,
+    "edges": 140,
+    "anchors": 141
+  },
+  "checks": [
+    "closed_nonzero_wall_geometry",
+    "closed_space_geometry",
+    "facility_boundaries",
+    "unique_ids",
+    "graph_fields_types_weights",
+    "no_duplicate_edges",
+    "no_wall_crossing",
+    "one_to_one_node_mapping",
+    "destination_references",
+    "same_map_version",
+    "source_hash"
+  ],
+  "pending": [
+    "Graph x/z 與 Edge w 仍為 SVG 圖面單位，未符合第 3 節的世界座標／等效公尺。",
+    "缺少確認後的比例、原點與旋轉，尚未具備第 2、7 節要求的正式 floors.json。",
+    "樓層 elevation_m 尚未確認。",
+    "Building ID 與 coordinate_system_id 尚待整合組定案。",
+    "封閉牆體的寬度僅由原圖線寬展開，實際牆厚尚未確認。",
+    "A119／A114 的重複房號仍使用 TEMP-* 暫名。"
+  ]
+}
