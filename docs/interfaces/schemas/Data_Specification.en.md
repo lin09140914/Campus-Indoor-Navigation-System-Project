@@ -1,6 +1,7 @@
 # Campus Indoor Navigation System V1 — Unified Data Specification
 
-**Document version:** V1.0 (final proposal)  
+**Document version:** V1.1 (SVG object and layer supplement proposal)
+**Updated:** 2026-11-23
 **Applies to:** Map, Localization, Route, 3D, UI Teams  
 **Document type:** Cross-team data contract  
 **Note:** This is an English translation of the Chinese original (`docs/interfaces/schemas/Data_Specification.md`). If the two differ, the Chinese original prevails.
@@ -40,27 +41,101 @@
 | `elevators` | Elevators |
 | `nav-anchors` | Navigation node anchors |
 
-Empty layers may be kept, but the meaning of defined IDs must not be changed on one's own.
+All six standard layers must be retained as `<g id="...">` elements. Use an empty layer when the floor has no corresponding content. The meaning of defined IDs must not be changed on one's own.
 
-## 1.4 SVG Example
+Place door leaves and swing directions in an additional `doors` group, and room numbers, names, and textual direction labels in `labels`. When present, this content must be separate from the six standard layers; these two auxiliary groups may be omitted when unused. Auxiliary groups do not replace standard layers.
+
+## 1.4 Basic Objects and Layer Stacking (Required)
+- Walls, rooms, corridors, stairs, and elevators must be organized as objects by purpose. Each basic object that needs independent identification, selection, editing, or 3D modeling must retain its own SVG element or `<g>` group and a clear `id` unique within the SVG.
+- Put objects of the same category in the layer specified in Section 1.3. Nested `<g>` elements may organize room or stair components, while retaining independent child objects. A shared wall only needs to be drawn once; do not duplicate it for each room.
+- Stacking means SVG paint order: later visible elements are normally painted over earlier ones. The recommended order is `corridors → rooms → walls → stairs → elevators → doors → nav-anchors → labels`. Order may be adjusted for occlusion, while preserving categories and IDs.
+- Do not merge an entire map, or multiple objects that need independent operations, into one path or raster image. Color alone must not identify categories. Wrapping mixed map geometry in a single `walls` group does not satisfy classification.
+- Reusable components are not required for every wall segment. Drawing-tool groups and generated SVG are both acceptable if the delivered SVG retains this structure. IDs are identifiers; programs must not infer coordinates, floors, or geometry from their names.
+
+## 1.5 Two-Dimensional Geometry for 3D Processing (Required)
+| Category | Delivery requirement |
+|---|---|
+| Walls | Use closed outlines with area, such as `rect`, `polygon`, or an explicitly closed `path`. Geometry must express wall thickness; a centerline whose thickness is represented only by `stroke-width` is insufficient. Doorways must be actual gaps in wall geometry, not floor-colored shapes covering a continuous wall. |
+| Rooms and corridors | Provide separate closed regions with independent IDs. Do not merge room outlines with walls, text, or door leaves. |
+| Stairs and elevators | Keep each facility in an independent group with a footprint outline. Step lines and direction symbols must remain identifiable child objects, outside `walls`. |
+| Doors and text labels | Use separate `doors` and `labels` groups. Do not extrude them as walls. Keep text separate from structural geometry. |
+
+The Map Team supplies 2D geometry, categories, and coordinates. The 3D Team handles wall heights, materials, and 3D model generation. A 2D stair symbol is not a 3D staircase. Convert SVG coordinates according to Sections 2 and 7. If nested `transform` attributes are used, the reader must account for their cumulative transform before applying `svg_transform` from `floors.json`.
+
+## 1.6 SVG Source Cleanup (Required)
+- Use UTF-8, two spaces per indentation level, and consistent line breaks. Do not deliver the entire SVG minified onto one line.
+- Organize source by layers and functional blocks, with short purpose comments. Use clear, consistent object names without duplicate IDs.
+- Remove unused hidden source drawings, temporary objects, and duplicate geometry from delivery files; keep source drafts separately. Required hidden `nav-anchors` are not unused content.
+- After export or formatting, confirm that the SVG still displays correctly and retains object categories, doorway gaps, and IDs.
+
+## 1.7 A118 Small-Area Example
+
+Complete editable example: [A118_layered_template.svg](examples/A118_layered_template.svg). Open it directly in a browser or SVG editor.
+
+![A118 object and layer example](examples/A118_layered_template.svg)
+
+This example demonstrates A118 and its adjoining corridor. **It is not a measured plan of A118.** Blue represents five independent wall segments, light green the room, light yellow the corridor, and orange the door. Colors, dimensions, and object ID names are examples, not prescribed values.
+
+| Object | Example ID | Layer |
+|---|---|---|
+| Room and floor | `room-A118`, `room-A118-floor` | `rooms` |
+| Adjoining corridor | `corridor-A118-front` | `corridors` |
+| Wall segments | `wall-A118-west`, `wall-A118-north-left`, etc. | `walls` |
+| Door leaf and swing arc | `door-A118-leaf`, `door-A118-swing` | `doors` |
+| Navigation anchors | `anchor-N_A118_CORRIDOR`, `anchor-N_A118_ENTRY` | `nav-anchors` |
+| Room number and name | `label-A118-number`, `label-A118-kind` | `labels` |
+
+`stairs` and `elevators` remain empty because these facilities are absent from the example area. `data-room-ref` is an optional helper relationship used by the example, not a new required field or a replacement for Node Mapping or Destination.
+
+The following is a compact structural example using the same geometry. The full example also includes the door, labels, and comments:
 ```xml
 <svg xmlns="http://www.w3.org/2000/svg"
-     viewBox="0 0 120 100"
-     data-building-id="B01"
+     viewBox="0 0 1000 850"
+     data-building-id="EB5_DEMO"
      data-floor="1"
-     data-map-version="2026-11-19-01">
-  <g id="walls"><path d="M0 0 H120 V100 H0 Z" fill="none" stroke="black"/></g>
-  <g id="rooms"></g>
-  <g id="corridors"></g>
-  <g id="stairs"></g>
-  <g id="elevators"></g>
+     data-map-version="example-A118-v1">
+  <g id="corridors">
+    <rect id="corridor-A118-front" x="140" y="100" width="720" height="160" fill="#fff0ce" />
+  </g>
+  <g id="rooms" fill="#dff2d8">
+    <g id="room-A118">
+      <rect id="room-A118-floor" x="160" y="280" width="680" height="440" />
+      <rect id="room-A118-threshold" x="220" y="260" width="120" height="20" />
+    </g>
+  </g>
+  <g id="walls" fill="#4f78ba">
+    <rect id="wall-A118-west" x="140" y="280" width="20" height="440" />
+    <rect id="wall-A118-east" x="840" y="280" width="20" height="440" />
+    <rect id="wall-A118-south" x="140" y="720" width="720" height="20" />
+    <!-- Doorway x=220..340 is a real gap between two wall segments. -->
+    <rect id="wall-A118-north-left" x="140" y="260" width="80" height="20" />
+    <rect id="wall-A118-north-right" x="340" y="260" width="520" height="20" />
+  </g>
+  <g id="stairs" />
+  <g id="elevators" />
   <g id="nav-anchors" display="none">
-    <circle id="anchor-N1" cx="20" cy="30" r="1"/>
-    <circle id="anchor-N2" cx="60" cy="30" r="1"/>
+    <circle id="anchor-N_A118_CORRIDOR" cx="280" cy="180" r="10" />
+    <circle id="anchor-N_A118_ENTRY" cx="280" cy="270" r="10" />
   </g>
 </svg>
 ```
-This example only shows the required structure and is not a complete real building floor plan. SVG drawing coordinates must be converted to real-world coordinates according to Sections 2 and 7.
+
+The building ID, map version, anchors, and coordinates are teaching values, not linked to the production Graph. Replace them with confirmed data for formal delivery, alongside consistent `floors.json`, `graph.json`, `node_map.json`, and `destinations.json`. This example does not demonstrate completed cross-file validation.
+
+## 1.8 SVG Delivery Checklist
+- [ ] Required root attributes and all six standard layers exist; the SVG parses and displays correctly.
+- [ ] Basic objects have unique IDs and can be selected and edited independently. No merged entire map, text mixed into walls, or category changes made only by renaming a layer.
+- [ ] Hiding `doors` and `labels` leaves correct wall outlines with actual doorway gaps; rooms and corridors are closed regions.
+- [ ] Walls, rooms, corridors, and facilities can be read separately by layer. Confirm small-area reading and modeling with the 3D Team before applying the structure to an entire floor.
+- [ ] Indentation, line breaks, names, and comments are organized; no duplicate IDs, unused hidden content, or external resources remain.
+- [ ] Formal delivery passes the Graph / anchor mapping and coordinate checks in Section 5, and the version rules in Section 9.2.
+
+In the PR, include a layer preview or object-selection screenshot, basic check results, and any outstanding cross-team validation. Displaying an SVG alone does not establish that it is ready for 3D modeling.
+
+## 1.9 Scope and Compatibility of This Supplement
+The 2026-11-23 supplement specifies independent objects, layer stacking, closed geometry, and source cleanup, affecting Map Team delivery and 3D Team readers. The six standard layers and root attributes remain from the previous specification; the object organization and geometry details are newly explicit requirements, not requirements retroactively claimed to have been written in the original.
+
+After this supplement is reviewed and merged through a PR, it applies to subsequent revisions of unmerged map-data PRs and future formal deliveries. Existing drawings need cleanup and compatibility confirmation with the 3D Team, rather than being assumed compliant. Existing fields and coordinate rules in Sections 2–10 remain unchanged.
 
 ---
 
@@ -460,4 +535,4 @@ Before formal use, the following must be validated: JSON structure and types, ID
 
 All teams may decide their internal implementations freely, but cross-team data must follow this document.
 
-**After review and release by the Integration Team, the V1.0 data specification serves as the formal data contract shared by the five teams.**
+**After review and release by the Integration Team, the V1.1 data specification serves as the formal data contract shared by the five teams.**
