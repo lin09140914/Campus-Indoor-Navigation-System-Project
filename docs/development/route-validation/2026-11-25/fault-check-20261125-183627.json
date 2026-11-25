@@ -1,0 +1,300 @@
+{
+  "time": "2026-11-25T10:36:27.102377+00:00",
+  "manifest": {
+    "core_git_blob": "11ad2bf89c59f59ac92c633d48fa15f42dd6bde4",
+    "jar_sha256": "75b74f16b80df956af6e0ec1f8885bc2c49a88f5c26a45f3459d53c1db53f8c3"
+  },
+  "scope": "v0.2 server.verify 與 Kotlin 查詢；不驗證 Android、RouteJson、瀏覽器顯示或修改 Kotlin 本身",
+  "cases": [
+    {
+      "case": "正常 S→L_G any",
+      "expected_failed_checks": [],
+      "actual_failed_checks": [],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true,
+        "追蹤版與原始版輸出一致": true,
+        "人工已知成本": true,
+        "人工已知路徑": true
+      },
+      "pass_": true,
+      "note": ""
+    },
+    {
+      "case": "正常 S→L_U any",
+      "expected_failed_checks": [],
+      "actual_failed_checks": [],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true,
+        "追蹤版與原始版輸出一致": true,
+        "人工已知成本": true,
+        "人工已知路徑": true
+      },
+      "pass_": true,
+      "note": ""
+    },
+    {
+      "case": "正常 S→L_U stair",
+      "expected_failed_checks": [],
+      "actual_failed_checks": [],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true,
+        "追蹤版與原始版輸出一致": true,
+        "人工已知成本": true,
+        "人工已知路徑": true
+      },
+      "pass_": true,
+      "note": ""
+    },
+    {
+      "case": "正常 S→L_U elev",
+      "expected_failed_checks": [],
+      "actual_failed_checks": [],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true,
+        "追蹤版與原始版輸出一致": true,
+        "人工已知成本": true,
+        "人工已知路徑": true
+      },
+      "pass_": true,
+      "note": ""
+    },
+    {
+      "case": "正常 S→L_S any",
+      "expected_failed_checks": [],
+      "actual_failed_checks": [],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true,
+        "追蹤版與原始版輸出一致": true,
+        "人工已知成本": true,
+        "人工已知路徑": true
+      },
+      "pass_": true,
+      "note": ""
+    },
+    {
+      "case": "正常 S→L_X any",
+      "expected_failed_checks": [],
+      "actual_failed_checks": [],
+      "checks": {
+        "可達性一致": true,
+        "追蹤版與原始版輸出一致": true,
+        "人工已知成本": true,
+        "人工已知路徑": true
+      },
+      "pass_": true,
+      "note": ""
+    },
+    {
+      "case": "成本寫錯 6→8",
+      "expected_failed_checks": [
+        "邊權重總和",
+        "Dijkstra 最短成本"
+      ],
+      "actual_failed_checks": [
+        "邊權重總和",
+        "Dijkstra 最短成本"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": false,
+        "Dijkstra 最短成本": false,
+        "樓層及 transitions": true
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "跳過 A：B→V 無連接邊",
+      "expected_failed_checks": [
+        "連續合法邊"
+      ],
+      "actual_failed_checks": [
+        "連續合法邊",
+        "移動模式",
+        "邊權重總和",
+        "樓層及 transitions"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": false,
+        "移動模式": false,
+        "邊權重總和": false,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": false
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "樓梯模式違規使用電梯",
+      "expected_failed_checks": [
+        "移動模式"
+      ],
+      "actual_failed_checks": [
+        "移動模式",
+        "Dijkstra 最短成本"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": false,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": false,
+        "樓層及 transitions": true
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "合法但非最短的樓梯路線",
+      "expected_failed_checks": [
+        "Dijkstra 最短成本"
+      ],
+      "actual_failed_checks": [
+        "Dijkstra 最短成本"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": false,
+        "樓層及 transitions": true
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "地圖版本錯誤",
+      "expected_failed_checks": [
+        "節點資料與版本"
+      ],
+      "actual_failed_checks": [
+        "節點資料與版本"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": false,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "錯誤樓層清單",
+      "expected_failed_checks": [
+        "樓層及 transitions"
+      ],
+      "actual_failed_checks": [
+        "樓層及 transitions"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": false
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "遺失跨樓層紀錄",
+      "expected_failed_checks": [
+        "樓層及 transitions"
+      ],
+      "actual_failed_checks": [
+        "樓層及 transitions"
+      ],
+      "checks": {
+        "起點與目的地": true,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": true,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": false
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "錯誤回傳無路徑",
+      "expected_failed_checks": [
+        "可達性一致"
+      ],
+      "actual_failed_checks": [
+        "可達性一致"
+      ],
+      "checks": {
+        "可達性一致": false
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    },
+    {
+      "case": "錯誤終點",
+      "expected_failed_checks": [
+        "起點與目的地"
+      ],
+      "actual_failed_checks": [
+        "起點與目的地",
+        "邊權重總和"
+      ],
+      "checks": {
+        "起點與目的地": false,
+        "節點資料與版本": true,
+        "連續合法邊": true,
+        "移動模式": true,
+        "邊權重總和": false,
+        "Dijkstra 最短成本": true,
+        "樓層及 transitions": true
+      },
+      "pass_": true,
+      "note": "故意錯誤的副本；正式程式與原始資料未修改"
+    }
+  ],
+  "pass": true
+}

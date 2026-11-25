@@ -1,0 +1,55 @@
+COMMAND: gradlew.bat --no-daemon --console=plain :app:assembleDebug
+INPUT SHA256: {"app/src/main/java/com/example/campusindoornavigation/routing/RoutePlanner.kt": "27eabce8423d661aab26fc2a63ab89f33d52c03146282a3dadbcb5e8b6a0db11", "app/src/main/java/com/example/campusindoornavigation/routing/RouteJson.kt": "81e4a6caaef90f2a9f37441106a514784bbfed80a468448c98343da6dda34377", "tools/routing/RouteJsonCheck.kt": "332fca94b8a43429a9cede80b9b2b99220de5c55cf9a2363a0116889085de993", "data/drafts/floor-1/graph.json": "c947125992c29c163e60eb0ba3fa2506c34bfbbf39ea70354ca968a1e11ca8bd", "data/drafts/floor-1/destinations.json": "404512d84f2f2109657840c7a47f5272dd9047fc976fcc394f4a2d0dbf1c669b", "gradle/libs.versions.toml": "9047be8432ba5b96ebb706c4566c0ac4e01305285f1ae7422dce0f5c69b3a1f7"}
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :app:preBuild UP-TO-DATE
+> Task :app:preDebugBuild UP-TO-DATE
+> Task :app:mergeDebugNativeDebugMetadata NO-SOURCE
+> Task :app:generateDebugResources
+> Task :app:packageDebugResources
+> Task :app:processDebugNavigationResources
+> Task :app:generateDebugAssets UP-TO-DATE
+> Task :app:javaPreCompileDebug
+> Task :app:parseDebugLocalResources
+> Task :app:mergeDebugAssets
+> Task :app:compressDebugAssets
+> Task :app:generateDebugRFile
+> Task :app:generateDebugGlobalSynthetics
+> Task :app:desugarDebugFileDependencies
+> Task :app:checkDebugDuplicateClasses
+> Task :app:checkDebugAarMetadata
+> Task :app:compileDebugKotlin
+> Task :app:mergeExtDexDebug
+> Task :app:mapDebugSourceSetPaths
+> Task :app:mergeLibDexDebug
+> Task :app:compileDebugNavigationResources
+> Task :app:compileDebugJavaWithJavac NO-SOURCE
+> Task :app:processDebugJavaRes
+> Task :app:mergeDebugResources
+> Task :app:createDebugCompatibleScreenManifests
+> Task :app:extractDeepLinksDebug
+> Task :app:processDebugMainManifest
+> Task :app:processDebugManifest
+> Task :app:mergeDebugJniLibFolders
+> Task :app:mergeDebugNativeLibs
+> Task :app:mergeDebugJavaResource
+> Task :app:validateSigningDebug
+> Task :app:writeDebugAppMetadata
+
+> Task :app:stripDebugDebugSymbols
+Unable to strip the following libraries, packaging them as they are: libandroidx.graphics.path.so. Run with --info option to learn more.
+
+> Task :app:writeDebugSigningConfigVersions
+> Task :app:processDebugManifestForPackage
+> Task :app:processDebugResources
+> Task :app:dexBuilderDebug
+> Task :app:mergeProjectDexDebug
+> Task :app:packageDebug
+> Task :app:createDebugApkListingFileRedirect
+> Task :app:assembleDebug
+
+BUILD SUCCESSFUL in 2m 20s
+36 actionable tasks: 36 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.0/userguide/configuration_cache_enabling.html
+
+EXIT=0; MARKER=True; RESULT=PASS
