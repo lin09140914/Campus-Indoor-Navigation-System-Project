@@ -87,7 +87,13 @@ The detailed error reporting format shall be determined according to the project
 
 **Related Teams:** All five teams
 
-Coordinates output by the Localization Team must comply with the project-wide shared coordinate system, including the origin, directions of coordinate axes, units, and floor definitions.
+The Localization Team outputs positions in the project-wide building-local coordinate system. Horizontal `x` and `z` are measured in meters and accompanied by an integer `floor`; raw SVG drawing units must not be reported as meters.
+
+- **Origin:** The top-left corner `(u0,v0)` of the 1F SVG `viewBox` maps to the building-wide `(x,y,z) = (0,0,0)`; the 1F finished-floor reference height is `y = 0`.
+- **Axes:** SVG-right on 1F is `+x`, SVG-down is `+z`, and vertical up is `+y`. All floors share the same horizontal origin and axes; `floor` identifies the corresponding floor height.
+- **Alignment with the Map Team:** `position.x` and `position.z` from `getCurrentPosition()` must use the same building coordinates as the matching Graph version. Until the measured scale and the alignment of other floor plans are available, SVG drawing coordinates must not be claimed to be meter coordinates.
+
+The full conversion formula and floor fields are defined in the [Unified Data Specification](../interfaces/schemas/Data_Specification.en.md).
 
 ### 4.2 Localization Result Format
 
@@ -176,11 +182,11 @@ After completing V1, further research may include:
 
 The above items are not part of the mandatory V1 acceptance requirements.
 
-## 9. Items Pending Confirmation
+## 9. Specification Status and Items Pending Confirmation
 
 | Item | Status |
 | --- | --- |
-| Standardized coordinate system | Pending formal confirmation |
+| Standardized coordinate system | Origin, axes, and meter units confirmed; map scale pending field measurement |
 | Localization result data format | Pending standardization |
 | Confidence definition | Pending standardization |
 | Floor data format | Pending standardization |

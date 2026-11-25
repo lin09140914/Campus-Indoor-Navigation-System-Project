@@ -1,7 +1,7 @@
 # Campus Indoor Navigation System V1 — Unified Data Specification
 
 **Document version:** V1.1 (SVG object and layer supplement proposal)
-**Updated:** 2026-11-23
+**Updated:** 2026-11-25
 **Applies to:** Map, Localization, Route, 3D, UI Teams  
 **Document type:** Cross-team data contract  
 **Note:** This is an English translation of the Chinese original (`docs/interfaces/schemas/Data_Specification.md`). If the two differ, the Chinese original prevails.
@@ -156,10 +156,10 @@ The building reference direction is established by the Map Team and confirmed by
 
 ## 2.2 Origin Rules
 - Each building has one unique fixed origin.
-- For V1, the top-left reference point of the 1F floor plan is recommended as `(0,0,0)`.
-- All floors share the same horizontal coordinate system.
-- Different floors are distinguished by the `y` height.
-- Once the origin is settled, no team may adjust it on its own.
+- V1 decision: the top-left corner `(u0,v0)` of the 1F SVG `viewBox` is the building-wide local origin `(x,y,z) = (0,0,0)`; `y = 0` is the 1F finished-floor reference height.
+- SVG-right on 1F maps to building `+x`, SVG-down maps to `+z`, and height `+y` points up. The 1F `svg_transform` uses `origin_x_m = 0`, `origin_z_m = 0`, and `rotation_deg = 0`. The scale must be established by field measurements.
+- All floors share this building-wide horizontal coordinate system. Each other floor's SVG must be aligned through its own `svg_transform`; its `viewBox` top-left corner must not be treated as another building origin.
+- Different floors are distinguished by the `y` height. No team may adjust the settled origin on its own.
 
 ## 2.3 Coordinate Usage Rules per Team
 | Team | Coordinate data |
