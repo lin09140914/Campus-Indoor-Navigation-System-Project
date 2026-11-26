@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#f6f7f3">
+  <title>工程五館 1F｜Three.js 空間模型</title>
+  <style>/*__CSS__*/</style>
+</head>
+<body>
+  <header>
+    <div class="identity"><span class="logo" data-icon="building"></span><strong>工程五館</strong><span class="separator"></span><span class="app-name">建築模型檢視器</span></div>
+    <div class="header-actions">
+      <button id="source" class="secondary"><i data-icon="plan"></i>原始圖面</button>
+      <button id="download" class="primary" disabled><i data-icon="download"></i><span>匯出 GLB</span></button>
+    </div>
+  </header>
+  <main>
+    <section id="stage" aria-label="互動式三維模型">
+      <div id="canvas-wrap"></div>
+      <div class="view-heading"><div class="floor-tag">1F</div><h1>一樓空間模型</h1></div>
+      <div class="mode" aria-label="檢視角度">
+        <button id="iso" aria-pressed="true"><i data-icon="cube"></i>立體</button>
+        <button id="top" aria-pressed="false"><i data-icon="top"></i>俯視</button>
+      </div>
+      <div id="selection-tag" hidden></div>
+      <div id="message" role="status">載入模型中…</div>
+      <div id="axes" aria-hidden="true"><svg viewBox="0 0 78 72"></svg></div>
+      <div class="zoom-controls">
+        <button id="minus" title="縮小" aria-label="縮小"><i data-icon="minus"></i></button>
+        <span id="zoom">100%</span>
+        <button id="plus" title="放大" aria-label="放大"><i data-icon="plus"></i></button>
+        <span class="separator"></span><button id="fit" title="顯示全層" aria-label="顯示全層"><i data-icon="fit"></i></button>
+      </div>
+    </section>
+    <aside aria-label="模型設定">
+      <section class="panel-section">
+        <h2><i data-icon="layers"></i>模型圖層</h2>
+        <div id="layers"></div>
+      </section>
+      <section class="panel-section">
+        <h2><i data-icon="locate"></i>房間定位</h2>
+        <label class="select-wrap"><select id="rooms" aria-label="選擇房間"><option value="">選擇房間</option></select><i data-icon="chevron"></i></label>
+        <div id="room-info">可直接點選模型內的房間。</div>
+      </section>
+      <section class="info panel-section">
+        <h2><i data-icon="info"></i>模型資料</h2>
+        <dl><dt>來源</dt><dd>floor-1.svg</dd><dt>座標</dt><dd>SVG 圖面單位</dd><dt>牆高／門高</dt><dd id="heights"></dd></dl>
+        <p>平面依原圖比例建模。圖面未實測，垂直尺寸為示意值。</p>
+      </section>
+    </aside>
+  </main>
+  <footer><span><i data-icon="mouse"></i><span class="desktop-hint">拖曳旋轉 · 右鍵平移 · 滾輪縮放</span><span class="touch-hint">單指旋轉 · 雙指平移與縮放</span></span><span>Three.js <b>／</b> WebGL</span></footer>
+  <dialog id="reference"><div class="dialog-bar"><strong>原始圖面 <small>floor-1.svg</small></strong><button id="close-source" title="關閉" aria-label="關閉原始圖面"><i data-icon="close"></i></button></div><img id="source-image" alt="工程五館一樓原始 SVG 平面圖"></dialog>
+  <script>/*__SCRIPT__*/</script>
+</body>
+</html>
