@@ -3,13 +3,48 @@ import importlib.util
 from pathlib import Path
 import unittest
 
-ROOT = Path(__file__).resolve().parents[1]
 spec = importlib.util.spec_from_file_location('android_versions', Path(__file__).with_name('check-android-versions.py'))
 checker = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(checker)
 
-DOC = checker.read_text(ROOT / checker.STACK_DOC)
-CATALOG = checker.read_text(ROOT / checker.CATALOG)
+# 測試只驗證工具邏輯，使用自帶樣本。專案實際版本由 CI 的比對步驟檢查，
+# 版本改錯時才會停在比對步驟，而不是先停在這裡。
+DOC = """## 2. 建置環境
+
+| 技術 | 固定版本／值 |
+|---|---|
+| JDK | **21 LTS** |
+| Kotlin | **2.4.21** |
+| Android Gradle Plugin (AGP) | **9.3.1** |
+| Gradle Wrapper | **9.5.0** |
+| Compose Compiler Gradle Plugin | **2.4.21** |
+| `compileSdk` | **37** |
+| `targetSdk` | **36** |
+| `minSdk` | **29** |
+
+## 3. 共用依賴
+
+| 依賴 | 固定版本 |
+|---|---|
+| Compose BOM | **2026.09.00** |
+| `androidx.webkit:webkit` | **1.18.0** |
+"""
+CATALOG = """[versions]
+agp = "9.3.1"
+kotlin = "2.4.21"
+compose-bom = "2026.09.00"
+webkit = "1.18.0"
+
+[libraries]
+kotlin-gradle-plugin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-bom = { module = "androidx.compose:compose-bom", version.ref = "compose-bom" }
+webkit = { module = "androidx.webkit:webkit", version.ref = "webkit" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+"""
 TOOLS, LIBRARIES = checker.parse_stack_doc(DOC)
 GRADLE = f'\n------\nGradle {TOOLS["gradle"]}\n------\n\nLauncher JVM:  {TOOLS["jdk"]}.0.5 (Example)\n'
 WRAPPER = f'distributionUrl=https\\://services.gradle.org/distributions/gradle-{TOOLS["gradle"]}-bin.zip\n'
