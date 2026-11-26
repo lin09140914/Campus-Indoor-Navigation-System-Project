@@ -1,0 +1,30 @@
+COMMAND: gradlew.bat -p <temporary-jvm-project> --no-daemon --console=plain run
+INPUT SHA256: {"app/src/main/java/com/example/campusindoornavigation/routing/RoutePlanner.kt": "27eabce8423d661aab26fc2a63ab89f33d52c03146282a3dadbcb5e8b6a0db11", "app/src/main/java/com/example/campusindoornavigation/routing/RouteJson.kt": "81e4a6caaef90f2a9f37441106a514784bbfed80a468448c98343da6dda34377", "tools/routing/RouteJsonCheck.kt": "332fca94b8a43429a9cede80b9b2b99220de5c55cf9a2363a0116889085de993", "data/drafts/floor-1/graph.json": "c947125992c29c163e60eb0ba3fa2506c34bfbbf39ea70354ca968a1e11ca8bd", "data/drafts/floor-1/destinations.json": "404512d84f2f2109657840c7a47f5272dd9047fc976fcc394f4a2d0dbf1c669b", "gradle/libs.versions.toml": "9047be8432ba5b96ebb706c4566c0ac4e01305285f1ae7422dce0f5c69b3a1f7"}
+Fetching distribution.
+Downloading https://services.gradle.org/distributions/gradle-9.5.0-bin.zip
+.............10%.............20%..............30%.............40%.............50%..............60%.............70%..............80%.............90%.............100%
+
+Welcome to Gradle 9.5.0!
+
+Here are the highlights of this release:
+ - Task provenance in reports and failure messages
+ - Type-safe accessors for precompiled Kotlin Settings plugins
+
+For more details see https://docs.gradle.org/9.5.0/release-notes.html
+
+To honour the JVM settings for this build a single-use Daemon process will be forked. For more on this, please refer to https://docs.gradle.org/9.5.0/userguide/gradle_daemon.html#sec:disabling_the_daemon in the Gradle documentation.
+Daemon will be stopped at the end of the build 
+> Task :checkKotlinGradlePluginConfigurationErrors SKIPPED
+> Task :processResources NO-SOURCE
+> Task :compileKotlin
+> Task :compileJava NO-SOURCE
+> Task :classes UP-TO-DATE
+
+> Task :run
+JSON smoke test PASS: {"building_id":"eng5","map_version":"2026-11-24-floor1-structured-draft2","coordinate_system_id":"eng5_LOCAL_PENDING","mode":"any","path":[{"id":"ENTRANCE-A-W","x":49.76,"z":203.62667,"floor":1,"type":"door"},{"id":"F1-C-051","x":90.0,"z":203.0,"floor":1,"type":"walk"},{"id":"F1-C-001","x":90.0,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-027","x":128.84,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-028","x":156.96,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-029","x":203.0,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-011","x":205.68,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-012","x":254.6,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-013","x":284.76,"z":202.5,"floor":1,"type":"walk"},{"id":"F1-C-030","x":301.36,"z":202.5,"floor":1,"type":"walk"},{"id":"A118#door","x":301.36,"z":228.18684,"floor":1,"type":"door"},{"id":"A118","x":288.0,"z":245.0,"floor":1,"type":"walk"}],"length":299.2666337835625,"floors":[1],"transitions":[]}
+
+BUILD SUCCESSFUL in 1m 23s
+2 actionable tasks: 2 executed
+Consider enabling configuration cache to speed up this build: https://docs.gradle.org/9.5.0/userguide/configuration_cache_enabling.html
+
+EXIT=0; MARKER=True; RESULT=PASS

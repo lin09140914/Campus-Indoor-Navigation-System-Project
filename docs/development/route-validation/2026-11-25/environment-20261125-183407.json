@@ -1,0 +1,26 @@
+{
+  "java": {
+    "version": "java version \"25.0.3\" 2026-04-21 LTS\nJava(TM) SE Runtime Environment (build 25.0.3+9-LTS-195)\nJava HotSpot(TM) 64-Bit Server VM (build 25.0.3+9-LTS-195, mixed mode, sharing)",
+    "exit": 0
+  },
+  "javac": {
+    "version": "javac 25.0.3",
+    "exit": 0
+  },
+  "git": {
+    "version": "git version 2.55.0.windows.5",
+    "exit": 0
+  },
+  "kotlinc": {
+    "version": "未在 PATH 找到"
+  },
+  "python": {
+    "version": "3.13.7 (tags/v3.13.7:bcee1c3, Aug 14 2025, 14:15:11) [MSC v.1944 64 bit (AMD64)]"
+  },
+  "stage": "2026-11-25 18:34 (UTC+8), before SDK installation",
+  "JAVA_HOME_configured_for": "JDK 21.0.10",
+  "ANDROID_HOME_configured": false,
+  "ANDROID_SDK_ROOT_configured": false,
+  "default_sdk_candidate_exists": false,
+  "later_manual_confirmation": "java and javac invoked via JAVA_HOME both reported 21.0.10; Android SDK subsequently installed; see build log."
+}
