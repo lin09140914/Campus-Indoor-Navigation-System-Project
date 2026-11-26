@@ -36,3 +36,42 @@ jobs:
           fi
 
           echo "No tracked files are excluded by master .gitignore."
+
+  # 1F 圖資草稿的資料一致性檢查；不取代現勘、實測與跨樓層連接的人工確認。
+  # 不執行 validate-floor1-svg.py --strict：實際尺寸與正式世界座標尚未完成。
+  floor1-draft-checks:
+    name: floor1-draft-checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the PR merge result
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: '22'
+
+      - name: Set up Python
+        id: setup-python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      # 環境備妥後，即使前一項檢查失敗仍執行其餘項目，一次看到所有錯誤。
+      # 任一步驟失敗，整個 job 就會顯示失敗。
+      - name: '1/4 Draft outputs are in sync (build-floor1-graph --check)'
+        run: node tools/build-floor1-graph.mjs --check
+
+      - name: '2/4 SVG and draft data consistency (validate-floor1-svg)'
+        if: ${{ !cancelled() && steps.setup-python.outcome == 'success' }}
+        run: python3 tools/validate-floor1-svg.py
+
+      - name: '3/4 Python regression tests (unittest)'
+        if: ${{ !cancelled() && steps.setup-python.outcome == 'success' }}
+        run: python3 -m unittest discover -s tools -p "test_floor1*.py"
+
+      - name: '4/4 Graph and draft route tests (node --test)'
+        if: ${{ !cancelled() && steps.setup-python.outcome == 'success' }}
+        run: node --test tools/build-floor1-graph.test.mjs examples/floor1-draft-route.test.mjs
