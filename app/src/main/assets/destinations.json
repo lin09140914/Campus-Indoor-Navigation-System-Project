@@ -1,0 +1,342 @@
+{
+  "building_id": "eng5",
+  "map_version": "2026-11-24-floor1-structured-draft2",
+  "locations": [
+    {
+      "id": "L_A129",
+      "name": "A129 氣體室",
+      "floor": 1,
+      "node_id": "A129",
+      "category": "room"
+    },
+    {
+      "id": "L_A125",
+      "name": "A125 氣體吸附儀室",
+      "floor": 1,
+      "node_id": "A125",
+      "category": "room"
+    },
+    {
+      "id": "L_A123",
+      "name": "A123 光電子能譜儀室",
+      "floor": 1,
+      "node_id": "A123",
+      "category": "room"
+    },
+    {
+      "id": "L_A121",
+      "name": "A121 掃描式電子顯微鏡室（二）",
+      "floor": 1,
+      "node_id": "A121",
+      "category": "room"
+    },
+    {
+      "id": "L_TEMP-A119-N",
+      "name": "A119 北側（房號待確認）",
+      "floor": 1,
+      "node_id": "TEMP-A119-N",
+      "category": "room"
+    },
+    {
+      "id": "L_A117",
+      "name": "A117 掃描式電子顯微鏡室（一）",
+      "floor": 1,
+      "node_id": "A117",
+      "category": "room"
+    },
+    {
+      "id": "L_A115-1",
+      "name": "A115-1 精儀中心主任辦公室",
+      "floor": 1,
+      "node_id": "A115-1",
+      "category": "room"
+    },
+    {
+      "id": "L_A115",
+      "name": "A115 工學院副院長室",
+      "floor": 1,
+      "node_id": "A115",
+      "category": "room"
+    },
+    {
+      "id": "L_A111",
+      "name": "A111 工學院會議室",
+      "floor": 1,
+      "node_id": "A111",
+      "category": "room"
+    },
+    {
+      "id": "L_A107",
+      "name": "A107 工學院院長室",
+      "floor": 1,
+      "node_id": "A107",
+      "category": "room"
+    },
+    {
+      "id": "L_A103",
+      "name": "A103 工學院辦公室",
+      "floor": 1,
+      "node_id": "A103",
+      "category": "room"
+    },
+    {
+      "id": "L_A109",
+      "name": "A109 茶水間",
+      "floor": 1,
+      "node_id": "A109",
+      "category": "room"
+    },
+    {
+      "id": "L_A101",
+      "name": "A101 檔案室",
+      "floor": 1,
+      "node_id": "A101",
+      "category": "room"
+    },
+    {
+      "id": "L_A124",
+      "name": "A124（與 A124-1 的分區待確認）",
+      "floor": 1,
+      "node_id": "A124",
+      "category": "room"
+    },
+    {
+      "id": "L_A122",
+      "name": "A122 熱分析儀室",
+      "floor": 1,
+      "node_id": "A122",
+      "category": "room"
+    },
+    {
+      "id": "L_A120",
+      "name": "A120 材料所辦公室",
+      "floor": 1,
+      "node_id": "A120",
+      "category": "room"
+    },
+    {
+      "id": "L_TEMP-A119-S",
+      "name": "A119 南側（房號待確認）",
+      "floor": 1,
+      "node_id": "TEMP-A119-S",
+      "category": "room"
+    },
+    {
+      "id": "L_A118",
+      "name": "A118 鍍金室",
+      "floor": 1,
+      "node_id": "A118",
+      "category": "room"
+    },
+    {
+      "id": "L_A116",
+      "name": "A116 穿透式電子顯微鏡室（二）",
+      "floor": 1,
+      "node_id": "A116",
+      "category": "room"
+    },
+    {
+      "id": "L_TEMP-A114-W",
+      "name": "A114 西側（房號待確認）",
+      "floor": 1,
+      "node_id": "TEMP-A114-W",
+      "category": "room"
+    },
+    {
+      "id": "L_A112",
+      "name": "A112",
+      "floor": 1,
+      "node_id": "A112",
+      "category": "room"
+    },
+    {
+      "id": "L_TEMP-A114-E",
+      "name": "A114 東側（房號待確認）",
+      "floor": 1,
+      "node_id": "TEMP-A114-E",
+      "category": "room"
+    },
+    {
+      "id": "L_A108",
+      "name": "A108 資料室",
+      "floor": 1,
+      "node_id": "A108",
+      "category": "room"
+    },
+    {
+      "id": "L_A106",
+      "name": "A106 環境與能源研究中心主任辦公室",
+      "floor": 1,
+      "node_id": "A106",
+      "category": "room"
+    },
+    {
+      "id": "L_A104",
+      "name": "A104 環境與能源研究中心管理辦公室",
+      "floor": 1,
+      "node_id": "A104",
+      "category": "room"
+    },
+    {
+      "id": "L_A102",
+      "name": "A102 綜合教室",
+      "floor": 1,
+      "node_id": "A102",
+      "category": "room"
+    },
+    {
+      "id": "L_B113",
+      "name": "B113 研究室",
+      "floor": 1,
+      "node_id": "B113",
+      "category": "room"
+    },
+    {
+      "id": "L_B111",
+      "name": "B111 實驗室",
+      "floor": 1,
+      "node_id": "B111",
+      "category": "room"
+    },
+    {
+      "id": "L_B109",
+      "name": "B109 實驗室",
+      "floor": 1,
+      "node_id": "B109",
+      "category": "room"
+    },
+    {
+      "id": "L_B107",
+      "name": "B107 實驗室",
+      "floor": 1,
+      "node_id": "B107",
+      "category": "room"
+    },
+    {
+      "id": "L_B105",
+      "name": "B105 資訊電機學院",
+      "floor": 1,
+      "node_id": "B105",
+      "category": "room"
+    },
+    {
+      "id": "L_B103",
+      "name": "B103（經 B105 進入）",
+      "floor": 1,
+      "node_id": "B103",
+      "category": "room"
+    },
+    {
+      "id": "L_B101",
+      "name": "B101 實驗室",
+      "floor": 1,
+      "node_id": "B101",
+      "category": "room"
+    },
+    {
+      "id": "L_B116",
+      "name": "B116 研究室",
+      "floor": 1,
+      "node_id": "B116",
+      "category": "room"
+    },
+    {
+      "id": "L_B114",
+      "name": "B114 實驗室",
+      "floor": 1,
+      "node_id": "B114",
+      "category": "room"
+    },
+    {
+      "id": "L_B112",
+      "name": "B112 實驗室",
+      "floor": 1,
+      "node_id": "B112",
+      "category": "room"
+    },
+    {
+      "id": "L_B110",
+      "name": "B110 實驗室",
+      "floor": 1,
+      "node_id": "B110",
+      "category": "room"
+    },
+    {
+      "id": "L_B108",
+      "name": "B108 實驗室",
+      "floor": 1,
+      "node_id": "B108",
+      "category": "room"
+    },
+    {
+      "id": "L_B106",
+      "name": "B106 實驗室",
+      "floor": 1,
+      "node_id": "B106",
+      "category": "room"
+    },
+    {
+      "id": "L_B104",
+      "name": "B104 實驗室",
+      "floor": 1,
+      "node_id": "B104",
+      "category": "room"
+    },
+    {
+      "id": "L_B102",
+      "name": "B102 實驗室",
+      "floor": 1,
+      "node_id": "B102",
+      "category": "room"
+    },
+    {
+      "id": "L_ENTRANCE-A-W",
+      "name": "A 區西側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-A-W",
+      "category": "entrance"
+    },
+    {
+      "id": "L_ENTRANCE-A-NW",
+      "name": "A 區西北側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-A-NW",
+      "category": "entrance"
+    },
+    {
+      "id": "L_ENTRANCE-A-SW",
+      "name": "A 區西南側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-A-SW",
+      "category": "entrance"
+    },
+    {
+      "id": "L_ENTRANCE-A-N",
+      "name": "A 區大廳北側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-A-N",
+      "category": "entrance"
+    },
+    {
+      "id": "L_ENTRANCE-LINK-E",
+      "name": "連接走廊東側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-LINK-E",
+      "category": "entrance"
+    },
+    {
+      "id": "L_ENTRANCE-B-E",
+      "name": "B 區東側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-B-E",
+      "category": "entrance"
+    },
+    {
+      "id": "L_ENTRANCE-B-S",
+      "name": "B 區南側入口",
+      "floor": 1,
+      "node_id": "ENTRANCE-B-S",
+      "category": "entrance"
+    }
+  ]
+}
