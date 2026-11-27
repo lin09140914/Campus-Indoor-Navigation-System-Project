@@ -51,7 +51,8 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v6
         with:
-          node-version: '22'
+          # 鎖版位置依 docs/architecture/Technology_Stack.md 第 8 節；版本基準見第 4 節。
+          node-version-file: .node-version
 
       - name: Set up Python
         id: setup-python
@@ -75,3 +76,50 @@ jobs:
       - name: '4/4 Graph and draft route tests (node --test)'
         if: ${{ !cancelled() && steps.setup-python.outcome == 'success' }}
         run: node --test tools/build-floor1-graph.test.mjs examples/floor1-draft-route.test.mjs
+
+  # 比對實際解析版本與 Technology_Stack.md、libs.versions.toml。
+  # dependencyInsight 只供查看來源；是否相符由 check-android-versions.py 判定。
+  android-version-check:
+    name: android-version-check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the PR merge result
+        uses: actions/checkout@v6
+        with:
+          persist-credentials: false
+
+      - name: Set up JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: '21'
+          cache: gradle
+
+      - name: Set up Python
+        uses: actions/setup-python@v6
+        with:
+          python-version: '3.13'
+
+      - name: Test the version checker (matching passes, wrong versions fail)
+        run: python3 -m unittest discover -s tools -p "test_android_versions.py" -v
+
+      - name: Build debug APK
+        run: ./gradlew :app:assembleDebug --console=plain
+
+      - name: Collect resolved versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          ./gradlew --version | tee "${RUNNER_TEMP}/gradle-version.txt"
+          ./gradlew :app:dependencies --configuration debugRuntimeClasspath --console=plain | tee "${RUNNER_TEMP}/runtime.txt"
+          ./gradlew buildEnvironment --console=plain | tee "${RUNNER_TEMP}/buildscript.txt"
+
+      - name: Show how WebKit was resolved (dependencyInsight)
+        run: ./gradlew :app:dependencyInsight --configuration debugRuntimeClasspath --dependency androidx.webkit --console=plain
+
+      - name: Compare resolved versions with the project baseline
+        run: >-
+          python3 tools/check-android-versions.py
+          --gradle-version "${RUNNER_TEMP}/gradle-version.txt"
+          --runtime "${RUNNER_TEMP}/runtime.txt"
+          --buildscript "${RUNNER_TEMP}/buildscript.txt"
