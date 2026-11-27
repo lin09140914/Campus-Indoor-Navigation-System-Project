@@ -1,10 +1,14 @@
 import * as THREE from 'three';
 import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
 import { GLTFExporter } from 'three/addons/exporters/GLTFExporter.js';
-import bundledSvg from '../floor-1.svg';
 import { buildFloor, dimensions, palette } from './model.js';
 
 const $ = id => document.getElementById(id);
+const query = new URLSearchParams(location.search);
+const androidHost = query.get('host') === 'android';
+const minimal = androidHost || query.get('display') === 'minimal';
+document.documentElement.classList.toggle('minimal', minimal);
+const defaultPath = androidHost ? 'data/svg/floor-1.svg' : 'floor-1.svg';
 const symbols = {
   building:'<path d="m2 9 10-6 10 6-10 6zM2 13l10 6 10-6M2 17l10 6 10-6M7 6l10 6"/>',
   cube:'<path d="m3 7 9-5 9 5v10l-9 5-9-5zM3 7l9 5 9-5M12 12v10"/>',
@@ -22,8 +26,7 @@ const symbols = {
 for (const el of document.querySelectorAll('[data-icon]')) {
   el.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.65" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + symbols[el.dataset.icon] + '</svg>';
 }
-let sourceUrl = URL.createObjectURL(new Blob([bundledSvg], { type:'image/svg+xml' }));
-$('source-image').src = sourceUrl;
+let sourceUrl;
 $('source').onclick = () => $('reference').showModal();
 $('close-source').onclick = () => $('reference').close();
 $('reference').onclick = event => { if (event.target === $('reference')) $('reference').close(); };
@@ -37,7 +40,7 @@ function makeNames(xml) {
   ctx.scale(canvas.width/w, canvas.height/h); ctx.translate(-x,-y);
   ctx.fillStyle = '#20382f'; ctx.textAlign = 'center';
   const labels = xml.querySelector('#labels');
-  for (const label of labels.querySelectorAll('text')) {
+  for (const label of labels?.querySelectorAll('text') ?? []) {
     let baseline = +label.getAttribute('y');
     const spans = label.children.length ? [...label.children] : [label];
     for (const span of spans) {
@@ -59,7 +62,7 @@ function makeNames(xml) {
 
 function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
   const events = new AbortController();
-  const labels = makeNames(xml);
+  const labels = minimal ? new THREE.Group() : makeNames(xml);
   const roomById = new Map(rooms.map(room => [room.id, room]));
   const plainRoom = rooms[0]?.mesh.material ?? new THREE.MeshStandardMaterial();
   const highlighted = plainRoom.clone();
@@ -79,7 +82,7 @@ function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
       const buffer = await new GLTFExporter().parseAsync(copy, { binary:true });
       const link = document.createElement('a');
       link.href = URL.createObjectURL(new Blob([buffer], {type:'model/gltf-binary'}));
-      link.download = 'floor-1.glb'; link.click();
+      link.download = (xml.id || 'floor-'+floor.floor)+'.glb'; link.click();
       setTimeout(() => URL.revokeObjectURL(link.href), 30000);
     } catch (error) {
       console.error(error); $('message').hidden = false; $('message').textContent = '模型匯出失敗，請重新嘗試。';
@@ -107,7 +110,7 @@ function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
   renderer.shadowMap.type = THREE.PCFSoftShadowMap;
   renderer.shadowMap.autoUpdate = false;
   renderer.shadowMap.needsUpdate = true;
-  renderer.domElement.setAttribute('aria-label','可旋轉及縮放的工程五館一樓模型');
+  renderer.domElement.setAttribute('aria-label',floor.floor+'F 樓層模型');
   wrap.appendChild(renderer.domElement);
   scene.add(new THREE.HemisphereLight(0xf9fbf4,0xc1c4b7,1.8));
   const bounds = new THREE.Box3().setFromObject(root);
@@ -244,7 +247,7 @@ function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
   }, {signal:events.signal});
   renderer.domElement.addEventListener('pointercancel',() => {down = null;}, {signal:events.signal});
   renderer.domElement.addEventListener('pointerup',e => {
-    if (!down || !e.isPrimary || e.button !== 0) return;
+    if (minimal || !down || !e.isPrimary || e.button !== 0) return;
     const delta = down.distanceTo(new THREE.Vector2(e.clientX,e.clientY)); down = null;
     if (delta > 4) return;
     const box = wrap.getBoundingClientRect();
@@ -255,9 +258,9 @@ function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
   }, {signal:events.signal});
   const settings = [
     ['rooms','房間與空間',layers.rooms.children.length],['corridors','走廊',layers.corridors.children.length],
-    ['walls','牆體',xml.querySelectorAll('#walls path').length],['doors','門扇與開向',layers.doors.children.length],
+    ['walls','牆體',xml.querySelectorAll('#walls path,#walls rect,#walls polygon').length],['doors','門扇與開向',layers.doors.children.length],
     ['stairs','樓梯',layers.stairs.children.length],['elevators','電梯',layers.elevators.children.length],
-    ['fixtures','設備符號',xml.querySelector('#fixtures').children.length],['labels','圖面文字',xml.querySelector('#labels').children.length],
+    ['fixtures','設備符號',xml.querySelector('#fixtures')?.children.length ?? 0],['labels','圖面文字',xml.querySelector('#labels')?.children.length ?? 0],
   ];
   for (const [key,title,count] of settings) {
     const layer = key === 'labels' ? labels : layers[key];
@@ -292,8 +295,8 @@ function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
       cancelAnimationFrame(frame);
       scene.traverse(object => object.geometry?.dispose());
       highlighted.dispose();
-      labels.material.map.dispose();
-      labels.material.dispose();
+      labels.material?.map.dispose();
+      labels.material?.dispose();
       ground.material.dispose();
       sun.shadow.dispose();
       $('layers').replaceChildren();
@@ -305,18 +308,49 @@ function mountFloor({ root, layers, rooms, xml }, renderer, floor, options) {
   };
 }
 
-const bundledInfo = new DOMParser().parseFromString(bundledSvg,'image/svg+xml').documentElement.dataset;
-const draftFloor = Object.freeze({ building_id:bundledInfo.buildingId, map_version:bundledInfo.mapVersion,
-  floor:Number(bundledInfo.floor), svg:'floor-1.svg', coordinate_status:'unmeasured' });
 let activeMap, activeSvg, activeFloor, renderer;
+let pendingLoad;
 
-function renderMap(svg = bundledSvg, floor = draftFloor, options = {}) {
-  const result = { building_id:floor?.building_id ?? '', map_version:floor?.map_version ?? '', floor:floor?.floor ?? null };
-  let code = 'INVALID_FLOOR';
+async function renderMap(source = defaultPath, floor, options = {}) {
+  pendingLoad?.abort();
+  const request = new AbortController();
+  pendingLoad = request;
+  let result = { building_id:floor?.building_id ?? '', map_version:floor?.map_version ?? '', floor:floor?.floor ?? null };
+  let code = 'SVG_LOAD_FAILED';
   try {
+    let svg, path;
+    if (typeof source !== 'string' || !source.trim()) throw Error('請指定 SVG 路徑。');
+    if (source.trimStart().startsWith('<')) {
+      svg = source;
+      path = floor?.svg || 'drawing.svg';
+    } else {
+      const url = new URL(source,document.baseURI);
+      if (!['http:','https:'].includes(url.protocol) || url.origin !== location.origin)
+        throw Error('請使用與檢視器相同來源的 SVG 路徑。');
+      path = url.pathname;
+      const response = await fetch(url,{signal:request.signal,cache:'no-cache',redirect:'error'});
+      if (!response.ok) throw Error('無法讀取 '+path+'（HTTP '+response.status+'）。');
+      svg = await response.text();
+    }
+    if (request.signal.aborted) throw Error('已切換至其他圖面。');
+    code = 'INVALID_SVG';
+    const doc = new DOMParser().parseFromString(svg,'image/svg+xml');
+    const xml = doc.documentElement;
+    const vb = xml.getAttribute('viewBox')?.trim().split(/[\s,]+/).map(Number);
+    if (xml.localName !== 'svg' || doc.doctype || vb?.length !== 4 || !vb.every(Number.isFinite) || vb[2] <= 0 || vb[3] <= 0 ||
+        doc.querySelector('parsererror,script,foreignObject,image,use,style,animate,set,animateTransform,animateMotion') ||
+        [...xml.querySelectorAll('*'),xml].some(node => [...node.attributes].some(a => /^on|^href$|^style$/i.test(a.localName) || /url\s*\(/i.test(a.value)))) throw Error('SVG 內容無法載入。');
+    const info = xml.dataset;
+    floor ??= {building_id:info.buildingId, map_version:info.mapVersion, floor:Number(info.floor),
+      svg:path, coordinate_status:'unmeasured'};
+    result = {building_id:floor.building_id, map_version:floor.map_version, floor:floor.floor};
+    code = 'INVALID_FLOOR';
     if (!floor?.svg || !Number.isInteger(floor.floor) || !floor.building_id || !floor.map_version)
       throw Error('樓層資料缺少識別欄位或 SVG 路徑。');
-    if (!(svg === bundledSvg && floor.coordinate_status === 'unmeasured' && floor.svg_transform == null)) {
+    if (info.buildingId !== floor.building_id || info.floor !== String(floor.floor) || info.mapVersion !== floor.map_version) {
+      code = 'MAP_MISMATCH'; throw Error('SVG 的建物、樓層或版本與樓層資料不符。');
+    }
+    if (!(floor.coordinate_status === 'unmeasured' && floor.svg_transform == null)) {
       const t = floor.svg_transform;
       if (!t || ![floor.elevation_m,t.scale_m_per_svg_unit,t.rotation_deg,t.origin_x_m,t.origin_z_m].every(Number.isFinite) || t.scale_m_per_svg_unit <= 0)
         throw Error('樓層的座標轉換參數無效。');
@@ -330,14 +364,9 @@ function renderMap(svg = bundledSvg, floor = draftFloor, options = {}) {
       if (options.fit_to_view !== false || (options.view_mode && $(mode).getAttribute('aria-pressed') !== 'true')) activeMap.fullView(mode);
     } else {
       code = 'INVALID_SVG';
-      const doc = new DOMParser().parseFromString(svg,'image/svg+xml');
-      const xml = doc.documentElement;
-      if (xml.localName !== 'svg' || doc.doctype || doc.querySelector('parsererror,script,foreignObject,image,use,style,animate,set,animateTransform,animateMotion') ||
-          [...xml.querySelectorAll('*'),xml].some(node => [...node.attributes].some(a => /^on|^href$|^style$/i.test(a.localName) || /url\s*\(/i.test(a.value)))) throw Error('SVG 內容無法載入。');
-      if (xml.dataset.buildingId !== floor.building_id || xml.dataset.floor !== String(floor.floor) || xml.dataset.mapVersion !== floor.map_version) {
-        code = 'MAP_MISMATCH'; throw Error('SVG 的建物、樓層或版本與樓層資料不符。');
-      }
       const model = buildFloor(svg);
+      model.root.userData.source = path;
+      if (new THREE.Box3().setFromObject(model.root).isEmpty()) throw Error('圖面缺少可顯示的幾何。');
       code = 'INVALID_CONTAINER';
       if (!$('canvas-wrap')?.clientWidth || !$('canvas-wrap').clientHeight) throw Error('地圖容器尚未就緒。');
       code = 'WEBGL_UNAVAILABLE';
@@ -346,18 +375,35 @@ function renderMap(svg = bundledSvg, floor = draftFloor, options = {}) {
       code = 'RENDER_FAILED';
       activeMap = mountFloor(model,renderer,floor,options);
       activeSvg = svg; activeFloor = key;
-      URL.revokeObjectURL(sourceUrl);
+      if (sourceUrl) URL.revokeObjectURL(sourceUrl);
       sourceUrl = URL.createObjectURL(new Blob([svg],{type:'image/svg+xml'}));
       $('source-image').src = sourceUrl;
+      $('source').disabled = false;
+      $('source-name').textContent = path.split('/').pop();
+      document.querySelector('.dialog-bar small').textContent = $('source-name').textContent;
+      document.querySelector('.floor-tag').textContent = floor.floor+'F';
+      document.querySelector('h1').textContent = floor.floor+'F 空間模型';
+      $('source-image').alt = floor.floor+'F 原始 SVG 平面圖';
     }
     $('message').hidden = true;
     return { ...result, status:'success', scene:activeMap.scene };
   } catch (e) {
+    if (request.signal.aborted) return {...result,status:'error',error:{code:'SUPERSEDED',message:'已切換至其他圖面。'}};
     $('message').textContent = code === 'WEBGL_UNAVAILABLE' ? '此裝置無法建立 WebGL 2 視圖。' : e.message;
     $('message').hidden = false;
     return { ...result, status:'error', error:{code, message:$('message').textContent} };
   }
 }
 window.renderMap = renderMap;
-if (new URLSearchParams(location.search).get('host') !== 'android') renderMap();
-else $('download').hidden = true;
+if (!androidHost && location.protocol === 'file:') {
+  $('file-picker').hidden = false;
+  $('message').textContent = '請選擇本機 SVG 圖面。';
+  $('local-svg').onchange = async event => {
+    const file = event.target.files[0];
+    if (file) await renderMap(await file.text());
+  };
+} else if (!androidHost) {
+  renderMap(query.get('map') ?? defaultPath);
+} else {
+  $('message').hidden = true;
+}

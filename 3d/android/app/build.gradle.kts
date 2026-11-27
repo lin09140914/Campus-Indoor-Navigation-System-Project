@@ -16,7 +16,15 @@ android {
 }
 
 val prepareMap = tasks.register<Sync>("prepareMap") {
-    from(rootProject.file("../floor-1.html"))
+    from(rootProject.file("../viewer.html"))
+    from(rootProject.file("..")) {
+        include("*.svg")
+        into("data/svg")
+    }
+    from(rootProject.file("../data/svg")) {
+        include("**/*.svg")
+        into("data/svg")
+    }
     into(layout.buildDirectory.dir("generated/floorAssets"))
 }
 tasks.named("preBuild") { dependsOn(prepareMap) }

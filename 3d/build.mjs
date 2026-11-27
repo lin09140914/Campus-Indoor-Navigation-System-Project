@@ -1,14 +1,13 @@
 import { readFile, writeFile } from 'node:fs/promises';
 import { build } from 'esbuild';
 
-// A single local file also works when opened directly from the desktop.
+// Bundle the renderer only. Floor drawings are requested at runtime.
 const bundle = await build({
   entryPoints: ['src/viewer.js'],
   bundle: true,
   format: 'iife',
   minify: true,
   target: 'es2022',
-  loader: { '.svg': 'text' },
   legalComments: 'inline',
   write: false,
 });
@@ -20,5 +19,5 @@ const [template, css, license] = await Promise.all([
 const script = bundle.outputFiles[0].text.replace(/<\/script/gi, '<\\/script');
 const page = template.replace('/*__CSS__*/', () => css)
   .replace('/*__SCRIPT__*/', () => '/*!\n' + license + '\n*/\n' + script);
-await writeFile('floor-1.html', page);
-console.log('Built floor-1.html');
+await writeFile('viewer.html', page);
+console.log('Built viewer.html');

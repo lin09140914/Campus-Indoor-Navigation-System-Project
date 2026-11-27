@@ -66,6 +66,10 @@ footer span{display:inline-flex;align-items:center;gap:7px}
 footer i svg{width:14px;height:14px}
 footer b{font-weight:400;color:#a0aca0}
 .touch-hint{display:none}
+.minimal body{min-height:0}
+.minimal main{display:block}
+.minimal header,.minimal aside,.minimal footer,.minimal #stage > :not(#canvas-wrap):not(#axes):not(#message){display:none}
+.minimal #stage{height:100dvh;min-height:0;width:100%;background-image:none}
 dialog{border:1px solid var(--line);border-radius:10px;padding:0;background:#fff;color:inherit;width:min(1100px,94vw);max-height:92dvh;overflow:auto;box-shadow:0 20px 90px #27332344}
 dialog::backdrop{background:#182b2573}
 .dialog-bar{display:flex;justify-content:space-between;align-items:center;padding:9px 16px;border-bottom:1px solid var(--line)}

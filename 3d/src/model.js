@@ -110,21 +110,23 @@ export function buildFloor(svg) {
   const paths = new Map(loaded.map(path => [path.userData.node.id, path]));
   const root = group(xml.id);
   root.userData = {
-    source: 'floor-1.svg', mapVersion: xml.dataset.mapVersion, coordinateStatus: xml.dataset.coordinateStatus,
+    mapVersion: xml.dataset.mapVersion, coordinateStatus: xml.dataset.coordinateStatus,
     coordinateMapping: 'world X = SVG x; world Z = SVG y; world Y = height; one unit per SVG unit',
     illustrativeDimensions: dimensions,
   };
   const layers = Object.fromEntries(Object.keys(palette).map(key => [key, group(key, root)]));
   const rooms = [];
   const layer = key => xml.querySelector('#' + key);
+  const surfaces = 'polygon,rect,path';
   for (const source of layer('rooms').children) {
-    const floor = source.querySelector('polygon, rect, path');
-    const mesh = solid(paths.get(floor.id), dimensions.slabDepth, 0, materials.rooms, layers.rooms);
-    mesh.userData = { sourceId: source.id, ...source.dataset };
-    if (source.dataset.roomId) {
-      const title = source.querySelector('title').textContent.trim();
+    const floors = source.matches(surfaces) ? [source] : [...source.querySelectorAll(surfaces)];
+    for (const floor of floors) {
+      const mesh = solid(paths.get(floor.id), dimensions.slabDepth, 0, materials.rooms, layers.rooms);
+      mesh.userData = { sourceId: source.id, ...source.dataset };
+      if (!source.dataset.roomId || floor !== floors[0]) continue;
+      const title = source.querySelector('title')?.textContent.trim() ?? source.dataset.roomId;
       mesh.userData.title = title;
-      rooms.push({ id: source.dataset.roomId, label: source.dataset.label, title, mesh });
+      rooms.push({ id: source.dataset.roomId, label: source.dataset.label ?? source.dataset.roomId, title, mesh });
     }
   }
   // Some corridor rectangles overlap in the source. Small offsets avoid coplanar flicker.
@@ -132,24 +134,24 @@ export function buildFloor(svg) {
     solid(paths.get(node.id), dimensions.slabDepth, 0.008 * (i+1), materials.corridors, layers.corridors);
   });
   for (const wing of layer('walls').children) {
-    const parent = group(wing.id, layers.walls);
-    for (const node of wing.querySelectorAll('path')) {
+    const parent = wing.matches(surfaces) ? layers.walls : group(wing.id, layers.walls);
+    for (const node of wing.matches(surfaces) ? [wing] : wing.querySelectorAll(surfaces)) {
       const mesh = solid(paths.get(node.id), dimensions.wallHeight, dimensions.wallHeight, wallMaterials, parent);
       mesh.userData = { sourceId: node.id, outlineWidth: +node.dataset.outlineWidthSvg };
     }
   }
-  for (const door of layer('doors').children) {
+  for (const door of layer('doors')?.children ?? []) {
     const parent = group(door.id, layers.doors);
     parent.userData = { ...door.dataset };
     for (const node of door.children) {
       const path = paths.get(node.id);
-      if (node.dataset.role === 'leaf') {
+      if (node.dataset.role === 'leaf' || node.localName === 'line') {
         const [a, b] = path.subPaths[0].getPoints(1);
         const length = a.distanceTo(b);
         const mesh = cuboid(node.id, (a.x+b.x)/2, (a.y+b.y)/2, length, 0.55,
           dimensions.leafHeight, materials.doors, parent);
         mesh.rotation.y = -Math.atan2(b.y-a.y, b.x-a.x);
-      } else if (node.dataset.role === 'swing') {
+      } else if (path) {
         stroke(path, 0.18, swingInk, parent);
       }
     }
@@ -175,7 +177,7 @@ export function buildFloor(svg) {
       }
     }
   }
-  for (const node of layer('fixtures').children) {
+  for (const node of layer('fixtures')?.children ?? []) {
     const path = paths.get(node.id);
     const geometry = new THREE.ShapeGeometry(SVGLoader.createShapes(path), 12);
     if (!geometry.index?.count) {

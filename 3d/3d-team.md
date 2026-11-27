@@ -35,3 +35,9 @@
 | 錯誤回報 | 不相符的樓層資料回傳 `MAP_MISMATCH`，再載入正確資料後成功顯示。 |
 
 [立體畫面](android/acceptance/android-3d.png) · [俯視畫面](android/acceptance/android-top.png) · [原始圖面](android/acceptance/android-svg.png) · [可重跑的裝置驗收](android/verify-webview.mjs)
+
+### 11/27 UI 組 WebView 精簡模式與 SVG 路徑切換
+
+Android 17（API 37）模擬器以同一份 `viewer.html` 讀取工程五館 1F 與 A118 一樓教室範例。WebView 只顯示模型與座標軸。往返切圖沿用原畫布，連續選圖以最後一次為準。讀取不存在的 SVG 會回報 `SVG_LOAD_FAILED`，之後可正常載回 1F。
+
+1F 以 11 次單指滑動累計旋轉 393.96°。204 段牆、59 個空間、8 個走廊區塊、84 組門、4 個樓梯區及 2 個電梯區的俯視比對通過。本次樓層驗收範圍為 1F。 [精簡模式立體畫面](android/acceptance/minimal-3d.png) · [精簡模式俯視畫面](android/acceptance/minimal-top.png)

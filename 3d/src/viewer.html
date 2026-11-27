@@ -4,14 +4,15 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#f6f7f3">
-  <title>工程五館 1F｜Three.js 空間模型</title>
+  <title>樓層地圖｜Three.js</title>
   <style>/*__CSS__*/</style>
 </head>
 <body>
   <header>
     <div class="identity"><span class="logo" data-icon="building"></span><strong>工程五館</strong><span class="separator"></span><span class="app-name">建築模型檢視器</span></div>
     <div class="header-actions">
-      <button id="source" class="secondary"><i data-icon="plan"></i>原始圖面</button>
+      <label id="file-picker" hidden>開啟 SVG <input id="local-svg" type="file" accept=".svg,image/svg+xml"></label>
+      <button id="source" class="secondary" disabled><i data-icon="plan"></i>原始圖面</button>
       <button id="download" class="primary" disabled><i data-icon="download"></i><span>匯出 GLB</span></button>
     </div>
   </header>
@@ -45,7 +46,7 @@
       </section>
       <section class="info panel-section">
         <h2><i data-icon="info"></i>模型資料</h2>
-        <dl><dt>來源</dt><dd>floor-1.svg</dd><dt>座標</dt><dd>SVG 圖面單位</dd><dt>牆高／門高</dt><dd id="heights"></dd></dl>
+        <dl><dt>來源</dt><dd id="source-name"></dd><dt>座標</dt><dd>SVG 圖面單位</dd><dt>牆高／門高</dt><dd id="heights"></dd></dl>
         <p>平面依原圖比例建模。圖面未實測，垂直尺寸為示意值。</p>
       </section>
     </aside>

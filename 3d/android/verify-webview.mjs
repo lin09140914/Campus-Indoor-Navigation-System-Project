@@ -19,7 +19,7 @@ const port = (await command('forward','tcp:0','localabstract:webview_devtools_re
 let socket;
 try {
   const pages = await (await fetch('http://127.0.0.1:'+port+'/json/list')).json();
-  const page = pages.find(p => p.url.includes('/android_asset/floor-1.html?host=android'));
+  const page = pages.find(p => p.url === 'https://appassets.androidplatform.net/assets/viewer.html?host=android');
   assert(page,'Expected the native map Activity to load its bundled viewer.');
   socket = new WebSocket(page.webSocketDebuggerUrl);
   await new Promise((resolve,reject) => {socket.onopen=resolve; socket.onerror=reject;});
@@ -43,16 +43,21 @@ try {
     await writeFile(new URL(name,output),await command('exec-out','screencap','-p'));
   }
   // Check the state produced by the Activity before calling any rendering function from the test.
-  assert(await evaluate('document.getElementById("message").hidden && document.querySelectorAll("#canvas-wrap canvas").length===1'), 'Native renderMap call did not display the map.');
+  assert(await evaluate(`(async () => {
+    for(let i=0;i<120 && !document.querySelector('#canvas-wrap canvas');i++) await new Promise(r=>setTimeout(r,250));
+    return document.getElementById("message").hidden && document.querySelectorAll("#canvas-wrap canvas").length===1;
+  })()`), 'Native renderMap call did not display the map.');
+  assert(await evaluate(`['header','aside','footer','.view-heading','.mode','.zoom-controls','#selection-tag'].every(
+    selector=>!document.querySelector(selector).getClientRects().length) && document.querySelector('#axes').getClientRects().length===1`));
   const provider = await evaluate('navigator.userAgent');
   const device = (await command('shell','getprop','ro.build.version.sdk')).toString().trim();
   console.log('Android API',device,provider);
-  await capture('android-3d.png');
   const uiFile = '/data/local/tmp/eng5-window.xml';
   await command('shell','uiautomator','dump',uiFile);
   const ui = (await command('shell','cat',uiFile)).toString();
   const bounds = ui.match(/class="android\.webkit\.WebView"[^>]*bounds="\[(\d+),(\d+)\]\[(\d+),(\d+)\]"/);
   assert(bounds,'Cannot locate the Android WebView on screen.');
+  await capture('minimal-3d.png');
   const [,left,top,right] = bounds.map(Number);
   const view = await evaluate('({width:innerWidth, y:document.querySelector("canvas").getBoundingClientRect().y, height:document.querySelector("canvas").clientHeight})');
   const px = (right-left)/view.width;
@@ -78,7 +83,7 @@ try {
   console.log('Android touch rotation',swipes,'swipes,',degrees.toFixed(2),'degrees');
   assert(Math.abs(degrees)>=360,'A full horizontal turn was not observed.');
   const counts = await evaluate(`(async () => {
-    const result = renderMap(undefined,undefined,{view_mode:'2d'});
+    const result = await renderMap('data/svg/floor-1.svg',undefined,{view_mode:'2d'});
     if(result.status!=='success') throw Error(JSON.stringify(result));
     const xml = await (await fetch(document.getElementById('source-image').src)).text();
     const drawing = new DOMParser().parseFromString(xml,'image/svg+xml').documentElement;
@@ -115,19 +120,27 @@ try {
     return counts;
   })()`);
   assert.deepEqual(counts,{walls:204,rooms:59,corridors:8,doors:84,stairs:4,elevators:2});
-  await delay(400); await capture('android-top.png');
-  assert(await evaluate(`(async () => {
-    document.getElementById("source").click();
-    await document.getElementById("source-image").decode();
-    await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
-    return document.getElementById("reference").open;
-  })()`));
-  await delay(1800); await capture('android-svg.png');
-  await evaluate('document.getElementById("close-source").click();document.getElementById("iso").click()');
-  assert.equal(await evaluate(`renderMap(undefined,{building_id:'other',map_version:'other',floor:1,svg:'floor-1.svg',coordinate_status:'unmeasured'}).error.code`),'MAP_MISMATCH');
-  assert.equal(await evaluate('renderMap().status'),'success');
+  await delay(800); await capture('minimal-top.png');
+  const switched = await evaluate(`(async () => {
+    const canvas = document.querySelector('#canvas-wrap canvas');
+    const first = await renderMap('data/svg/floor-1.svg');
+    const example = await renderMap('data/svg/examples/A118_layered_template.svg');
+    if (example.status !== 'success') throw Error(JSON.stringify(example.error));
+    const distinct = !!example.scene.getObjectByName('wall-A118-west') && !example.scene.getObjectByName('wall-A-001');
+    const [obsolete, last] = await Promise.all([
+      renderMap('data/svg/examples/A118_layered_template.svg'),
+      renderMap('data/svg/floor-1.svg')
+    ]);
+    return {distinct, previousCleared:first.scene.children.length===0, exampleCleared:example.scene.children.length===0,
+            cancelled:obsolete.error?.code, restored:!!last.scene?.getObjectByName('wall-A-001'),
+            sameCanvas:document.querySelector('#canvas-wrap canvas')===canvas};
+  })()`);
+  assert.deepEqual(switched,{distinct:true,previousCleared:true,exampleCleared:true,cancelled:'SUPERSEDED',restored:true,sameCanvas:true});
+  assert.equal(await evaluate(`renderMap('data/svg/missing-test-map.svg').then(r=>r.error.code)`),'SVG_LOAD_FAILED');
+  assert.equal(await evaluate(`renderMap(undefined,{building_id:'other',map_version:'other',floor:1,svg:'floor-1.svg',coordinate_status:'unmeasured'}).then(r=>r.error.code)`),'MAP_MISMATCH');
+  assert.equal(await evaluate(`renderMap('data/svg/floor-1.svg').then(r=>r.status)`),'success');
   assert.equal(await evaluate('document.querySelectorAll("#canvas-wrap canvas").length'),1);
-  console.log('Top-view comparison passed',counts);
+  console.log('Top-view comparison passed',counts,'Runtime SVG switching passed',switched);
 } finally {
   socket?.close();
   await command('forward','--remove','tcp:'+port);
