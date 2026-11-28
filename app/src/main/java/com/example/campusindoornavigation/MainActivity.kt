@@ -1,6 +1,7 @@
 package com.example.campusindoornavigation
 
 import android.os.Bundle
+import android.util.Log
 import android.view.ViewGroup
 import android.webkit.WebView
 import androidx.activity.ComponentActivity
@@ -22,6 +23,7 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,21 +35,41 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import kotlinx.serialization.json.Json
+import kotlinx.serialization.json.buildJsonObject
 import kotlinx.serialization.json.int
 import kotlinx.serialization.json.jsonArray
 import kotlinx.serialization.json.jsonObject
 import kotlinx.serialization.json.jsonPrimitive
+import kotlinx.serialization.json.put
 
 // Field names follow the shared Destination specification.
 data class Destination(val id: String, val name: String, val floor: Int)
 
+// The two values the UI chooses for findRoute(graph, start, destination_id, mode).
+// destinationId is the Location id (for example L_A125), not the Graph node ID.
+data class NavigationRequest(val destinationId: String, val mode: String) {
+    fun toJson(): String = buildJsonObject {
+        put("destination_id", destinationId)
+        put("mode", mode)
+    }.toString()
+}
+
 class MainActivity : ComponentActivity() {
+    // Latest selection for the routing step. null until a destination is chosen.
+    var navigationRequest: NavigationRequest? = null
+        private set
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             MaterialTheme {
                 Surface(Modifier.fillMaxSize()) {
-                    NavigationScreen()
+                    NavigationScreen(
+                        onRequestChange = { request ->
+                            navigationRequest = request
+                            Log.d("NavigationRequest", request?.toJson() ?: "null")
+                        }
+                    )
                 }
             }
         }
@@ -66,7 +88,7 @@ private fun parseDestinations(text: String): List<Destination> =
     }
 
 @Composable
-fun NavigationScreen() {
+fun NavigationScreen(onRequestChange: (NavigationRequest?) -> Unit = {}) {
     val context = LocalContext.current
     val destinations = remember {
         runCatching {
@@ -80,6 +102,9 @@ fun NavigationScreen() {
     var mode by rememberSaveable { mutableStateOf("any") }
     var menuOpen by remember { mutableStateOf(false) }
     val selected = destinations.find { it.id == selectedId }
+    val request = selected?.let { NavigationRequest(destinationId = it.id, mode = mode) }
+
+    LaunchedEffect(request) { onRequestChange(request) }
 
     Column(
         modifier = Modifier.fillMaxSize().safeDrawingPadding().padding(16.dp),
@@ -131,8 +156,7 @@ fun NavigationScreen() {
         }
 
         Text(
-            if (selected == null) "請先選擇目的地 Please choose a destination"
-            else "已選擇：${selected.id}，模式：$mode"
+            request?.toJson() ?: "請先選擇目的地 Please choose a destination"
         )
 
         MapPlaceholder(Modifier.fillMaxWidth().weight(1f))
